@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src data:; connect-src https://*.supabase.co wss://*.supabase.co; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://*.supabase.co wss://*.supabase.co; base-uri 'none'; form-action 'none'">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Instrument+Sans:wght@400;500;600;700&display=swap">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="light">
 <title>FRAGOLA PRENOTA | Reservas y gestión de citas</title>
@@ -333,6 +336,148 @@ button,.btn,.chip,.slot,.day,.opt,.seg button,nav.tabs button{touch-action:manip
 @media(max-width:719px){.cal-bar .cal-title{white-space:normal}}
 .cal-panel .cal-filters>div{flex:1 1 150px}
 .wk-c .big.z{color:#b6bdcc;font-weight:600}
+
+/* =====================================================================
+   v8 · DISEÑO
+   Panel: claro y sobrio (blanco, grises fríos; azul marino solo en la acción principal).
+   Cliente (body.cli): azul noche con el rojo fresa solo en lo que se toca o se elige.
+   ===================================================================== */
+:root{--font:'Instrument Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--display:'Big Shoulders Display','Arial Narrow',system-ui,sans-serif;
+  --bg:#fff;--soft:#f5f6f8;--ink:#14203a;--mute:#5e6a82;--line:#e3e6ec;--line2:#d4d9e2;--navy:#16294d;--blue:#16294d;--blue-d:#16294d;--blue-soft:#edf0f6;
+  --red:#d7263d;--red-d:#b01c30;--red-soft:#fdecee;--ok:#17663a;--focus:#3557c7;--r:12px}
+body{font-family:var(--font);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;background:var(--soft)}
+h1,h2,h3{font-weight:650;letter-spacing:-.01em}h2{font-size:17px}h3{font-size:15px}h2 svg.i{color:var(--mute)}
+b,strong{font-weight:650}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+/* encabezado del panel */
+header.top{background:var(--navy);border-bottom:0}
+.logo .pill.red{background:rgba(255,255,255,.1);color:#c3cbe0;font-weight:600}
+.seg{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+.seg button{font-weight:550}
+/* menú: sin cajas */
+nav.tabs button{border:0;background:transparent;color:var(--mute);font-weight:550;border-radius:8px;padding:8px 12px}
+nav.tabs button:hover{background:#eaedf2;color:var(--ink)}
+nav.tabs button[aria-current=true],nav.tabs.side button[aria-current=true]{background:#e4e9f2;color:var(--navy);font-weight:650;box-shadow:none}
+nav.tabs button[aria-current=true] svg.i{color:var(--red)}
+/* superficies */
+.card{border-color:var(--line);border-radius:12px;padding:18px 20px}
+.overlay{background:rgba(20,32,58,.5)}
+.overlay .card{box-shadow:0 20px 50px rgba(20,32,58,.25);border:0}
+/* botones: uno principal, el resto neutros */
+.btn{border-radius:8px;font-weight:600;padding:9px 16px;transition:background-color .15s}
+.btn:not(.ghost):not(.dghost):not(.danger):not(:disabled):hover{background:#22396a}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line2)}
+.btn.ghost:not(:disabled):hover{background:var(--soft)}
+.btn.dghost{background:#fff;color:var(--red-d);border:1px solid #efc4ca}
+.btn.dghost:not(:disabled):hover{background:var(--red-soft)}
+.btn.sm{font-size:13px;padding:6px 11px}
+/* formularios */
+input,select,textarea{border-color:var(--line2);border-radius:8px}
+select{-webkit-appearance:none;appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235e6a82' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center/15px;padding-right:34px}
+label{font-weight:600;color:var(--ink)}
+.notice{border-left:3px solid var(--line2);background:var(--soft);color:var(--mute)}
+.okt{color:var(--ok)}
+.chip[aria-pressed=true]{background:var(--navy);border-color:var(--navy)}
+.demo-banner{background:#fff8e8;border-color:#efd59a;color:#6e4b00}
+.demo-banner .btn.dghost{border-color:#e6c37a;color:#6e4b00;background:transparent}
+/* cifras */
+.kpi{border:1px solid var(--line);border-top:1px solid var(--line)}.kpi.r{border-top-color:var(--line)}
+.kpi .v{font-weight:650;font-size:26px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}.kpi.r .v{color:var(--red-d)}
+.bars .t i{background:var(--navy)}
+td,th{font-variant-numeric:tabular-nums}
+.appt{border-left-width:3px}
+.toast{background:#14203a;border-radius:10px;box-shadow:0 10px 30px rgba(20,32,58,.3)}
+.bar{border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(20,32,58,.06)}
+.tg,.wk-wrap,.mon{border-radius:12px}
+
+/* ---------- cliente: azul noche ---------- */
+body.cli{--bg:#16243d;--soft:#0f1b30;--ink:#edf0f5;--mute:#9ba9c3;--line:#2a3d5f;--line2:#344a70;--blue:#e2364d;--blue-d:#ff8c9b;--blue-soft:rgba(226,54,77,.14);
+  --navy:#e2364d;--focus:#ff8c9b;--ok:#86d7a6;background:#0f1b30;color:var(--ink);color-scheme:dark}
+body.cli *{scrollbar-width:thin;scrollbar-color:#344a70 transparent}
+body.cli nav.tabs,body.cli .chips{scrollbar-width:none}body.cli nav.tabs::-webkit-scrollbar,body.cli .chips::-webkit-scrollbar{display:none}
+body.cli .ln .p{color:#fff}
+body.cli .hero{padding-top:40px}
+body.cli ::selection{background:#e2364d;color:#fff}
+body.cli header.top{background:transparent;border-bottom:1px solid var(--line);margin-bottom:0}
+body.cli .logo{gap:8px}body.cli .wm1{font-size:12px;letter-spacing:.2em;color:var(--mute)}body.cli .wm2{font-size:8px;color:#8a97b1}
+body.cli .seg{background:#16243d;border-color:var(--line)}
+body.cli .seg button[aria-pressed=true]{background:#edf0f5;color:#0f1b30}
+/* rótulo del negocio */
+.hero{padding:36px 0 22px}
+.shop{font-family:var(--display);font-weight:800;font-size:clamp(40px,7vw,64px);line-height:.95;letter-spacing:.01em;text-transform:uppercase;margin:0 0 14px;color:#fff}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px 20px;color:var(--mute);font-size:14px}
+.hero-meta span,.hero-meta a{display:inline-flex;align-items:center;gap:6px}
+.hero-meta a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line2)}.hero-meta a:hover{border-bottom-color:var(--blue)}
+/* pestañas Reservar / Mis citas */
+body.cli nav.tabs{gap:24px;border-bottom:1px solid var(--line);padding:0;margin:0 0 26px}
+body.cli .steps{margin-top:0}
+body.cli nav.tabs button{background:none;border-radius:0;padding:14px 0 12px;color:var(--mute);border-bottom:2px solid transparent;margin-bottom:-1px}
+body.cli nav.tabs button:hover{background:none;color:var(--ink)}
+body.cli nav.tabs button[aria-current=true]{background:none;color:var(--ink);border-bottom-color:var(--blue)}
+body.cli nav.tabs button[aria-current=true] svg.i{color:var(--blue)}
+/* bloques sin cajas */
+body.cli .card{background:transparent;border:0;padding:0;margin:0 0 28px}
+body.cli h2{font-family:var(--display);font-weight:600;font-size:30px;line-height:1.05;letter-spacing:.005em;margin:0 0 6px;color:#fff}
+body.cli h2 svg.i{display:none}
+body.cli h3{color:#fff}
+body.cli .mute{color:var(--mute)}
+body.cli .steps{margin:22px 0 8px}body.cli .steps li{height:3px;background:var(--line)}body.cli .steps li.on{background:var(--blue)}
+/* tablero de precios */
+.opt.svc{display:block;position:relative}
+body.cli .opt{background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;margin:0;padding:18px 40px 18px 0;color:var(--ink);transition:background-color .15s,padding-left .15s}
+body.cli .opt:hover{background:rgba(255,255,255,.025)}
+body.cli .opt[aria-pressed=true]{background:linear-gradient(90deg,rgba(226,54,77,.16),rgba(226,54,77,0) 70%);box-shadow:inset 3px 0 0 var(--blue);padding-left:16px}
+body.cli .opt[aria-pressed=true]::after{content:"";position:absolute;right:8px;top:21px;width:18px;height:18px;border-radius:50%;background:var(--blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") no-repeat center/12px}
+.ln{display:flex;align-items:baseline;gap:10px;width:100%}
+.ln .n{font-size:17px;font-weight:600;flex:none;max-width:70%}
+.ln .lead{flex:1;min-width:20px;border-bottom:2px dotted var(--line2);transform:translateY(-5px)}
+.ln .p{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;flex:none}
+.opt.svc .d{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:4px;color:var(--mute);font-size:14px}
+.opt.svc .du{color:var(--ink);opacity:.8}
+/* profesionales */
+body.cli .pro-opt .mute{color:var(--mute)}body.cli .av-any{background:#22334f}
+body.cli .tag{background:#22334f;color:#cfd8e8}
+/* buscar y filtrar */
+body.cli input,body.cli select,body.cli textarea{background-color:#13213a;color:var(--ink);border-color:var(--line2)}
+body.cli input::placeholder,body.cli textarea::placeholder{color:#7d8aa5}
+body.cli select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ba9c3' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")}
+body.cli label{color:var(--ink)}
+body.cli .chip{background:transparent;border-color:var(--line2);color:var(--mute)}
+body.cli .chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#0f1b30}
+/* fecha y hora */
+body.cli .day,body.cli .slot{background:transparent;border-color:var(--line2);color:var(--ink)}
+body.cli .day small{color:var(--mute)}
+body.cli .day:not(:disabled):hover,body.cli .slot:hover{border-color:var(--mute)}
+body.cli .day[aria-pressed=true],body.cli .slot[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+body.cli .day:disabled{opacity:.3}
+body.cli .slot{font-variant-numeric:tabular-nums}
+/* botones */
+body.cli .btn{border-radius:10px}
+body.cli .btn:not(.ghost):not(.dghost):not(.danger):not(:disabled):hover{background:#c92a40}
+body.cli .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line2)}
+body.cli .btn.ghost:not(:disabled):hover{background:rgba(255,255,255,.05)}
+body.cli .btn.dghost{background:transparent;color:#ff8c9b;border:1px solid #6a3045}
+body.cli .btn:disabled{opacity:.35}
+/* barra inferior */
+body.cli .bar{background:rgba(15,27,48,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid var(--line);box-shadow:none}
+body.cli .bar b{font-size:17px;font-variant-numeric:tabular-nums}
+/* resumen, confirmación y mis citas: paneles */
+body.cli .sumcard,body.cli .card:has(.code),body.cli .card:has(#c-ph){background:#16243d;border:1px solid var(--line);border-radius:14px;padding:22px}
+body.cli .sumcard .sum-tot{font-size:22px}
+body.cli .code{color:#fff;font-family:var(--display);font-weight:800;font-size:40px;letter-spacing:.14em}
+body.cli .appt{background:#16243d;border-color:var(--line);border-left:3px solid var(--blue)}
+body.cli .appt.x{border-left-color:var(--line2)}
+body.cli .pill{background:#22334f;color:#cfd8e8}body.cli .pill.s-ca{background:transparent;border-color:#6a3045;color:#ff8c9b}
+body.cli .notice{border-left-color:var(--line2);background:transparent;color:var(--mute)}
+body.cli .err{color:#ff8c9b}
+body.cli .empty .ico{background:#22334f;color:var(--ink)}
+body.cli .toast{background:#edf0f5;color:#0f1b30}
+body.cli hr{border-top-color:var(--line)!important}
+body.cli details summary{color:var(--ink)}
+.cli-foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--line)}
+.cli-foot .ft{color:var(--mute);font-size:12px;gap:8px}
+@media(max-width:719px){.hero{padding:26px 0 16px}body.cli h2{font-size:26px}.ln .n,.ln .p{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
@@ -814,9 +959,11 @@ function brandMark(z){
 }
 function header(){
   const roles=[['cliente','user','Cliente'],['empleado','scissors','Empleado'],['admin','shield','Administrador']];
+  /* el visitante del enlace público solo ve la página de su barbería: sin selector de perfiles ni etiquetas internas */
+  const visitor=CLOUD_ON&&C.mode==='pub'&&!(C.user&&C.user.email), cli=S.role==='cliente';
   return h('header',{class:'top'},h('div',{class:'in'},
-    h('div',{class:'logo'},brandMark(38),h('div',{class:'wm',role:'img','aria-label':'FRAGOLA PRENOTA'},h('span',{class:'wm1'},'FRAGOLA'),h('span',{class:'wm2'},'PRENOTA')),h('span',{class:'pill red',style:'margin-left:4px'},CLOUD_ON?'Beta':'Prototipo')),
-    h('div',{class:'seg',role:'group','aria-label':'Perfil'},roles.map(([k,i,l])=>h('button',{type:'button','aria-label':l,'aria-pressed':S.role===k,onclick:()=>{S.role=k;render(true);}},ic(i,16),h('span',null,l))))));
+    h('div',{class:'logo'},brandMark(cli?28:38),h('div',{class:'wm',role:'img','aria-label':'FRAGOLA PRENOTA'},h('span',{class:'wm1'},'FRAGOLA'),h('span',{class:'wm2'},'PRENOTA')),cli?null:h('span',{class:'pill red',style:'margin-left:4px'},CLOUD_ON?'Beta':'Prototipo')),
+    visitor?null:h('div',{class:'seg',role:'group','aria-label':'Perfil'},roles.map(([k,i,l])=>h('button',{type:'button','aria-label':l,'aria-pressed':S.role===k,onclick:()=>{S.role=k;render(true);}},ic(i,16),h('span',null,l))))));
 }
 function tabsBar(){
   let defs=[];
@@ -858,10 +1005,11 @@ function modalView(){
         else{S.fails.admin++;m.err='PIN incorrecto.';render();}}))));
 }
 function demoBanner(){
-  if(!hasDemo()) return null;
+  if(!hasDemo()||S.role==='cliente') return null;
   return h('div',{class:'demo-banner',role:'status'},h('span',null,ic('alert',16),' Hay datos de demostración ficticios en este negocio: las citas, clientes e ingresos que ves pueden no ser reales.'),btn('Quitar datos de demostración','trash',clearDemoDlg,'dghost sm'));
 }
 function foot(){
+  if(S.role==='cliente') return h('footer',{class:'cli-foot'},h('div',{class:'ft'},brandMark(18),'Reservas en línea con FRAGOLA PRENOTA'));
   if(CLOUD_ON) return h('footer',null,
     h('div',{class:'ft'},brandMark(20),h('b',null,'FRAGOLA PRENOTA'),' · una solución de la familia FRAGOLA'),
     h('div',null,'Versión 7 (con servidor). ',C.mode==='biz'?h('span',{'data-sync':'1',class:C.st==='err'?'err':'mute'},syncText()):null),
@@ -878,10 +1026,13 @@ function foot(){
 function render(top){
   const ae=document.activeElement, aid=ae&&ae.id, sel=(ae&&ae.selectionStart!=null)?[ae.selectionStart,ae.selectionEnd]:null, y=window.scrollY, adm=S.role==='admin'&&S.auth.admin;
   document.body.classList.toggle('adm',adm);
+  document.body.classList.toggle('cli',S.role==='cliente');
   document.title=S.role==='cliente'?S.settings.name+' · Reservas con FRAGOLA PRENOTA':'FRAGOLA PRENOTA · Panel de gestión';
   const oc0=document.querySelector('.overlay > .card'), ms=(oc0&&!top)?oc0.scrollTop:0;
   const nav=tabsBar(), main=mainView();
-  app.replaceChildren(...[header(),demoBanner(),adm?h('div',{class:'shell'},nav,h('div',{class:'main'},main)):[nav,main],S.modal?modalView():null,S.toast?h('div',{class:'toast'+(S.toast.kind==='err'?' err':''),role:'status'},ic(S.toast.kind==='err'?'alert':'check',16),S.toast.text):null,foot()].flat().filter(Boolean));
+  /* cliente: primero el rótulo del negocio y debajo las pestañas Reservar / Mis citas */
+  const hero=S.role==='cliente'&&!(CLOUD_ON&&(!C.ready||C.fatal||C.mode==='none'))?profileCard():null;
+  app.replaceChildren(...[header(),demoBanner(),adm?h('div',{class:'shell'},nav,h('div',{class:'main'},main)):[hero,nav,main],S.modal?modalView():null,S.toast?h('div',{class:'toast'+(S.toast.kind==='err'?' err':''),role:'status'},ic(S.toast.kind==='err'?'alert':'check',16),S.toast.text):null,foot()].flat().filter(Boolean));
   {const nc=document.querySelector('.overlay > .card'); if(nc&&ms) nc.scrollTop=ms;}
   const re=aid&&document.getElementById(aid);
   if(S.modal&&S.modal.kind==='form'&&!S.modal.opened){S.modal.opened=true;const i=$('#f-name');if(i)i.focus();}
@@ -925,8 +1076,12 @@ function loginView(role){
 }
 
 /* ================= CLIENTE: reservar ================= */
-function profileCard(){const s=S.settings;return h('div',{class:'card profile'},h('div',{class:'avatar','aria-hidden':'true'},s.name.slice(0,2).toUpperCase()),
-  h('div',null,h('h1',null,s.name),s.address?h('div',{class:'mute'},ic('pin',14),' ',s.address):null,h('div',{class:'mute'},ic('clock',14),' Reserva online con confirmación inmediata')));}
+/* cabecera de la página de reservas: el nombre del negocio como un rótulo */
+function profileCard(){const s=S.settings;
+  return h('section',{class:'hero'},h('h1',{class:'shop'},s.name),
+    h('div',{class:'hero-meta'},s.address?h('span',null,ic('pin',15),s.address):null,
+      h('span',null,ic('clock',15),'Abierto de '+fmtTime(s.open*60)+' a '+fmtTime(s.close*60)),
+      waOk()?h('a',{href:waBase(),target:'_blank',rel:'noopener noreferrer'},ic('chat',15),'Escríbenos por WhatsApp'):null));}
 function stepper(){const L=['Servicios',V.pro(),'Fecha y hora','Tus datos','Confirmación'];
   return h('div',null,h('ol',{class:'steps','aria-hidden':'true'},L.map((_,i)=>h('li',{class:i<S.step?'on':''}))),h('div',{class:'mute',style:'margin-bottom:8px'},'Paso '+S.step+' de 5 · '+L[S.step-1]));}
 function bar(info,label,next,dis,back){
@@ -936,7 +1091,7 @@ function bar(info,label,next,dis,back){
 const cartInfo=()=>cartItems().length?[money(cartTotal()),cartItems().length+' servicio(s) · '+fmtDur(cartDur())]:['Sin servicios','Elige al menos uno'];
 function goStep(n){S.step=n;render(true);}
 function bookView(){
-  const w=h('div',null,profileCard());
+  const w=h('div');
   if(S.step===5){w.append(stepFive());return w;}
   w.append(stepper());
   w.append([stepOne,stepTwo,stepThree,stepFour][S.step-1]());
@@ -949,8 +1104,10 @@ function stepOne(){
   const draw=()=>{
     let a=S.services.filter(s=>s.on&&(S.cat==='Todos'||s.cat===S.cat)&&s.name.toLowerCase().includes(S.q.toLowerCase()));
     if(S.sort==='price')a=[...a].sort((x,y)=>x.price-y.price); if(S.sort==='dur')a=[...a].sort((x,y)=>x.dur-y.dur);
-    list.replaceChildren(...(a.length?a.map(s=>h('button',{type:'button',class:'opt','aria-pressed':S.cart.includes(s.id),onclick:()=>{S.cart=S.cart.includes(s.id)?S.cart.filter(x=>x!==s.id):[...S.cart,s.id];S.proId=null;render();}},
-      h('div',null,h('div',{class:'n'},s.name),h('div',{class:'mute'},s.desc),h('div',{class:'mute'},ic('clock',13),' ',fmtDur(s.dur))),h('div',{class:'p'},money(s.price)))):[h('p',{class:'mute'},'No hay servicios que coincidan.')]));
+    /* tablero de precios: nombre ······ precio, y debajo duración y descripción */
+    list.replaceChildren(...(a.length?a.map(s=>h('button',{type:'button',class:'opt svc','aria-pressed':S.cart.includes(s.id),onclick:()=>{S.cart=S.cart.includes(s.id)?S.cart.filter(x=>x!==s.id):[...S.cart,s.id];S.proId=null;render();}},
+      h('span',{class:'ln'},h('span',{class:'n'},s.name),h('span',{class:'lead','aria-hidden':'true'}),h('span',{class:'p'},money(s.price))),
+      h('span',{class:'d'},h('span',{class:'du'},fmtDur(s.dur)),s.desc?h('span',null,s.desc):null))):[h('p',{class:'mute'},'No hay servicios que coincidan.')]));
   };
   draw();
   return h('div',null,h('div',{class:'card'},h('h2',null,ic('scissors',18),'Elige tus servicios'),h('p',{class:'mute'},'Puedes combinar varios: calculamos el tiempo total.'),
