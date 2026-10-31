@@ -477,7 +477,91 @@ body.cli details summary{color:var(--ink)}
 .cli-foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--line)}
 .cli-foot .ft{color:var(--mute);font-size:12px;gap:8px}
 @media(max-width:719px){.hero{padding:26px 0 16px}body.cli h2{font-size:26px}.ln .n,.ln .p{font-size:16px}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* =====================================================================
+   v8.1 · CELULAR PRIMERO (≈90% del uso). Todo lo de abajo aplica a pantallas < 720 px.
+   ===================================================================== */
+input[type=checkbox],input[type=radio]{accent-color:var(--navy)}
+.demo-banner .sh{display:none}
+.bnav{display:none}
+@media(max-width:719px){
+  .wrap{padding:0 14px calc(96px + env(safe-area-inset-bottom))}
+  /* encabezado: una sola línea */
+  header.top{margin:0 -14px 12px;padding:8px 14px}
+  header .in{flex-wrap:nowrap}
+  header .logo .pill,header .wm2{display:none}
+  header .logo svg{width:30px;height:30px}
+  .wm1{font-size:14px;letter-spacing:.14em}
+  .seg button{min-width:42px;min-height:40px;padding:0 10px}
+  /* aviso de demostración en una línea */
+  .demo-banner{padding:6px 6px 6px 12px;font-size:13px;flex-wrap:nowrap;margin-bottom:10px}
+  .demo-banner .lg{display:none}.demo-banner .sh{display:inline}
+  .demo-banner .btn.sm{min-height:36px;padding:4px 10px}
+  /* barra de navegación inferior (panel y empleado) */
+  .bnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:12;background:#fff;border-top:1px solid var(--line);
+    padding:4px 4px calc(4px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px rgba(20,32,58,.07)}
+  .bnav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:56px;border:0;background:none;
+    color:var(--mute);font:inherit;font-size:11px;font-weight:600;border-radius:10px;cursor:pointer;padding:4px 0}
+  .bnav button[aria-current=true]{color:var(--navy)}
+  .bnav button[aria-current=true] svg.i{color:var(--red)}
+  .bnav button[aria-current=true]::before{content:"";position:absolute;top:-4px;left:50%;width:32px;height:3px;border-radius:0 0 3px 3px;background:var(--red);transform:translateX(-50%)}
+  .bnav button{position:relative}
+  body.adm .shell{display:block}
+  /* tarjetas más compactas */
+  .card{padding:16px;border-radius:12px}
+  h2{font-size:16px}
+  /* ventanas: suben desde abajo, a todo lo ancho */
+  .overlay{place-items:end center;padding:0}
+  .overlay .card,.overlay .card.wide,.overlay .card.pm{max-width:none;width:100%;border-radius:18px 18px 0 0;max-height:92vh;max-height:92dvh;
+    padding:20px 16px calc(20px + env(safe-area-inset-bottom));animation:sheetUp .2s ease-out}
+  .overlay .card::before{content:"";display:block;width:40px;height:4px;border-radius:2px;background:var(--line2);margin:-8px auto 12px}
+  .overlay .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .overlay .acts .btn{width:100%}
+  .overlay .row>.btn{flex:1}
+  .kv{grid-template-columns:92px 1fr}
+  /* hoja "Más" */
+  .sheet-list{display:flex;flex-direction:column}
+  .sheet-list button{display:flex;align-items:center;gap:14px;min-height:54px;border:0;border-bottom:1px solid var(--line);background:none;font:inherit;font-size:16px;
+    font-weight:550;color:var(--ink);text-align:left;padding:0 6px;cursor:pointer}
+  .sheet-list button svg.i{color:var(--mute)}
+  .sheet-list button[aria-current=true]{color:var(--navy);font-weight:650}.sheet-list button[aria-current=true] svg.i{color:var(--red)}
+  .sheet-list button.out{border-bottom:0;color:var(--red-d)}.sheet-list button.out svg.i{color:var(--red-d)}
+  /* agenda: controles en dos líneas y "Nueva cita" flotante */
+  .cal-head{padding:12px}
+  .cal-bar{gap:8px}
+  .cal-bar .cal-title{order:1;flex:1 1 0;min-width:0;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0}
+  .cal-bar .cal-nav{order:2;flex:none;gap:4px}
+  .cal-bar .cal-nav .btn{min-width:40px;min-height:40px;padding:0 10px}
+  .cal-bar .seg2{order:3;margin-left:0;flex:1 1 auto}
+  .cal-bar .seg2 button,.cal-bar .seg2 .chip{flex:1;min-height:38px;padding:0 8px}
+  .cal-bar .btn.tgl{order:4;flex:none;min-height:40px;padding:0 12px;font-size:13px}
+  body.adm .cal-bar .btn.nueva{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom));z-index:11;border-radius:999px;min-height:52px;
+    padding:0 20px;box-shadow:0 8px 24px rgba(20,32,58,.3);order:9}
+  /* primeros pasos: el botón va debajo del texto */
+  .steps-list li{flex-wrap:wrap}
+  .steps-list li>div{flex:1 1 calc(100% - 40px)}
+  .steps-list li>.btn{margin-left:36px}
+  .dnote{display:none}
+  .cal-bar .cal-title{flex:1 1 calc(100% - 160px)} /* fecha + flechas llenan la 1.ª línea; vista y filtros bajan a la 2.ª */
+  .cal-bar .seg2{flex:1 1 120px;min-width:0}
+  .cal-bar .seg2 button,.cal-bar .seg2 .chip{min-width:0}
+  .cal-bar .btn.tgl{padding:0 10px}
+  /* casillas de tamaño normal (el renglón entero sigue siendo tocable) */
+  input[type=checkbox],input[type=radio]{width:22px;height:22px}
+  td input[type=checkbox]{width:26px;height:26px}
+  /* cliente: barra inferior compacta */
+  .bar{padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+  .bar .in{gap:10px}
+  .bar .in>div:first-child{min-width:0}
+  .bar .mute{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .btn.ghost{font-size:0;gap:0;width:48px;padding:0}
+  .bar .btn.ghost svg.i{width:20px;height:20px}
+  .bar .btn:not(.ghost){padding:0 18px;min-height:48px}
+  .toast{bottom:calc(84px + env(safe-area-inset-bottom))}
+}
+@media(pointer:coarse){.days{scrollbar-width:none}.days::-webkit-scrollbar{display:none}}
+@keyframes sheetUp{from{transform:translateY(24px);opacity:.6}to{transform:none;opacity:1}}
 </style>
 </head>
 <body>
@@ -532,7 +616,8 @@ alert:'<path d="M12 3l10 18H2L12 3zM12 10v4M12 17h.01"/>',
 play:'<path d="M7 5l12 7-12 7V5z"/>',
 move:'<path d="M5 9l-3 3 3 3M19 9l3 3-3 3M2 12h20M9 5l3-3 3 3M9 19l3 3 3-3"/>',
 eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
-upload:'<path d="M12 20V9M7 13l5-5 5 5M4 4h16"/>'
+upload:'<path d="M12 20V9M7 13l5-5 5 5M4 4h16"/>',
+menu:'<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>'
 };
 function ic(n,s){ const v=document.createElementNS('http://www.w3.org/2000/svg','svg'); const z=s||18;
   v.setAttribute('viewBox','0 0 24 24'); v.setAttribute('width',z); v.setAttribute('height',z); v.setAttribute('class','i');
@@ -717,7 +802,7 @@ const clearDemoDlg=()=>confirmDlg('Quitar datos de demostración','Se eliminará
 const waOk=()=>/^57\d{10}$/.test(S.settings.whatsapp);
 const waBase=()=>'https://wa.me/'+(waOk()?S.settings.whatsapp:'');
 function emptyState(i,title,text,...acts){return h('div',{class:'card empty'},h('div',{class:'ico'},ic(i,24)),h('h3',null,title),h('p',{class:'mute'},text),acts.length?h('div',{class:'acts'},acts):null);}
-function demoNote(){return hasDemo()?h('div',{class:'notice'},'Las cifras incluyen datos de demostración ficticios.'):null;}
+function demoNote(){return hasDemo()?h('div',{class:'notice dnote'},'Las cifras incluyen datos de demostración ficticios.'):null;}
 function demoTools(){
   const tn=S.adm;
   return h('div',{class:'card'},h('h2',null,ic('info',18),'Herramientas de demostración'),
@@ -973,9 +1058,26 @@ function tabsBar(){
     defs=[['inicio','home','Inicio'],['agenda','calendar','Agenda']];
     defs.push(['clientes','users','Clientes'],['equipo','user','Equipo'],['servicios','list','Servicios'],['negocio','settings','Negocio'],['reportes','chart','Reportes'],['registro','shield','Registro']);
   } else return null;
+  /* celular: barra inferior al alcance del pulgar; lo menos usado va en "Más" */
+  if(MOB()&&S.role!=='cliente'){
+    const cur=S.tabs[S.role], MAIN=S.role==='admin'?['inicio','agenda','clientes','equipo']:defs.map(d=>d[0]);
+    const main=defs.filter(d=>MAIN.includes(d[0])), rest=defs.filter(d=>!MAIN.includes(d[0]));
+    const go=k=>()=>{S.tabs[S.role]=k;S.modal=null;render(true);};
+    return h('nav',{class:'bnav','aria-label':'Secciones'},main.map(([k,i,l])=>h('button',{type:'button','aria-current':cur===k,onclick:go(k)},ic(i,22),h('span',null,l))),
+      rest.length?h('button',{type:'button','aria-current':rest.some(d=>d[0]===cur),'aria-haspopup':'dialog',onclick:()=>{S.modal={kind:'more',items:rest};render();}},ic('menu',22),h('span',null,'Más'))
+        :h('button',{type:'button',onclick:roleLogout},ic('logout',22),h('span',null,'Salir')));
+  }
   const out=h('nav',{class:'tabs'+(S.role==='admin'?' side':''),'aria-label':'Secciones'},defs.map(([k,i,l])=>h('button',{type:'button','aria-current':S.tabs[S.role]===k,title:l,onclick:()=>{S.tabs[S.role]=k;render(true);}},ic(i,16),h('span',{class:'tl'},l))));
-  if(S.role!=='cliente') out.append(h('button',{type:'button',onclick:()=>{if(CLOUD_ON){cloudLogout();return;}S.auth[S.role]=S.role==='admin'?false:null;render(true);}},ic('logout',16),h('span',{class:'tl'},'Salir')));
+  if(S.role!=='cliente') out.append(h('button',{type:'button',onclick:roleLogout},ic('logout',16),h('span',{class:'tl'},'Salir')));
   return out;
+}
+function roleLogout(){S.modal=null;if(CLOUD_ON){cloudLogout();return;}S.auth[S.role]=S.role==='admin'?false:null;render(true);}
+/* hoja "Más" del celular */
+function moreSheet(m){
+  return h('div',{class:'overlay',role:'dialog','aria-modal':'true','aria-label':'Más secciones',onclick:e=>{if(e.target===e.currentTarget){S.modal=null;render();}}},
+    h('div',{class:'card sheet'},h('div',{class:'sheet-list'},
+      m.items.map(([k,i,l])=>h('button',{type:'button','aria-current':S.tabs[S.role]===k,onclick:()=>{S.tabs[S.role]=k;S.modal=null;render(true);}},ic(i,20),h('span',null,l))),
+      h('button',{type:'button',class:'out',onclick:roleLogout},ic('logout',20),h('span',null,'Salir')))));
 }
 function logo2(){return null;}
 function askPin(title,onOk){S.modal={title,onOk,err:''};render();}
@@ -989,6 +1091,7 @@ function modalView(){
   if(m.kind==='proDone') return doneModal(m);
   if(m.kind==='client') return clientModal(m);
   if(m.kind==='newpass') return newPassModal(m);
+  if(m.kind==='more') return moreSheet(m);
   if(m.kind==='confirm') return h('div',{class:'overlay',role:'dialog','aria-modal':'true','aria-label':m.title},h('div',{class:'card'},
     h('h2',null,ic('info',18),m.title),h('p',{class:'mute'},m.text),
     h('div',{class:'row',style:'margin-top:12px'},btn('Cancelar',null,()=>{S.modal=m.back||null;render();},'ghost'),btn(m.okLabel||'Aceptar','check',()=>{const f=m.onOk;S.modal=m.back||null;f();render(true);}))));
@@ -1006,7 +1109,7 @@ function modalView(){
 }
 function demoBanner(){
   if(!hasDemo()||S.role==='cliente') return null;
-  return h('div',{class:'demo-banner',role:'status'},h('span',null,ic('alert',16),' Hay datos de demostración ficticios en este negocio: las citas, clientes e ingresos que ves pueden no ser reales.'),btn('Quitar datos de demostración','trash',clearDemoDlg,'dghost sm'));
+  return h('div',{class:'demo-banner',role:'status'},h('span',null,ic('alert',16),h('span',{class:'lg'},' Hay datos de demostración ficticios en este negocio: las citas, clientes e ingresos que ves pueden no ser reales.'),h('span',{class:'sh'},' Incluye datos de demostración')),btn('Quitar','trash',clearDemoDlg,'dghost sm'));
 }
 function foot(){
   if(S.role==='cliente') return h('footer',{class:'cli-foot'},h('div',{class:'ft'},brandMark(18),'Reservas en línea con FRAGOLA PRENOTA'));
@@ -1093,6 +1196,7 @@ function goStep(n){S.step=n;render(true);}
 function bookView(){
   const w=h('div');
   if(S.step===5){w.append(stepFive());return w;}
+  if(S.step===1&&!S.services.some(x=>x.on)){w.append(stepOne());return w;} /* sin servicios: solo el aviso, sin barra de pasos */
   w.append(stepper());
   w.append([stepOne,stepTwo,stepThree,stepFour][S.step-1]());
   return w;
