@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src data:; connect-src https://*.supabase.co wss://*.supabase.co; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="light">
 <title>FRAGOLA PRENOTA | Reservas y gestión de citas</title>
@@ -274,6 +274,65 @@ button,.btn,.chip,.slot,.day,.opt,.seg button,nav.tabs button{touch-action:manip
   table.rt td input:not([type=checkbox]),table.rt td select{width:100%}
   table.rt td input[type=checkbox]{justify-self:start}
 }
+
+/* ===== v6.2: Equipo, Clientes y Excel ===== */
+.hd2{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.hd2 h2{margin:0}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin:14px 0}
+.tcard{margin:0;display:flex;flex-direction:column;gap:8px}.tcard.inactive{background:var(--soft)}
+.tc-top{display:flex;gap:12px;align-items:center}.tc-id h3{margin:0}.tc-h{display:flex;gap:6px;align-items:center}
+.tc-st{display:flex;gap:6px;flex-wrap:wrap}.tcard .acts{margin-top:auto}
+.tpill{display:inline-flex;gap:4px;align-items:center;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700}
+.tpill.on{background:#e5f5ea;color:#14602f}.tpill.off{background:#eceef3;color:#3d475f}.tpill.abs{background:var(--amb-soft);color:var(--amb)}.tpill.warn{background:var(--red-soft);color:var(--red-d)}
+.overlay .card.pm{max-width:760px;width:100%}
+.pm-hd{display:flex;gap:12px;align-items:center;justify-content:space-between}
+.pm-tabs{display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid var(--line);margin:12px 0}
+.pm-tabs button{flex:none;border:0;background:none;padding:10px 14px;font:inherit;font-weight:600;color:var(--mute);cursor:pointer;border-bottom:3px solid transparent}
+.pm-tabs button[aria-selected=true]{color:var(--blue-d);border-bottom-color:var(--red)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.req{color:var(--red-d);font-weight:700}
+.cr-photo{display:flex;gap:14px;align-items:center;margin:10px 0}
+.rm-row{display:grid;grid-template-columns:1fr minmax(180px,270px);gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.cl-list{display:flex;flex-direction:column;gap:8px}
+.cl-item{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:10px 12px;font:inherit;cursor:pointer;width:100%}
+.cl-tools{align-items:center;flex-wrap:wrap}.cl-count{margin:8px 0}.pager{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:12px}
+.arch summary{cursor:pointer;font-weight:700}.arch-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line);flex-wrap:wrap}
+@media(max-width:719px){.grid2{grid-template-columns:1fr}.rm-row{grid-template-columns:1fr}.pm-hd{flex-wrap:wrap}}
+@media (max-width:1023px),(pointer:coarse){.swatch{width:44px;height:44px}}
+/* v6.3: agenda limpia */
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cal-head{padding:10px 12px}
+.cal-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cal-bar .cal-title{font-size:17px;white-space:nowrap;font-weight:700;color:var(--navy);margin-right:auto;padding:0 4px}
+.cal-bar .seg2{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:#fff}
+.cal-bar .seg2 button{border:0;background:none;font:inherit;font-size:14px;padding:6px 14px;border-radius:999px;color:var(--mute);cursor:pointer}
+.cal-bar .seg2 button[aria-pressed=true]{background:var(--navy);color:#fff;font-weight:600;border:0}
+.cal-bar .seg2 .chip{border:0;background:none;color:var(--mute)}.cal-bar .seg2 .chip[aria-pressed=true]{background:var(--navy);color:#fff}
+.cal-bar .btn.tgl{position:relative}
+.pillf{display:inline-block;min-width:18px;height:18px;line-height:18px;border-radius:9px;background:var(--red);color:#fff;font-size:11px;font-weight:700;text-align:center;margin-left:6px;padding:0 4px}
+.cal-bar .btn[aria-expanded=true]{background:var(--soft);border-color:var(--navy)}
+.cal-panel{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.cal-panel .cal-filters{margin-top:0}.cal-panel .legend{margin-top:0}
+.cal-bar .cal-date{width:auto;flex:none}
+@media(max-width:719px){
+ .cal-bar .cal-title{order:1;flex:1 1 0;min-width:130px;font-size:17px}
+ .cal-bar .cal-nav{flex:none}
+ .cal-bar .btn.nueva{order:2}
+ .cal-bar .cal-nav{order:3}
+ .cal-bar .seg2{order:4;margin-left:auto}
+ .cal-bar .seg2 button{padding:6px 10px}
+ .cal-bar .btn.tgl{order:5;flex:1 1 40%;justify-content:center}
+}
+/* semana simple */
+.wk-c.n{align-items:center;justify-content:center;gap:0;min-height:56px}
+.wk-c .big{font-size:20px;font-weight:700;color:var(--navy);line-height:1.1}
+.wk-c .ct{font-size:12px;font-weight:600;color:var(--mute)}
+.wk-c.l1{background:#f1f5fd}.wk-c.l2{background:#dfe8fb}.wk-c.l3{background:#c8d7f8}
+.wk-c.full .big{color:var(--red-d)}
+.cal-bar .seg2 .sh{display:none}@media(max-width:719px){.cal-bar .seg2 .lg{display:none}.cal-bar .seg2 .sh{display:inline}}
+.cal-bar .seg2 .chip{min-width:44px}
+@media(max-width:719px){.cal-bar .cal-title{white-space:normal}}
+.cal-panel .cal-filters>div{flex:1 1 150px}
+.wk-c .big.z{color:#b6bdcc;font-weight:600}
 </style>
 </head>
 <body>
@@ -326,7 +385,9 @@ chat:'<path d="M4 5h16v11H9l-5 4V5z"/>',
 info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
 alert:'<path d="M12 3l10 18H2L12 3zM12 10v4M12 17h.01"/>',
 play:'<path d="M7 5l12 7-12 7V5z"/>',
-move:'<path d="M5 9l-3 3 3 3M19 9l3 3-3 3M2 12h20M9 5l3-3 3 3M9 19l3 3 3-3"/>'
+move:'<path d="M5 9l-3 3 3 3M19 9l3 3-3 3M2 12h20M9 5l3-3 3 3M9 19l3 3 3-3"/>',
+eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+upload:'<path d="M12 20V9M7 13l5-5 5 5M4 4h16"/>'
 };
 function ic(n,s){ const v=document.createElementNS('http://www.w3.org/2000/svg','svg'); const z=s||18;
   v.setAttribute('viewBox','0 0 24 24'); v.setAttribute('width',z); v.setAttribute('height',z); v.setAttribute('class','i');
@@ -350,13 +411,22 @@ function newCode(){const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',b=new Uint8Array(6
 const PHONE_RE=/^3\d{9}$/;
 const cleanPhone=p=>String(p).replace(/[\s-]/g,'');
 
+/* ================= v7 · CONEXIÓN CON EL SERVIDOR (Fase 4) =================
+   Pega aquí los datos de tu proyecto de Supabase (Settings → API). Si quedan vacíos,
+   la app funciona en modo local: los datos se guardan solo en este navegador.
+   La "anon key" es pública por diseño: la seguridad la ponen las reglas de la base de datos. */
+const CLOUD_CFG={url:'https://nnjcbjqoplypmbegmzfl.supabase.co',anonKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5uamNianFvcGx5cG1iZWdtemZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM0NDE0MjMsImV4cCI6MjEwOTAxNzQyM30.TlOkOLjtGzfLaZdSlPf33tOkj3cOKSL_BiEhYok1KFY'};
+const CFG=window.__FRAGOLA_CLOUD||CLOUD_CFG, CLOUD_ON=!!(CFG.url&&CFG.anonKey);
+/* identificadores aleatorios: dos dispositivos pueden crear datos a la vez sin chocar */
+function rid(){const a=new Uint32Array(2);crypto.getRandomValues(a);return (a[0]&0x3fff)*4294967296+a[1]+1;}
+
 /* ================= estado y datos de ejemplo ================= */
 /* ===== modelo multi-negocio: cada negocio ("tenant") tiene sus propios datos; nada se comparte entre negocios ===== */
 const DB={tenants:{},order:[],cur:null,n:0};
-const nextId=a=>Math.max(0,...a.map(x=>x.id))+1;
+const nextId=a=>CLOUD_ON?rid():Math.max(0,...a.map(x=>x.id))+1;
 function newTenant(name){
   const id='n'+(++DB.n);
-  const t=DB.tenants[id]={id,settings:{name:name||'Mi negocio',address:'',whatsapp:'',open:9,close:19,step:30,minCancelHours:2,maxActive:3,minAdvanceMin:30,maxAdvanceDays:14,closedDates:[],adminAttends:false,autoConfirm:true,type:'general',features:{buffers:false,resources:false},pin:'1234'},
+  const t=DB.tenants[id]={id,settings:{name:name||'Mi negocio',address:'',whatsapp:'',open:9,close:19,step:30,minCancelHours:2,maxActive:3,minAdvanceMin:30,maxAdvanceDays:14,closedDates:[],autoConfirm:true,type:'general',features:{buffers:false,resources:false},pin:'1234'},
     services:[],pros:[],bookings:[],blocks:[],resources:[],meta:{},audit:[],notices:[],seq:0};
   DB.order.push(id); if(!DB.cur) DB.cur=id;
   t.audit.unshift({ts:new Date(),who:'Sistema',text:'Negocio creado: '+t.settings.name});
@@ -371,28 +441,77 @@ const S={
   cl:{phone:'',otp:'',err:'',logged:null,confirm:null,msg:'',editData:false},
   em:{date:todayS(),view:'dia',blk:{date:todayS(),from:12*60,to:13*60,reason:'',err:''}},
   ag:{date:todayS(),pro:'all',view:'dia',form:null},
-  adm:{personal:{date:todayS(),view:'dia'},cq:'',cSel:null,rep:30,fe:{id:0,err:''},pinMsg:'',newDate:'',newEmp:'',newSvc:{n:'',c:'',p:'',d:'',e:''},tn:''},
+  adm:{cq:'',cSel:null,rep:30,fe:{id:0,err:''},pinMsg:'',newDate:'',newEmp:'',newSvc:{n:'',c:'',p:'',d:'',e:''},tn:''},
   modal:null, loginSel:null, loginErr:'', toast:null, tm:newTm(),
-  cal:{adm:{date:todayS(),view:'dia',pro:'all',svc:'all',st:'all'},me:{date:todayS(),view:'dia',pro:'all',svc:'all',st:'all'},em:{date:todayS(),view:'dia',pro:'all',svc:'all',st:'all'}}
+  cal:{adm:{date:todayS(),view:'dia',pro:'all',svc:'all',st:'all'},em:{date:todayS(),view:'dia',pro:'all',svc:'all',st:'all'}}
 };
 /* los datos del negocio activo se leen siempre a traves de T(): el resto del codigo no necesita cambiar */
 ['settings','services','pros','bookings','blocks','resources','meta','audit','notices','seq'].forEach(k=>Object.defineProperty(S,k,{get:()=>T()[k],set:v=>{T()[k]=v;},enumerable:true}));
-newTenant('Mi negocio');
+/* ================= v6.4: guardado en este navegador (localStorage) =================
+   Se guardan solo los datos de los negocios (DB). La sesion (PIN ingresado, reserva a medio hacer) no se guarda:
+   al recargar hay que volver a entrar. En produccion esto lo reemplaza el servidor (Fase 4). */
+const STORE_KEY='fragola-prenota:v1', BACKUP_APP='fragola-prenota', BACKUP_VER=1;
+const store={ok:true,err:'',at:null,t:null};
+function lsGet(k){try{return localStorage.getItem(k);}catch(_){return null;}}
+const reviveTs=a=>(Array.isArray(a)?a:[]).filter(x=>x&&typeof x.text==='string').map(x=>Object.assign({},x,{ts:new Date(x.ts)}));
+const numF=(o,ks)=>ks.forEach(k=>{if(o[k]!=null)o[k]=Number(o[k])||0;});
+function validDB(d){
+  if(!d||typeof d!=='object'||!d.tenants||typeof d.tenants!=='object'||!Array.isArray(d.order)||!d.order.length||d.order.length>20) return false;
+  return d.order.every(id=>{const t=d.tenants[id];return t&&t.settings&&typeof t.settings==='object'&&typeof t.settings.name==='string'&&['services','pros','bookings','blocks','resources'].every(k=>Array.isArray(t[k]));});
+}
+/* adopta datos guardados o restaurados: normaliza tipos (los numeros terminan en estilos CSS y calculos) */
+function adoptDB(d){
+  Object.keys(DB.tenants).forEach(k=>delete DB.tenants[k]);
+  d.order.forEach(id=>{DB.tenants[id]=normTenant(d.tenants[id]);});
+  DB.order=d.order.slice(); DB.cur=d.order.includes(d.cur)?d.cur:d.order[0];
+  DB.n=Math.max(Number(d.n)||0,...d.order.map(id=>Number(String(id).slice(1))||0));
+}
+function normTenant(t){const st=t.settings;
+    t.audit=reviveTs(t.audit); t.notices=reviveTs(t.notices); t.meta=t.meta&&typeof t.meta==='object'?t.meta:{};
+    numF(st,['open','close','step','minCancelHours','maxActive','minAdvanceMin','maxAdvanceDays']);
+    st.closedDates=Array.isArray(st.closedDates)?st.closedDates.filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)):[]; st.features=st.features||{buffers:false,resources:false}; st.pin=/^\d{4,8}$/.test(st.pin)?st.pin:'1234';
+    t.bookings.forEach(b=>{numF(b,['id','proId','start','dur','pre','post','total']);b.lines=Array.isArray(b.lines)?b.lines:[];b.svcIds=Array.isArray(b.svcIds)?b.svcIds:[];b.res=Array.isArray(b.res)?b.res:[];});
+    t.services.forEach(s=>numF(s,['id','dur','price','pre','post','res']));
+    t.pros.forEach(p=>{numF(p,['id','color','from','to']);p.serviceIds=Array.isArray(p.serviceIds)?p.serviceIds:[];});
+    t.blocks.forEach(k=>{numF(k,['proId','start','end']);if(!Number.isSafeInteger(k.id))k.id=rid();}); /* v6.3 usaba ids decimales */
+    t.seq=Math.max(Number(t.seq)||0,...t.bookings.map(b=>b.id));
+    return t;}
+function loadDB(){
+  const raw=lsGet(STORE_KEY); if(!raw) return false;
+  try{const d=JSON.parse(raw); if(!d||d.app!==BACKUP_APP||!validDB(d.db)) throw new Error('formato'); adoptDB(d.db); return true;}
+  catch(_){try{localStorage.setItem(STORE_KEY+':danado',raw);}catch(__){} store.err='Los datos guardados estaban dañados y no se pudieron abrir (se guardó una copia aparte). Se empezó con un negocio vacío.'; return false;}
+}
+function saveNow(){
+  clearTimeout(store.t); store.t=null;
+  const body=JSON.stringify(DB); if(body===store.last&&store.ok) return; /* sin cambios: no se reescribe (evita ecos entre pestanas) */
+  try{localStorage.setItem(STORE_KEY,'{"app":"'+BACKUP_APP+'","v":'+BACKUP_VER+',"savedAt":"'+new Date().toISOString()+'","db":'+body+'}');store.ok=true;store.at=new Date();store.last=body;}
+  catch(e){const was=store.ok; store.ok=false;
+    store.err=(e&&(e.name==='QuotaExceededError'||e.code===22))?'El almacenamiento del navegador está lleno: los últimos cambios NO se guardaron. Descarga una copia de seguridad y quita fotos o datos de demostración.':'Este navegador no permite guardar datos (modo privado o almacenamiento bloqueado): los cambios se perderán al cerrar.';
+    if(was) setTimeout(()=>toast(store.err,'err'),0);}
+}
+function scheduleSave(){if(CLOUD_ON){cloudSchedule();return;} if(!store.t) store.t=setTimeout(saveNow,250);}
+/* cambios hechos en campos que no vuelven a dibujar la pantalla (precios, ajustes) tambien se guardan */
+document.addEventListener('change',()=>scheduleSave());
+window.addEventListener('pagehide',()=>{if(store.t) saveNow();});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&store.t) saveNow();});
+/* otra pestana guardo cambios: se adoptan aqui para no pisarlos con datos viejos */
+window.addEventListener('storage',e=>{
+  if(CLOUD_ON||e.key!==STORE_KEY||!e.newValue) return;
+  try{const d=JSON.parse(e.newValue); if(d.app!==BACKUP_APP||!validDB(d.db)) return; const cur=DB.cur; adoptDB(d.db); if(DB.tenants[cur]) DB.cur=cur; store.last=JSON.stringify(DB);
+    if(S.auth.empleado!=null&&!proById(S.auth.empleado)) S.auth.empleado=null; toast('Se cargaron cambios hechos en otra pestaña.');}catch(_){}
+});
+if(CLOUD_ON) newTenant('Cargando…'); else if(loadDB()) store.at=new Date(); else newTenant('Mi negocio');
+store.last=(lsGet(STORE_KEY)&&!store.err)?JSON.stringify(DB):null;
 function audit(who,text){S.audit.unshift({ts:new Date(),who,text}); if(S.audit.length>300) S.audit.length=300;}
 function notice(text){S.notices.unshift({ts:new Date(),text}); if(S.notices.length>30) S.notices.length=30;}
 const svc=id=>S.services.find(s=>s.id===id);
 const proById=id=>S.pros.find(p=>p.id===id);
 const proName=id=>(proById(id)||{name:'—'}).name;
-function ownerPro(create){
-  let p=S.pros.find(x=>x.owner);
-  if(!p&&create){p={id:nextId(S.pros),name:'Dueño (administrador)',owner:true,active:true,pin:'',serviceIds:S.services.map(x=>x.id),days:[1,2,3,4,5,6],from:9,to:19};S.pros.push(p);}
-  return p;
-}
 function mkBooking(o){
   const pr=proById(o.proId);
   /* una cita es "de demostracion" si usa un profesional o un servicio de demostracion */
   const demo=!!(o.demo||(pr&&pr.demo)||(o.svcIds||[]).some(id=>svc(id)&&svc(id).demo));
-  const b={id:++S.seq,code:newCode(),date:o.date,start:o.start,dur:o.dur,proId:o.proId,lines:o.lines,total:o.lines.reduce((a,l)=>a+l.price,0),
+  const b={id:CLOUD_ON?rid():++S.seq,code:newCode(),date:o.date,start:o.start,dur:o.dur,proId:o.proId,lines:o.lines,total:o.lines.reduce((a,l)=>a+l.price,0),
     name:o.name,phone:o.phone,email:o.email||'',notes:o.notes||'',svcIds:o.svcIds||[],pre:o.pre||0,post:o.post||0,res:[...(o.res||[])],resNames:(o.res||[]).map(id=>(S.resources.find(r=>r.id===id)||{}).name).filter(Boolean),proName:pr?pr.name:'',status:o.status||'confirmada',paid:!!o.paid,source:o.source||'online',demo};
   S.bookings.push(b); return b;
 }
@@ -427,7 +546,7 @@ function loadDemo(){
       }
     });
   }
-  S.blocks.push({id:Date.now()+Math.random(),proId:pros[1].id,date:addDays(t0,20),dateTo:addDays(t0,26),start:0,end:1440,reason:'Vacaciones (demostración)',type:'vacaciones'});
+  S.blocks.push({id:rid(),proId:pros[1].id,date:addDays(t0,20),dateTo:addDays(t0,26),start:0,end:1440,reason:'Vacaciones (demostración)',type:'vacaciones'});
   audit('Sistema','Datos de demostración (ficticios) cargados');
 }
 function clearDemo(){
@@ -439,15 +558,15 @@ function clearDemo(){
   S.pros.forEach(p=>{p.serviceIds=p.serviceIds.filter(id=>!dSvc.has(id));});
   const phones=new Set(S.bookings.map(b=>b.phone)); Object.keys(S.meta).forEach(ph=>{if(!phones.has(ph)) delete S.meta[ph];});
   audit('Sistema','Datos de demostración eliminados (los datos reales no se tocaron)');
-  resetFlow(); S.cl.logged=null; S.adm.cSel=null; S.ag.form=null; S.ag.pro='all';S.toast=null;S.tm=newTm();['adm','me','em'].forEach(k=>{S.cal[k].pro='all';S.cal[k].svc='all';S.cal[k].st='all';});
+  resetFlow(); S.cl.logged=null; S.adm.cSel=null; S.ag.form=null; S.ag.pro='all';S.toast=null;S.tm=newTm();['adm','em'].forEach(k=>{S.cal[k].pro='all';S.cal[k].svc='all';S.cal[k].st='all';});
 }
 function switchTenant(id){
   if(!DB.tenants[id]) return;
   DB.cur=id; resetFlow(); S.auth={empleado:null,admin:false};
-  Object.assign(S.cl,{logged:null,msg:'',confirm:null,delConfirm:false,err:''}); S.adm.cSel=null; S.ag.form=null; S.ag.pro='all';S.toast=null;S.tm=newTm();['adm','me','em'].forEach(k=>{S.cal[k].pro='all';S.cal[k].svc='all';S.cal[k].st='all';}); S.modal=null; S.loginErr=''; S.loginSel=null;
+  Object.assign(S.cl,{logged:null,msg:'',confirm:null,delConfirm:false,err:''}); S.adm.cSel=null; S.ag.form=null; S.ag.pro='all';S.toast=null;S.tm=newTm();['adm','em'].forEach(k=>{S.cal[k].pro='all';S.cal[k].svc='all';S.cal[k].st='all';}); S.modal=null; S.loginErr=''; S.loginSel=null;
   render(true);
 }
-function confirmDlg(title,text,okLabel,onOk){S.modal={kind:'confirm',title,text,okLabel,onOk};render();}
+function confirmDlg(title,text,okLabel,onOk){S.modal={kind:'confirm',title,text,okLabel,onOk,back:(S.modal&&S.modal.kind==='proProfile')?S.modal:null};render();}
 const loadDemoDlg=()=>confirmDlg('Cargar datos de demostración','Se agregarán servicios, profesionales, clientes y citas FICTICIOS para que pruebes la aplicación. No son reservas, clientes ni ingresos reales y puedes quitarlos cuando quieras.','Cargar datos ficticios',loadDemo);
 const clearDemoDlg=()=>confirmDlg('Quitar datos de demostración','Se eliminarán solo los servicios, profesionales y citas de demostración, y las citas creadas con ellos. Tus datos reales no se tocan.','Quitar datos de demostración',clearDemo);
 const waOk=()=>/^57\d{10}$/.test(S.settings.whatsapp);
@@ -457,14 +576,14 @@ function demoNote(){return hasDemo()?h('div',{class:'notice'},'Las cifras incluy
 function demoTools(){
   const tn=S.adm;
   return h('div',{class:'card'},h('h2',null,ic('info',18),'Herramientas de demostración'),
-    h('div',{class:'notice'},'Solo existen en el prototipo. En producción cada negocio accede únicamente a su propia cuenta y no ve otros negocios.'),
+    h('div',{class:'notice'},CLOUD_ON?'Sirven para probar: crean servicios, profesionales y citas FICTICIOS marcados como demostración, y se pueden quitar sin tocar tus datos reales.':'Solo existen en el prototipo. En producción cada negocio accede únicamente a su propia cuenta y no ve otros negocios.'),
     h('p',{class:'mute'},hasDemo()?'Hay datos de demostración cargados.':'No hay datos de demostración cargados.'),
     h('div',{class:'acts'},btn('Cargar datos de demostración','plus',loadDemoDlg,'ghost sm',hasDemo()),btn('Quitar datos de demostración','trash',clearDemoDlg,'dghost sm',!hasDemo())),
-    h('h3',{style:'margin-top:14px'},'Negocios de prueba (datos separados)'),
+    CLOUD_ON?null:[h('h3',{style:'margin-top:14px'},'Negocios de prueba (datos separados)'),
     h('div',{class:'row'},h('select',{'aria-label':'Negocio activo',onchange:e=>switchTenant(e.target.value)},DB.order.map(id=>h('option',{value:id,selected:id===DB.cur},DB.tenants[id].settings.name))),
       h('input',{id:'tn-n',maxlength:'60',placeholder:'Nombre del nuevo negocio','aria-label':'Nombre del nuevo negocio',value:tn.tn,onchange:e=>{tn.tn=e.target.value;}}),
       btn('Crear negocio vacío','plus',()=>{const n=($('#tn-n').value||'').trim();if(n.length<2){tn.tnErr='Escribe un nombre de 2 a 60 caracteres.';render();return;}if(DB.order.length>=5){tn.tnErr='Máximo 5 negocios en la demo.';render();return;}tn.tnErr='';tn.tn='';const id=newTenant(n);switchTenant(id);},'ghost sm')),
-    errLine(tn.tnErr));
+    errLine(tn.tnErr)]);
 }
 
 
@@ -538,11 +657,12 @@ function freePros(o){
   const base=o.proId?S.pros.filter(p=>p.id===o.proId):S.pros;
   return base.filter(p=>p.active&&(o.svcIds||[]).every(id=>p.serviceIds.includes(id))&&!checkSlot(Object.assign({},o,{proId:p.id})));
 }
+/* true si la hora (fecha + minutos) ya paso o cae dentro de la anticipacion minima (lead, en minutos); cruza la medianoche */
+function tooSoon(date,t,lead){const d=parseYmd(date);d.setMinutes(t);return d.getTime()<Date.now()+(lead||0)*60000;}
 function slotsGeneric(o){
   const out=[]; if(!o.dur||o.proId==null||!o.date) return out;
-  const now=new Date(), isToday=ymd(now)===o.date, lim=now.getHours()*60+now.getMinutes()+(o.lead||0);
   for(let t=S.settings.open*60;t+o.dur<=S.settings.close*60;t+=S.settings.step){
-    if(isToday&&t<lim) continue;
+    if(tooSoon(o.date,t,o.lead)) continue;
     if(freePros(Object.assign({},o,{start:t})).length) out.push(t);
   }
   return out;
@@ -579,7 +699,7 @@ function addBlock(o,force){
   if(!o.all&&!(o.end>o.start)) return {err:'La hora final debe ser posterior a la inicial.'};
   if(S.blocks.length>400) return {err:'Demasiados bloqueos.'};
   const before=new Set(issuesFor(o.proId));
-  const k={id:Date.now()+Math.random(),proId:o.proId,date:o.date,start:o.all?0:o.start,end:o.all?1440:o.end,reason:(o.reason||'').slice(0,60),type:o.type||'bloqueo'};
+  const k={id:rid(),proId:o.proId,date:o.date,start:o.all?0:o.start,end:o.all?1440:o.end,reason:(o.reason||'').slice(0,60),type:o.type||'bloqueo'};
   if(to!==o.date) k.dateTo=to;
   S.blocks.push(k);
   const aff=issuesFor(o.proId).filter(id=>!before.has(id));
@@ -610,7 +730,7 @@ const V={pro:()=>tpl().pro[0],pros:()=>tpl().pro[1],proL:()=>tpl().pro[0].toLowe
 function applyTemplate(id){
   const t=TEMPLATES[id]; if(!t) return;
   S.settings.type=id; S.settings.features=Object.assign({},S.settings.features,t.feat);
-  if(t.feat.resources&&t.res&&!S.resources.length) S.resources.push({id:1,name:t.res[0],qty:t.res[1],active:true});
+  if(t.feat.resources&&t.res&&!S.resources.length) S.resources.push({id:nextId(S.resources),name:t.res[0],qty:t.res[1],active:true});
   audit('Administrador','Configuración inicial aplicada: '+t.name+' (funciones: tiempos adicionales '+(t.feat.buffers?'sí':'no')+', recursos '+(t.feat.resources?'sí':'no')+'). No se modificaron datos existentes.');
 }
 function setFeature(k,v){S.settings.features[k]=v;audit('Administrador','Función "'+(k==='buffers'?'tiempos de preparación y limpieza':'recursos')+'" '+(v?'activada':'desactivada'));}
@@ -675,16 +795,9 @@ function clientsList(){
   }
   return [...m.values()];
 }
-const isBlocked=ph=>!!(S.meta[ph]&&S.meta[ph].blocked);
 function eraseClient(ph){
   S.bookings.forEach(b=>{ if(b.phone===ph){ if(ACTIVE(b)&&b.date>=todayS()&&(b.status==='confirmada'||b.status==='pendiente')) b.status='cancelada'; b.name='Cliente eliminado'; b.phone=''; b.email=''; b.notes=''; }});
   delete S.meta[ph];
-}
-function csvCell(v){let s=String(v??''); if(/^[=+\-@\t\r]/.test(s)) s="'"+s; return '"'+s.replace(/"/g,'""')+'"';}
-function downloadCsv(){
-  const rows=[['Nombre','Celular','Correo','Citas','Ultima cita','No asistio','Bloqueado']].concat(clientsList().map(c=>[c.name,c.phone,c.email,c.n,c.last,c.noshow,isBlocked(c.phone)?'si':'no']));
-  const blob=new Blob(['﻿'+rows.map(r=>r.map(csvCell).join(',')).join('\n')],{type:'text/csv;charset=utf-8'});
-  const u=URL.createObjectURL(blob), a=document.createElement('a'); a.href=u; a.download='clientes.csv'; document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),1000);
 }
 function setStatus(b,st,who){ b.status=st; audit(who,'Cita '+b.code+' ('+b.name+') pasó a "'+st+'"'); }
 
@@ -702,7 +815,7 @@ function brandMark(z){
 function header(){
   const roles=[['cliente','user','Cliente'],['empleado','scissors','Empleado'],['admin','shield','Administrador']];
   return h('header',{class:'top'},h('div',{class:'in'},
-    h('div',{class:'logo'},brandMark(38),h('div',{class:'wm',role:'img','aria-label':'FRAGOLA PRENOTA'},h('span',{class:'wm1'},'FRAGOLA'),h('span',{class:'wm2'},'PRENOTA')),h('span',{class:'pill red',style:'margin-left:4px'},'Prototipo')),
+    h('div',{class:'logo'},brandMark(38),h('div',{class:'wm',role:'img','aria-label':'FRAGOLA PRENOTA'},h('span',{class:'wm1'},'FRAGOLA'),h('span',{class:'wm2'},'PRENOTA')),h('span',{class:'pill red',style:'margin-left:4px'},CLOUD_ON?'Beta':'Prototipo')),
     h('div',{class:'seg',role:'group','aria-label':'Perfil'},roles.map(([k,i,l])=>h('button',{type:'button','aria-label':l,'aria-pressed':S.role===k,onclick:()=>{S.role=k;render(true);}},ic(i,16),h('span',null,l))))));
 }
 function tabsBar(){
@@ -711,11 +824,10 @@ function tabsBar(){
   else if(S.role==='empleado'&&S.auth.empleado) defs=[['agenda','calendar','Mi agenda'],['bloqueos','ban','Bloqueos']];
   else if(S.role==='admin'&&S.auth.admin){
     defs=[['inicio','home','Inicio'],['agenda','calendar','Agenda']];
-    if(S.settings.adminAttends) defs.push(['miagenda','scissors','Mi agenda']);
     defs.push(['clientes','users','Clientes'],['equipo','user','Equipo'],['servicios','list','Servicios'],['negocio','settings','Negocio'],['reportes','chart','Reportes'],['registro','shield','Registro']);
   } else return null;
   const out=h('nav',{class:'tabs'+(S.role==='admin'?' side':''),'aria-label':'Secciones'},defs.map(([k,i,l])=>h('button',{type:'button','aria-current':S.tabs[S.role]===k,title:l,onclick:()=>{S.tabs[S.role]=k;render(true);}},ic(i,16),h('span',{class:'tl'},l))));
-  if(S.role!=='cliente') out.append(h('button',{type:'button',onclick:()=>{S.auth[S.role]=S.role==='admin'?false:null;render(true);}},ic('logout',16),h('span',{class:'tl'},'Salir')));
+  if(S.role!=='cliente') out.append(h('button',{type:'button',onclick:()=>{if(CLOUD_ON){cloudLogout();return;}S.auth[S.role]=S.role==='admin'?false:null;render(true);}},ic('logout',16),h('span',{class:'tl'},'Salir')));
   return out;
 }
 function logo2(){return null;}
@@ -724,15 +836,23 @@ function modalView(){
   const m=S.modal;
   if(m.kind==='appt') return apptModal(m);
   if(m.kind==='form') return formModal(m);
+  if(m.kind==='proCreate') return createModal();
+  if(m.kind==='proProfile') return profileModal(m);
+  if(m.kind==='proRemove') return removeModal(m);
+  if(m.kind==='proDone') return doneModal(m);
+  if(m.kind==='client') return clientModal(m);
+  if(m.kind==='newpass') return newPassModal(m);
   if(m.kind==='confirm') return h('div',{class:'overlay',role:'dialog','aria-modal':'true','aria-label':m.title},h('div',{class:'card'},
     h('h2',null,ic('info',18),m.title),h('p',{class:'mute'},m.text),
-    h('div',{class:'row',style:'margin-top:12px'},btn('Cancelar',null,()=>{S.modal=null;render();},'ghost'),btn(m.okLabel||'Aceptar','check',()=>{const f=m.onOk;S.modal=null;f();render(true);}))));
+    h('div',{class:'row',style:'margin-top:12px'},btn('Cancelar',null,()=>{S.modal=m.back||null;render();},'ghost'),btn(m.okLabel||'Aceptar','check',()=>{const f=m.onOk;S.modal=m.back||null;f();render(true);}))));
   return h('div',{class:'overlay',role:'dialog','aria-modal':'true','aria-label':m.title},h('div',{class:'card'},
-    h('h2',null,ic('lock',18),'Confirma tu PIN'),h('p',{class:'mute'},m.title),
-    h('input',{id:'modal-pin',type:'password',inputmode:'numeric',maxlength:'8',autocomplete:'off','aria-label':'PIN de administrador'}),errLine(m.err),
+    h('h2',null,ic('lock',18),CLOUD_ON?'Confirma tu contraseña':'Confirma tu PIN'),h('p',{class:'mute'},m.title),
+    h('input',CLOUD_ON?{id:'modal-pin',type:'password',maxlength:'72',autocomplete:'current-password','aria-label':'Contraseña'}:{id:'modal-pin',type:'password',inputmode:'numeric',maxlength:'8',autocomplete:'off','aria-label':'PIN de administrador'}),errLine(m.err),
     h('div',{class:'row',style:'margin-top:12px'},
       btn('Cancelar',null,()=>{S.modal=null;render();},'ghost'),
       btn('Confirmar','check',()=>{
+        if(CLOUD_ON){const v=$('#modal-pin').value;C.sb.auth.signInWithPassword({email:(C.user||{}).email||'',password:v}).then(({error})=>{
+          if(error){m.err=authMsg(error);render();return;} const f=m.onOk;S.modal=null;f();render();});return;}
         if(S.fails.admin>=5){m.err='Demasiados intentos. Recarga la demo.';render();return;}
         if($('#modal-pin').value===S.settings.pin){S.fails.admin=0;const f=m.onOk;S.modal=null;f();render();}
         else{S.fails.admin++;m.err='PIN incorrecto.';render();}}))));
@@ -742,10 +862,16 @@ function demoBanner(){
   return h('div',{class:'demo-banner',role:'status'},h('span',null,ic('alert',16),' Hay datos de demostración ficticios en este negocio: las citas, clientes e ingresos que ves pueden no ser reales.'),btn('Quitar datos de demostración','trash',clearDemoDlg,'dghost sm'));
 }
 function foot(){
+  if(CLOUD_ON) return h('footer',null,
+    h('div',{class:'ft'},brandMark(20),h('b',null,'FRAGOLA PRENOTA'),' · una solución de la familia FRAGOLA'),
+    h('div',null,'Versión 7 (con servidor). ',C.mode==='biz'?h('span',{'data-sync':'1',class:C.st==='err'?'err':'mute'},syncText()):null),
+    C.user&&C.user.email?h('div',null,'Sesión: '+C.user.email,C.list.length>1?[' · ',h('label',{for:'bz-f',style:'display:inline;margin:0 6px'},'Negocio:'),
+      h('select',{id:'bz-f',style:'width:auto',onchange:e=>switchBiz(e.target.value)},C.list.map(m=>h('option',{value:m.id,selected:m.id===C.bid},m.name+(m.role==='staff'?' (empleado)':''))))]:null):null);
   const multi=DB.order.length>1;
   return h('footer',null,
     h('div',{class:'ft'},brandMark(20),h('b',null,'FRAGOLA PRENOTA'),' · una solución de la familia FRAGOLA'),
-    h('div',null,'Prototipo v6 (Fase 3): sin servidor, base de datos ni autenticación real. Los datos viven solo en la memoria de esta pestaña y se pierden al cerrarla.'),
+    h('div',null,'Versión 7 en modo local: sin servidor ni autenticación real. Los datos se guardan solo en este navegador y en este equipo: otra persona u otro equipo no los ve. Usa solo datos ficticios. Para usarla con clientes reales, conecta el servidor (GUIA-INSTALACION.md).'),
+    store.ok?null:h('div',{class:'err',role:'alert',style:'margin-top:6px'},ic('alert',14),store.err),
     h('div',null,'Accesos de demostración, no válidos para producción: administrador PIN 1234, empleados PIN 1111, clientes código 123456.'),
     multi?h('div',{style:'margin-top:8px'},h('label',{for:'tn-f',style:'display:inline;margin-right:6px'},'Negocio activo (solo demo):'),h('select',{id:'tn-f',style:'width:auto',onchange:e=>switchTenant(e.target.value)},DB.order.map(id=>h('option',{value:id,selected:id===DB.cur},DB.tenants[id].settings.name)))):null);
 }
@@ -753,24 +879,35 @@ function render(top){
   const ae=document.activeElement, aid=ae&&ae.id, sel=(ae&&ae.selectionStart!=null)?[ae.selectionStart,ae.selectionEnd]:null, y=window.scrollY, adm=S.role==='admin'&&S.auth.admin;
   document.body.classList.toggle('adm',adm);
   document.title=S.role==='cliente'?S.settings.name+' · Reservas con FRAGOLA PRENOTA':'FRAGOLA PRENOTA · Panel de gestión';
+  const oc0=document.querySelector('.overlay > .card'), ms=(oc0&&!top)?oc0.scrollTop:0;
   const nav=tabsBar(), main=mainView();
   app.replaceChildren(...[header(),demoBanner(),adm?h('div',{class:'shell'},nav,h('div',{class:'main'},main)):[nav,main],S.modal?modalView():null,S.toast?h('div',{class:'toast'+(S.toast.kind==='err'?' err':''),role:'status'},ic(S.toast.kind==='err'?'alert':'check',16),S.toast.text):null,foot()].flat().filter(Boolean));
+  {const nc=document.querySelector('.overlay > .card'); if(nc&&ms) nc.scrollTop=ms;}
   const re=aid&&document.getElementById(aid);
   if(S.modal&&S.modal.kind==='form'&&!S.modal.opened){S.modal.opened=true;const i=$('#f-name');if(i)i.focus();}
+  else if(S.modal&&S.modal.kind==='proCreate'&&!S.modal.opened){S.modal.opened=true;const i=$('#cr-name');if(i)i.focus();}
   else if(re){re.focus({preventScroll:true});if(sel&&re.setSelectionRange)try{re.setSelectionRange(sel[0],sel[1]);}catch(_){}}
   else if(S.modal){const i=$('#modal-pin')||$('.overlay .btn:not(.ghost)')||$('.overlay .btn');if(i)i.focus();}
   window.scrollTo(0,top?0:y);
   calAfterRender();
+  scheduleSave();
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.modal){S.modal=null;render();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.modal){S.modal=S.modal.back||null;render();}});
 function mainView(){
+  if(CLOUD_ON){
+    if(!C.ready) return loadingCard();
+    if(C.fatal) return emptyState('alert','Sin conexión con el servidor',C.fatal,btn('Reintentar','repeat',()=>location.reload(),'ghost sm'));
+    if(S.role==='cliente'&&C.mode==='none') return emptyState('calendar',C.err?'Enlace no válido':'Reserva en línea',C.err||'Para reservar, abre el enlace que te compartió el negocio (termina en “?n=nombre-del-negocio”).',
+      btn('Soy dueño de un negocio','shield',()=>{S.role='admin';render(true);},'ghost sm'));
+  }
   if(S.role==='cliente') return S.tabs.cliente==='reservar'?bookView():myView();
   if(S.role==='empleado') return S.auth.empleado?(S.tabs.empleado==='agenda'?calendarView(ctxFor('em')):blocksView()):loginView('empleado');
   if(!S.auth.admin) return loginView('admin');
   const t=S.tabs.admin;
-  return ({inicio:adminHome,agenda:adminAgenda,miagenda:()=>calendarView(ctxFor('me')),clientes:adminClients,equipo:adminTeam,servicios:adminServices,negocio:adminBusiness,reportes:adminReports,registro:adminAudit}[t]||adminHome)();
+  return ({inicio:adminHome,agenda:adminAgenda,clientes:adminClients,equipo:adminTeam,servicios:adminServices,negocio:adminBusiness,reportes:adminReports,registro:adminAudit}[t]||adminHome)();
 }
 function loginView(role){
+  if(CLOUD_ON) return cloudLoginView(role);
   const emps=S.pros.filter(p=>!p.owner&&p.active);
   if(role==='empleado'&&!emps.length) return emptyState('user','Aún no hay empleados activos','El administrador debe crear los perfiles de empleados desde la sección Equipo para que puedan ingresar.');
   if(!emps.some(p=>p.id===S.loginSel)) S.loginSel=emps.length?emps[0].id:null;
@@ -848,7 +985,10 @@ function stepThree(){
   const strip=h('div',{class:'days'},days.map(k=>{const d=parseYmd(k);return h('button',{type:'button',class:'day',disabled:!dayOpen(k),'aria-pressed':S.date===k,'aria-label':fmtDate(k),onclick:()=>{S.date=k;S.time=null;render();}},
     h('small',null,d.toLocaleDateString('es-CO',{weekday:'short'}).replace('.','')),h('b',null,d.getDate()));}));
   const info=ed?[ed.lines.map(l=>l.name).join(', '),fmtDur(ed.dur)+' · '+bpName(ed)]:cartInfo();
-  const next=ed?()=>{ if(!freePros(args({date:S.date,start:S.time})).length){S.errors={slot:'Ese horario acaba de ocuparse.'};S.time=null;render();return;}
+  const next=ed?()=>{ if(!canChange(ed)){S.errors={slot:'Ya pasó el plazo para reprogramar esta cita ('+S.settings.minCancelHours+' h antes). Escribe al negocio.'};render();return;}
+      if(tooSoon(S.date,S.time,lead)){S.errors={slot:'Esa hora ya no cumple la anticipación mínima. Elige otra.'};S.time=null;render();return;}
+      if(!freePros(args({date:S.date,start:S.time})).length){S.errors={slot:'Ese horario acaba de ocuparse.'};S.time=null;render();return;}
+      if(CLOUD_ON){cloudResched(ed);return;}
       const old=fmtDate(ed.date)+' '+fmtTime(ed.start); ed.date=S.date;ed.start=S.time; S.last=ed;S.lastMsg='Tu cita fue reprogramada.';audit('Cliente '+ed.name,'Reprogramó la cita '+ed.code+' (antes '+old+')');S.editing=null;goStep(5);}:()=>goStep(4);
   return h('div',null,h('div',{class:'card'},h('h2',null,ic('calendar',18),ed?'Nuevo horario para tu cita':'Fecha y hora'),h('p',{class:'mute'},'Duración total: '+fmtDur(dur)),errLine(S.errors.slot),strip,box),
     bar(info,ed?'Guardar cambio':'Continuar',next,!(S.date&&S.time),ed?()=>{S.editing=null;resetFlow();S.tabs.cliente='citas';render(true);}:()=>goStep(2)));
@@ -866,8 +1006,7 @@ function validateClient(){
   if(c.notes.length>200)e.notes='Máximo 200 caracteres.';
   if(!c.consent)e.consent='Debes aceptar el tratamiento de datos para reservar.';
   if(!e.phone){
-    if(isBlocked(ph))e.limit='No es posible reservar en línea con este número. Contacta al negocio por WhatsApp.';
-    else if(S.bookings.filter(b=>b.phone===ph&&OPEN(b)&&b.date>=todayS()).length>=S.settings.maxActive)e.limit='Alcanzaste el máximo de '+S.settings.maxActive+' citas activas. Cancela o espera a que pase alguna.';
+    if(S.bookings.filter(b=>b.phone===ph&&OPEN(b)&&b.date>=todayS()).length>=S.settings.maxActive)e.limit='Alcanzaste el máximo de '+S.settings.maxActive+' citas activas. Cancela o espera a que pase alguna.';
   }
   S.errors=e;return !Object.keys(e).length;
 }
@@ -894,10 +1033,12 @@ function stepFour(){
     errLine(S.errors.consent),errLine(S.errors.limit)),
     bar(cartInfo(),'Confirmar reserva',()=>{
       if(!validateClient()){render();return;}
+      if(tooSoon(S.date,S.time,S.settings.minAdvanceMin)){S.errors={slot:'Esa hora ya no cumple la anticipación mínima. Elige otra.'};S.time=null;goStep(3);return;}
+      if(CLOUD_ON){cloudBook();return;} /* el servidor vuelve a validar todo y asigna profesional */
       const J2=jobOf(S.cart), free=freePros(Object.assign(fa(),{dur:J2.dur,pre:J2.pre,post:J2.post,res:J2.res,svcIds:J2.svcIds}));
       if(!free.length){S.errors={slot:'Ese horario acaba de ocuparse. Elige otro.'};S.time=null;goStep(3);return;}
       const b=mkBooking({svcIds:J2.svcIds,date:S.date,start:S.time,dur:J2.dur,pre:J2.pre,post:J2.post,res:J2.res,proId:free[0].id,lines:J2.lines.map(l=>({name:l.name,price:l.price,dur:l.dur})),name:c.name.trim(),phone:cleanPhone(c.phone),email:c.email.trim(),notes:c.notes.trim(),source:'online',status:S.settings.autoConfirm?'confirmada':'pendiente'});
-      audit('Cliente '+b.name,'Nueva reserva '+b.code+' para '+fmtDate(b.date)+' '+fmtTime(b.start)); S.last=b;S.lastMsg=b.status==='pendiente'?'Reserva recibida. Queda pendiente de confirmación del negocio.':'Reserva confirmada.';if(b.status==='pendiente')notice('Nueva reserva pendiente de confirmar: '+b.name+' ('+fmtShort(b.date)+' '+fmtTime(b.start)+').');goStep(5);},false,()=>goStep(3)));
+      audit('Cliente '+b.name,'Nueva reserva '+b.code+' para '+fmtDate(b.date)+' '+fmtTime(b.start)); S.last=b;S.lastMsg=b.status==='pendiente'?'Reserva recibida. Queda pendiente de confirmación del negocio.':'Reserva confirmada.';if(b.status==='pendiente')notice('Nueva reserva pendiente de confirmar: '+b.name+' ('+fmtShort(b.date)+' '+fmtTime(b.start)+').');goStep(5);},CLOUD_ON&&C.busy,()=>goStep(3)));
 }
 function summaryOf(b){
   const p=proById(b.proId);
@@ -918,6 +1059,12 @@ function stepFive(){
 function canChange(b){return hoursUntil(b)>=S.settings.minCancelHours;}
 function myView(){
   const c=S.cl;
+  if(CLOUD_ON){
+    if(C.user&&C.user.email) return emptyState('user','Mis citas','Tienes abierta la sesión del negocio ('+C.user.email+'). Para consultar citas como cliente, cierra esa sesión o abre el enlace en una ventana privada.');
+    if(C.mode!=='pub') return emptyState('calendar','Mis citas','Abre el enlace de reservas de tu negocio para consultar tus citas.');
+    if(!C.phone) return cloudClientLogin();
+    c.logged=C.phone;
+  }
   if(!c.logged){
     return h('div',{class:'card',style:'max-width:440px;margin:0 auto'},h('h2',null,ic('phone',18),'Consulta tus citas'),
       h('div',{class:'notice'},'Demo: el código de verificación es 123456. En producción se envía por WhatsApp o SMS.'),
@@ -935,21 +1082,25 @@ function myView(){
   const who=mine[0]||{name:'',email:''};
   const card=(b,isUp)=>h('div',{class:'appt'+(b.status==='cancelada'?' x':'')},h('div',{class:'hd'},h('b',null,fmtDate(b.date)+' · '+fmtTime(b.start)),stPill(b.status)),
     h('div',{class:'mute'},b.lines.map(l=>l.name).join(', ')+' · '+money(b.total)+' · '+bpName(b)),
+    b.reassigned&&isUp?h('div',{class:'notice',role:'status'},'Tu cita cambió de profesional: ahora es con '+b.reassigned.to+' (antes con '+b.reassigned.from+'). El día y la hora no cambian.'):null,
+    b.bizCancel?h('div',{class:'notice',role:'status'},'El negocio canceló esta cita por un cambio en su equipo. Escríbenos por WhatsApp y te damos otra hora.'):null,
     isUp?h('div',{class:'acts'},
       canChange(b)?[btn('Reprogramar','move',()=>{S.editing=b.id;S.date=null;S.time=null;S.step=3;S.tabs.cliente='reservar';render(true);},'ghost sm'),
         btn(S.cl.confirm===b.id?'Confirmar cancelación':'Cancelar cita','x',()=>{
+          if(S.cl.confirm===b.id&&CLOUD_ON){rpcOk('cancel_my_booking',{p_slug:S.settings.slug,p_id:b.id}).then(d=>{Object.assign(b,fromBj(d));c.msg='Cita cancelada. El horario quedó libre.';c.err='';},e=>{c.err=syncMsg(e);}).then(()=>{S.cl.confirm=null;render();});return;}
           if(S.cl.confirm===b.id){setStatus(b,'cancelada','Cliente '+b.name);notice('El cliente '+b.name+' canceló la cita del '+fmtShort(b.date)+' '+fmtTime(b.start)+'.');S.cl.confirm=null;c.msg='Cita cancelada. El horario quedó libre.';}else S.cl.confirm=b.id;render();},'dghost sm')]
         :[h('span',{class:'mute'},'Faltan menos de '+S.settings.minCancelHours+' h: para cambios, escribe al negocio.'),h('a',{class:'btn ghost sm',href:waBase(),target:'_blank',rel:'noopener noreferrer'},ic('chat',14),'WhatsApp')]):
       h('div',{class:'acts'},btn('Repetir','repeat',()=>{S.cart=S.services.filter(s=>s.on&&b.lines.some(l=>l.name===s.name)).map(s=>s.id);S.proId=(proById(b.proId)&&proById(b.proId).active)?b.proId:0;S.date=null;S.time=null;S.editing=null;S.step=cartItems().length?3:1;S.tabs.cliente='reservar';render(true);},'ghost sm')));
   return h('div',null,
-    h('div',{class:'card'},h('div',{class:'hd',style:'display:flex;justify-content:space-between;align-items:center;gap:8px'},h('h2',null,ic('user',18),'Mis citas'),btn('Salir','logout',()=>{S.cl.logged=null;S.cl.msg='';render(true);},'ghost sm')),
-      c.msg?h('div',{class:'okt',role:'status'},ic('check',16),c.msg):null,
+    h('div',{class:'card'},h('div',{class:'hd',style:'display:flex;justify-content:space-between;align-items:center;gap:8px'},h('h2',null,ic('user',18),'Mis citas'),btn('Salir','logout',()=>{if(CLOUD_ON){clientSignOut();return;}S.cl.logged=null;S.cl.msg='';render(true);},'ghost sm')),
+      c.msg?h('div',{class:'okt',role:'status'},ic('check',16),c.msg):null,CLOUD_ON?errLine(c.err):null,
       h('h3',{style:'margin-top:10px'},'Próximas'),up.length?up.map(b=>card(b,true)):h('p',{class:'mute'},'No tienes citas próximas.'),
       h('h3',{style:'margin-top:14px'},'Historial'),hist.length?hist.slice(0,10).map(b=>card(b,false)):h('p',{class:'mute'},'Aún no hay historial.')),
     h('div',{class:'card'},h('h2',null,ic('shield',18),'Mis datos'),
       h('p',{class:'mute'},'Nombre: '+who.name+(who.email?' · Correo: '+who.email:'')),
       h('div',{class:'acts'},btn(c.editData?'Cerrar':'Corregir mis datos','edit',()=>{c.editData=!c.editData;render();},'ghost sm'),
         btn(c.delConfirm?'Confirmar eliminación definitiva':'Eliminar mis datos','trash',()=>{
+          if(c.delConfirm&&CLOUD_ON){rpcOk('erase_my_data',{p_slug:S.settings.slug}).then(()=>{c.delConfirm=false;return clientSignOut();},e=>{c.err=syncMsg(e);render();});return;}
           if(c.delConfirm){eraseClient(c.logged);audit('Cliente','Solicitud de eliminación de datos atendida');notice('Un cliente eliminó sus datos personales.');c.logged=null;c.delConfirm=false;c.msg='';c.err='';render(true);}else{c.delConfirm=true;render();}},'dghost sm')),
       c.delConfirm?h('div',{class:'notice'},'Se cancelarán tus citas futuras y se borrarán tu nombre, celular y correo. No se puede deshacer.'):null,
       c.editData?h('div',null,h('label',{for:'e-n'},'Nombre'),h('input',{id:'e-n',maxlength:'60',value:who.name}),h('label',{for:'e-m'},'Correo'),h('input',{id:'e-m',type:'email',maxlength:'254',value:who.email}),errLine(c.err),
@@ -957,6 +1108,7 @@ function myView(){
           const n=$('#e-n').value.trim(),m=$('#e-m').value.trim();
           if(n.length<2||n.length>60){c.err='Nombre de 2 a 60 caracteres.';render();return;}
           if(m&&!/^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,}$/.test(m)){c.err='Correo no válido.';render();return;}
+          if(CLOUD_ON){rpcOk('update_my_data',{p_slug:S.settings.slug,p_name:n,p_email:m}).then(()=>{S.bookings.forEach(b=>{if(b.phone===c.logged){b.name=n;b.email=m;}});c.err='';c.editData=false;c.msg='Datos actualizados.';},e=>{c.err=syncMsg(e);}).then(()=>render());return;}
           S.bookings.forEach(b=>{if(b.phone===c.logged){b.name=n;b.email=m;}});audit('Cliente '+n,'Corrigió sus datos');c.err='';c.editData=false;c.msg='Datos actualizados.';render();}))):null));
 }
 
@@ -975,7 +1127,6 @@ const hasSvc=(b,id)=>b.svcIds&&b.svcIds.length?b.svcIds.includes(id):b.lines.som
 const calPred=c=>b=>(c.pro==='all'||b.proId===Number(c.pro))&&(c.svc==='all'||hasSvc(b,Number(c.svc)))&&(c.st==='all'||b.status===c.st);
 const filtersOn=c=>c.svc!=='all'||c.st!=='all';
 const ctxFor=key=>key==='em'?{key,st:S.cal.em,lock:S.auth.empleado,who:'Empleado '+proName(S.auth.empleado),adm:false,title:'Mi agenda'}
-  :key==='me'?{key,st:S.cal.me,lock:ownerPro(true).id,who:'Administrador',adm:true,title:'Mi agenda (administrador)'}
   :{key:'adm',st:S.cal.adm,lock:null,who:'Administrador',adm:true,title:'Agenda del negocio'};
 let toastT=null;
 function toast(text,kind){S.toast={text,kind:kind||'ok'};render();clearTimeout(toastT);toastT=setTimeout(()=>{S.toast=null;const e=$('.toast');if(e)e.remove();},4500);}
@@ -1214,13 +1365,15 @@ function weekMatrix(ctx){
   g.append(h('div',{class:'wk-h wk-corner',role:'columnheader'},'Profesional'));
   days.forEach(d=>{const dd=parseYmd(d);g.append(h('button',{type:'button',class:'wk-h'+(d===todayS()?' today':''),role:'columnheader','aria-label':'Ver el día '+fmtDate(d),onclick:()=>{c.date=d;c.view='dia';render();}},h('small',null,dd.toLocaleDateString('es-CO',{weekday:'short'}).replace('.','')),h('b',null,dd.getDate())));});
   pros.forEach(p=>{
-    const tot=days.map(d=>proDay(p,d)), cap=tot.reduce((a,x)=>a+x.cap,0), bk=tot.reduce((a,x)=>a+x.booked,0), n=tot.reduce((a,x)=>a+x.n,0);
-    g.append(h('button',{type:'button',class:'wk-r',role:'rowheader','aria-label':'Ver la semana de '+p.name,onclick:()=>{c.pro=String(p.id);render();}},avatar(p,28),h('div',{class:'hn'},h('b',null,p.name+(p.active?'':' (inactivo)')),h('small',null,n+' cita'+(n===1?'':'s')+' · '+(cap?Math.round(bk/cap*100):0)+'% ocupado'))));
+    const tot=days.map(d=>proDay(p,d)), n=tot.reduce((a,x)=>a+x.n,0);
+    g.append(h('button',{type:'button',class:'wk-r',role:'rowheader','aria-label':'Ver la semana de '+p.name,onclick:()=>{c.pro=String(p.id);render();}},avatar(p,28),h('div',{class:'hn'},h('b',null,p.name+(p.active?'':' (inactivo)')),h('small',null,n+' cita'+(n===1?'':'s')))));
     days.forEach(d=>{
       const pd=proDay(p,d), mt=S.bookings.filter(b=>b.proId===p.id&&b.date===d&&ACTIVE(b)&&pred(b)).length;
-      const txt=!pd.works?offLbl(pd):(pd.cap&&!pd.free?'Completo · ':'')+pd.n+' cita'+(pd.n===1?'':'s')+(pd.free?' · '+fmtFree(pd.free)+' libres':'');
-      g.append(h('button',{type:'button',class:'wk-c'+(d===todayS()?' today':'')+(pd.works?'':' offc'),role:'cell','data-pro':p.id,'data-date':d,'aria-label':p.name+', '+fmtDate(d)+': '+txt,onclick:()=>{c.date=d;c.view='dia';render();}},
-        miniBar(p,d,pred),h('span',{class:'ct'},txt),filtersOn(c)&&pd.works?h('span',{class:'mt'},mt+' coinciden'):null));
+      const pct=pd.cap?pd.booked/pd.cap:0, full=pd.works&&pd.cap&&!pd.free, lv=!pd.works?'':pct>=.6?' l3':pct>=.3?' l2':pd.n?' l1':'';
+      const txt=!pd.works?offLbl(pd):(full?'Completo · ':'')+pd.n+' cita'+(pd.n===1?'':'s');
+      g.append(h('button',{type:'button',class:'wk-c n'+(d===todayS()?' today':'')+(pd.works?'':' offc')+lv+(full?' full':''),role:'cell','data-pro':p.id,'data-date':d,'aria-label':p.name+', '+fmtDate(d)+': '+txt+(pd.works&&pd.free?' · '+fmtFree(pd.free)+' libres':''),onclick:()=>{c.date=d;c.view='dia';render();}},
+        pd.works?[h('span',{class:'big'+(pd.n?'':' z')},pd.n),h('span',{class:'ct'},full?'completo':(pd.n===1?'cita':'citas'))]:h('span',{class:'ct'},offLbl(pd)),
+        filtersOn(c)&&pd.works?h('span',{class:'mt'},mt+' coinciden'):null));
     });
   });
   return h('div',{class:'wk-wrap'},g);
@@ -1254,7 +1407,6 @@ function dayList(ctx,date){
   return h('div',{class:'dl'},pros.map(p=>{
     const pd=proDay(p,date), items=[...S.bookings.filter(b=>b.proId===p.id&&b.date===date&&pred(b)).map(b=>({t:b.start,b})),...(c.st==='all'&&c.svc==='all'?gapsOf(p,date).map(g=>({t:g[0],g})):[])].sort((a,b)=>a.t-b.t);
     return h('div',{class:'card dl-p','data-pro':p.id},h('div',{class:'dl-h'},avatar(p,28),h('div',null,h('b',null,p.name),h('div',{class:'mute'},pd.works?pd.n+' cita'+(pd.n===1?'':'s')+' · '+fmtFree(pd.free)+' libres · '+(pd.cap?Math.round(pd.booked/pd.cap*100):0)+'% ocupado':(pd.closed?'Negocio cerrado':pd.m.absent?offLbl(pd):'No trabaja este día')))),
-      miniBar(p,date,pred),
       items.length?items.map(it=>it.b?h('button',{type:'button',class:'li ev-'+stKey(it.b.status),onclick:()=>openAppt(it.b.id,ctx.key),'aria-label':'Cita '+fmtTime(it.b.start)+', '+it.b.name+', '+it.b.status},
           h('b',null,fmtTime(it.b.start)+' a '+fmtTime(it.b.start+it.b.dur)),h('span',null,it.b.name+' · '+it.b.lines.map(l=>l.name).join(', ')),stPill(it.b.status))
         :(ctx.adm?h('button',{type:'button',class:'li gap','aria-label':'Hueco libre de '+fmtTime(it.g[0])+' a '+fmtTime(it.g[1])+'. Crear cita',onclick:()=>openForm({proId:p.id,date,time:it.g[0]})},ic('plus',14),' Libre · '+fmtTime(it.g[0])+' a '+fmtTime(it.g[1]))
@@ -1271,28 +1423,34 @@ function calendarView(ctx){
   const dd=parseYmd(c.date), ws=weekStart(c.date), we=addDays(ws,6);
   const title=v==='dia'?dd.toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long',year:'numeric'}):v==='semana'?fmtShort(ws)+' – '+fmtShort(we)+' de '+parseYmd(we).getFullYear():dd.toLocaleDateString('es-CO',{month:'long',year:'numeric'});
   
-  const cap=t=>t.charAt(0).toUpperCase()+t.slice(1), title2=cap(title);
-  const tools=h('div',{class:'cal-tools'},
-    h('div',{class:'cal-nav'},h('button',{type:'button',class:'btn ghost sm','aria-label':(v==='mes'?'Mes':v==='dia'?'Día':'Semana')+' anterior',onclick:()=>move(-1)},ic('left',16)),
-      h('button',{type:'button',class:'btn ghost sm','aria-label':(v==='mes'?'Mes':v==='dia'?'Día':'Semana')+' siguiente',onclick:()=>move(1)},ic('right',16)),
-      h('button',{type:'button',class:'btn ghost sm',id:'cal-hoy',onclick:()=>{c.date=todayS();render();}},ic('calendar',16),'Hoy'),
-      h('input',{type:'date',class:'cal-date','aria-label':'Ir a la fecha',value:c.date,onchange:e=>{if(e.target.value){c.date=e.target.value;render();}}})),
-    h('div',{class:'chips',role:'group','aria-label':'Vista'},[['dia','Día'],['semana','Semana'],['mes','Mes']].map(([k,t])=>h('button',{type:'button',class:'chip','aria-pressed':v===k,onclick:()=>{c.view=k;render();}},t))),
-    ctx.adm?btn('Nueva cita','plus',()=>openForm({date:c.date<todayS()?todayS():c.date,proId:ctx.lock||(c.pro!=='all'?Number(c.pro):0)}),''):null);
+  const cap=t=>t.charAt(0).toUpperCase()+t.slice(1);
+  const shortT=dd.toLocaleDateString('es-CO',{weekday:'short',day:'numeric',month:'short'}).replace(/\./g,''), title2=cap(mob&&v==='dia'?shortT:title);
+  const nF=(c.svc!=='all'?1:0)+(c.st!=='all'?1:0)+((ctx.lock==null&&c.pro!=='all')?1:0);
+  const lbl=mob?'':'', vs=v==='mes'?'Mes':v==='dia'?'Día':'Semana';
+  const tools=h('div',{class:'cal-tools cal-bar'},
+    h('span',{class:'cal-title','aria-live':'polite'},title2),
+    h('div',{class:'cal-nav'},h('button',{type:'button',class:'btn ghost sm','aria-label':vs+' anterior',onclick:()=>move(-1)},ic('left',16)),
+      h('button',{type:'button',class:'btn ghost sm',id:'cal-hoy',onclick:()=>{c.date=todayS();render();}},'Hoy'),
+      h('button',{type:'button',class:'btn ghost sm','aria-label':vs+' siguiente',onclick:()=>move(1)},ic('right',16))),
+    h('div',{class:'seg2',role:'group','aria-label':'Vista'},[['dia','Día'],['semana','Semana'],['mes','Mes']].map(([k,t])=>h('button',{type:'button',class:'chip','aria-pressed':v===k,onclick:()=>{c.view=k;render();}},k==='semana'?[h('span',{class:'lg'},'Semana'),h('span',{class:'sh'},'Sem')]:t))),
+    h('button',{type:'button',class:'btn ghost sm tgl',id:'cal-fbtn','aria-expanded':!!c.fo,'aria-controls':'cal-fp',onclick:()=>{c.fo=!c.fo;render();}},'Filtros',nF?h('span',{class:'pillf','aria-label':nF+' filtro'+(nF===1?'':'s')+' activo'+(nF===1?'':'s')},nF):null),
+    h('button',{type:'button',class:'btn ghost sm tgl',id:'cal-lbtn','aria-expanded':!!c.lg,'aria-controls':'cal-lp',onclick:()=>{c.lg=!c.lg;render();}},'Leyenda'),
+    ctx.adm?h('button',{type:'button',class:'btn nueva',onclick:()=>openForm({date:c.date<todayS()?todayS():c.date,proId:ctx.lock||(c.pro!=='all'?Number(c.pro):0)})},ic('plus',16),'Nueva cita'):null);
   const fl=h('div',{class:'cal-filters'},
-    ctx.lock==null?sel('cf-pro','Profesional',c.pro,[['all','Todos'],...S.pros.map(p=>[p.id,p.name+(p.active?'':' (inactivo)')])],x=>{c.pro=x;}):null,
+    h('div',null,h('label',{for:'cf-date'},'Ir a la fecha'),h('input',{type:'date',class:'cal-date',id:'cf-date',value:c.date,onchange:e=>{if(e.target.value){c.date=e.target.value;render();}}})),
+    ctx.lock==null?sel('cf-pro','Profesional',c.pro,[['all','Todos'],...S.pros.map(p=>[p.id,p.name+(p.deleted?' (eliminado)':p.active?'':' (inactivo)')])],x=>{c.pro=x;}):null,
     sel('cf-svc','Servicio',c.svc,[['all','Todos'],...S.services.map(s=>[s.id,s.name])],x=>{c.svc=x;}),
     sel('cf-st','Estado',c.st,[['all','Todos'],...STAT.map(s=>[s,s])],x=>{c.st=x;}),
-    filtersOn(c)||(ctx.lock==null&&c.pro!=='all')?h('div',{class:'fx'},btn('Limpiar filtros','x',()=>{c.svc='all';c.st='all';if(ctx.lock==null)c.pro='all';render();},'ghost sm')):null);
-  const legend=h('div',{class:'legend','aria-label':'Leyenda'},STAT.map(s=>stPill(s)),h('span',null,h('i',{class:'sw sw-off'}),'Fuera de horario'),h('span',null,h('i',{class:'sw sw-blk'}),'Bloqueo'),h('span',null,h('i',{class:'sw sw-brk'}),'Descanso'),h('span',null,h('i',{class:'sw sw-abs'}),'Ausencia o vacaciones'),feat('buffers')?h('span',null,h('i',{class:'sw sw-buf'}),'Preparación / limpieza'):null,h('span',null,h('i',{class:'sw sw-now'}),'Hora actual'));
+    nF?h('div',{class:'fx'},btn('Limpiar filtros','x',()=>{c.svc='all';c.st='all';if(ctx.lock==null)c.pro='all';render();},'ghost sm')):null);
+  const legend=h('div',{class:'legend',id:'cal-lp','aria-label':'Leyenda'},STAT.map(s=>stPill(s)),h('span',null,h('i',{class:'sw sw-off'}),'Fuera de horario'),h('span',null,h('i',{class:'sw sw-blk'}),'Bloqueo'),h('span',null,h('i',{class:'sw sw-brk'}),'Descanso'),h('span',null,h('i',{class:'sw sw-abs'}),'Ausencia o vacaciones'),feat('buffers')?h('span',null,h('i',{class:'sw sw-buf'}),'Preparación / limpieza'):null,h('span',null,h('i',{class:'sw sw-now'}),'Hora actual'));
+  const panel=(c.fo||c.lg)?h('div',{class:'cal-panel'},c.fo?h('div',{id:'cal-fp'},fl):null,c.fo&&c.lg?h('div',{style:'height:10px'}):null,c.lg?legend:null):null;
   let body;
   if(v==='dia'){ body=mob?[dayList(ctx,c.date)]:(()=>{const cols=dayColumns(ctx,c.date);return cols.length?timeGrid(ctx,cols,ctx.key+'|dia'):h('div',{class:'card mute'},'No hay profesionales para mostrar.');})(); }
   else if(v==='semana'){
     if(mob){const strip=h('div',{class:'days wstrip'},Array.from({length:7},(_,i)=>{const d=addDays(ws,i),x=parseYmd(d),n=S.bookings.filter(b=>b.date===d&&ACTIVE(b)&&calPred(c)(b)).length;return h('button',{type:'button',class:'day','aria-pressed':d===c.date,'aria-label':fmtDate(d)+', '+n+' citas',onclick:()=>{c.date=d;render();}},h('small',null,x.toLocaleDateString('es-CO',{weekday:'short'}).replace('.','')),h('b',null,x.getDate()),h('small',null,n+' cita'+(n===1?'':'s')));}));body=[strip,dayList(ctx,c.date)];}
     else body=c.pro==='all'?weekMatrix(ctx):timeGrid(ctx,weekColumns(ctx),ctx.key+'|sem');
   } else { const m=monthView(ctx,mob); body=mob?[m,h('h3',{style:'margin:12px 0 6px'},fmtDate(c.date)),dayList(ctx,c.date)]:m; }
-  const more=mob?h('details',{class:'cal-more',open:!!c.more,ontoggle:e=>{c.more=e.target.open;}},h('summary',null,'Filtros y leyenda'+((filtersOn(c)||(ctx.lock==null&&c.pro!=='all'))?' (activos)':'')),fl,legend):[fl,legend];
-  return h('div',null,h('div',{class:'card cal-head'},h('div',{class:'cal-ttl'},h('h2',null,ic('calendar',18),ctx.title),h('span',{class:'cal-title','aria-live':'polite'},title2)),tools,more),
+  return h('div',null,h('div',{class:'card cal-head'},h('h2',{class:'vh'},ctx.title),tools,panel),
     issueBanner(ctx),h('div',{class:'cal-body'},body));
 }
 function adminAgenda(){
@@ -1382,14 +1540,15 @@ function adminHome(){
   const checklist=steps.some(x=>!x.ok)?h('div',{class:'card'},h('h2',null,ic('list',18),'Primeros pasos'),
     h('p',{class:'mute'},'Completa estos pasos para dejar listo tu negocio.'),
     h('ul',{class:'steps-list'},steps.map(x=>h('li',null,h('span',{class:'dot'+(x.ok?' ok':'')},x.ok?ic('check',14):null),h('div',null,h('b',null,x.t),h('div',{class:'mute'},x.d)),x.ok?null:btn(x.cta,'right',()=>{S.tabs.admin=x.tab;render(true);},'ghost sm')))),
-    h('div',{class:'notice'},'Enlace público de reservas: estará disponible cuando exista servidor (cada negocio tendrá su propia dirección). En este prototipo, usa el perfil "Cliente" para ver la página de reservas.'),
+    CLOUD_ON?null:h('div',{class:'notice'},'Enlace público de reservas: disponible al conectar el servidor (ver GUIA-INSTALACION.md). En modo local, usa el perfil "Cliente" para ver la página de reservas.'),
     h('div',{class:'acts'},btn(hasDemo()?'Datos de demostración ya cargados':'Cargar datos de demostración','plus',loadDemoDlg,'ghost sm',hasDemo()))):null;
   const ready=S.services.some(x=>x.on)&&S.pros.some(p=>p.active);
   const quick=h('div',{class:'card'},h('h2',null,ic('play',18),'Accesos rápidos'),h('div',{class:'acts'},
     btn('Nueva cita','plus',()=>{S.tabs.admin='agenda';openForm({date:S.cal.adm.date<todayS()?todayS():S.cal.adm.date});window.scrollTo(0,0);},'sm',!ready),
     btn('Gestionar servicios','list',()=>{S.tabs.admin='servicios';render(true);},'ghost sm'),
     btn('Gestionar equipo','user',()=>{S.tabs.admin='equipo';render(true);},'ghost sm')),
-    ready?null:h('div',{class:'mute',style:'margin-top:8px'},'Crear citas requiere al menos un servicio y un profesional activos.'));
+    ready?null:h('div',{class:'mute',style:'margin-top:8px'},'Crear citas requiere al menos un servicio y un profesional activos.'),
+    CLOUD_ON&&C.isAdmin?pubLinkEl():null);
   const today=S.bookings.filter(b=>b.date===t&&ACTIVE(b));
   let cap=0, booked=0; S.pros.forEach(p=>{const m=dayModel(p,t);cap+=m.cap;booked+=m.booked;}); const occ=cap?Math.round(booked/cap*100)+'%':'—';
   const done=S.bookings.filter(b=>b.status==='completada');
@@ -1409,28 +1568,66 @@ function adminHome(){
 function adminClients(){
   const C=S.adm; let all=clientsList().sort((a,b)=>a.name.localeCompare(b.name));
   if(!all.length&&!C.cq) return emptyState('users','Aún no hay clientes','Los clientes aparecen aquí cuando reservan en línea o cuando creas una cita desde la Agenda.');
-  const q=C.cq.toLowerCase(); if(q) all=all.filter(c=>c.name.toLowerCase().includes(q)||c.phone.includes(q));
-  const sel=C.cSel?clientsList().find(c=>c.phone===C.cSel):null;
-  let ficha=null;
-  if(sel){
-    const hist=S.bookings.filter(b=>b.phone===sel.phone).sort((a,b)=>a.date<b.date?1:-1).slice(0,12), m=S.meta[sel.phone]||{};
-    ficha=h('div',{class:'card'},h('h2',null,ic('user',18),sel.name),h('p',{class:'mute'},ic('phone',13),' ',sel.phone,sel.email?' · '+sel.email:'',' · '+sel.n+' citas · '+sel.noshow+' no asistencias'),
-      isBlocked(sel.phone)?h('span',{class:'pill red'},ic('ban',12),'Bloqueado para reservar en línea'):null,
-      h('label',{for:'c-note'},'Nota interna'),h('textarea',{id:'c-note',rows:'2',maxlength:'200',onchange:e=>{S.meta[sel.phone]=Object.assign(S.meta[sel.phone]||{},{note:e.target.value.slice(0,200)});audit('Administrador','Editó la nota de un cliente');}},m.note||''),
-      h('div',{class:'acts'},
-        btn(isBlocked(sel.phone)?'Desbloquear':'Bloquear por abuso','ban',()=>{S.meta[sel.phone]=Object.assign(S.meta[sel.phone]||{},{blocked:!isBlocked(sel.phone)});audit('Administrador',(isBlocked(sel.phone)?'Bloqueó':'Desbloqueó')+' al cliente '+sel.name);render();},'dghost sm'),
-        btn('Eliminar datos (Ley 1581)','trash',()=>askPin('Se borrarán los datos personales de '+sel.name+' y se cancelarán sus citas futuras.',()=>{eraseClient(sel.phone);audit('Administrador','Eliminó los datos de un cliente');C.cSel=null;}),'dghost sm'),
-        btn('Cerrar ficha','x',()=>{C.cSel=null;render();},'ghost sm')),
-      h('h3',{style:'margin-top:12px'},'Historial'),hist.map(b=>h('div',{class:'mute',style:'padding:3px 0'},fmtShort(b.date)+' · '+b.lines.map(l=>l.name).join(', ')+' · '+money(b.total)+' · '+b.status)));
-  }
+  const q=(C.cq||'').toLowerCase(); if(q) all=all.filter(c=>c.name.toLowerCase().includes(q)||c.phone.includes(q));
+  const PG=25, pages=Math.max(1,Math.ceil(all.length/PG)); C.pg=Math.min(Math.max(C.pg||0,0),pages-1);
+  const from=all.length?C.pg*PG+1:0, to=Math.min(all.length,(C.pg+1)*PG), part=all.slice(C.pg*PG,C.pg*PG+PG);
+  const open=c=>{S.modal={kind:'client',phone:c.phone};render();};
+  const list=!part.length?h('p',{class:'mute'},'Ningún cliente coincide con la búsqueda.')
+    :MOB()?h('div',{class:'cl-list'},part.map(c=>h('button',{type:'button',class:'cl-item','aria-label':'Ver a '+c.name,onclick:()=>open(c)},h('b',null,c.name),h('span',{class:'mute'},c.phone+' · '+c.n+' cita'+(c.n===1?'':'s')+(c.last?' · última '+fmtShort(c.last):'')+(c.noshow?' · '+c.noshow+' no asistió':'')))))
+    :h('div',{class:'scroll'},h('table',{class:'cl'},h('thead',null,h('tr',null,['Cliente','Celular','Citas','Última cita','No asistió',''].map(x=>h('th',null,x)))),
+      h('tbody',{id:'cl-body'},part.map(c=>h('tr',null,h('td',null,c.name),h('td',null,c.phone),h('td',null,c.n),h('td',null,c.last?fmtShort(c.last):'-'),h('td',null,c.noshow),h('td',null,btn('Ver','eye',()=>open(c),'ghost sm')))))));
   return h('div',null,h('div',{class:'card'},h('h2',null,ic('users',18),'Clientes'),
-    h('div',{class:'row'},h('input',{type:'search',placeholder:'Buscar por nombre o celular','aria-label':'Buscar cliente',maxlength:'40',value:C.cq,oninput:e=>{C.cq=e.target.value;const t=$('#cl-body');if(t)drawBody();}}),
-      h('div',null,btn('Exportar CSV','download',()=>askPin('La exportación contiene datos personales y queda registrada.',()=>{downloadCsv();audit('Administrador','Exportó la lista de clientes (CSV)');}),'ghost'))),
-    h('div',{class:'scroll'},h('table',null,h('thead',null,h('tr',null,['Cliente','Celular','Citas','Última','No asistió','Estado',''].map(x=>h('th',null,x)))),h('tbody',{id:'cl-body'},bodyRows())))),ficha);
-  function bodyRows(){return all.slice(0,60).map(c=>h('tr',null,h('td',null,c.name),h('td',null,c.phone),h('td',null,c.n),h('td',null,c.last?fmtShort(c.last):'-'),h('td',null,c.noshow),
-    h('td',null,isBlocked(c.phone)?h('span',{class:'pill red'},'Bloqueado'):'Activo'),h('td',null,btn('Ver','eye',()=>{C.cSel=c.phone;render();},'ghost sm'))));}
-  function drawBody(){let a=clientsList().sort((x,y)=>x.name.localeCompare(y.name));const qq=C.cq.toLowerCase();if(qq)a=a.filter(c=>c.name.toLowerCase().includes(qq)||c.phone.includes(qq));all=a;$('#cl-body').replaceChildren(...bodyRows());}
+    h('div',{class:'row cl-tools'},h('input',{id:'cl-q',type:'search',placeholder:'Buscar por nombre o celular','aria-label':'Buscar cliente',maxlength:'40',value:C.cq||'',oninput:e=>{C.cq=e.target.value;C.pg=0;render();}}),
+      h('div',null,btn('Exportar Excel','download',()=>askPin('La exportación contiene datos personales y queda registrada.',()=>{exportClients();audit('Administrador','Exportó la lista de clientes (Excel)');}),'ghost'))),
+    h('div',{class:'cl-count mute','aria-live':'polite'},all.length?'Mostrando '+from+'–'+to+' de '+all.length+' cliente'+(all.length===1?'':'s')+(q?' (filtrados)':''):''),
+    list,
+    pages>1?h('div',{class:'pager'},btn('‹ Anterior',null,()=>{C.pg--;render();},'ghost sm',C.pg<=0),h('span',{class:'mute'},'Página '+(C.pg+1)+' de '+pages),btn('Siguiente ›',null,()=>{C.pg++;render();},'ghost sm',C.pg>=pages-1)):null));
 }
+function clientModal(m){
+  const sel=clientsList().find(c=>c.phone===m.phone); if(!sel){S.modal=null;return null;}
+  const hist=S.bookings.filter(b=>b.phone===sel.phone).sort((a,b)=>a.date<b.date?1:-1).slice(0,12), meta=S.meta[sel.phone]||{};
+  return h('div',{class:'overlay',role:'dialog','aria-modal':'true','aria-label':'Ficha de '+sel.name},h('div',{class:'card wide'},
+    h('h2',null,ic('user',18),sel.name),h('p',{class:'mute'},ic('phone',13),' ',sel.phone,sel.email?' · '+sel.email:'',' · '+sel.n+' citas · '+sel.noshow+' no asistencias'),
+    h('label',{for:'c-note'},'Nota interna'),h('textarea',{id:'c-note',rows:'2',maxlength:'200',onchange:e=>{S.meta[sel.phone]=Object.assign(S.meta[sel.phone]||{},{note:e.target.value.slice(0,200)});audit('Administrador','Editó la nota de un cliente');}},meta.note||''),
+    h('h3',{style:'margin-top:12px'},'Historial (últimas 12 citas)'),hist.map(b=>h('div',{class:'mute',style:'padding:3px 0'},fmtShort(b.date)+' · '+b.lines.map(l=>l.name).join(', ')+' · '+money(b.total)+' · '+b.status)),
+    h('div',{class:'acts'},btn('Cerrar','x',()=>{S.modal=null;render();},'ghost'))));
+}
+/* ---------- Excel (.xlsx real, sin librerías): paquete ZIP sin compresión + XML ---------- */
+const XLSX_MIME='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+function crc32(u8){let t=crc32.t;if(!t){t=crc32.t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}}let r=0xFFFFFFFF;for(let i=0;i<u8.length;i++)r=t[(r^u8[i])&255]^(r>>>8);return(r^0xFFFFFFFF)>>>0;}
+function zipStore(files){
+  const enc=new TextEncoder(), out=[], cd=[]; let off=0;
+  for(const f of files){
+    const nm=enc.encode(f.name), d=enc.encode(f.text), crc=crc32(d), sz=d.length;
+    const lh=new DataView(new ArrayBuffer(30)); lh.setUint32(0,0x04034b50,true);lh.setUint16(4,20,true);lh.setUint16(6,0x0800,true);lh.setUint16(8,0,true);lh.setUint16(10,0,true);lh.setUint16(12,0x21,true);lh.setUint32(14,crc,true);lh.setUint32(18,sz,true);lh.setUint32(22,sz,true);lh.setUint16(26,nm.length,true);lh.setUint16(28,0,true);
+    out.push(new Uint8Array(lh.buffer),nm,d);
+    const ch=new DataView(new ArrayBuffer(46)); ch.setUint32(0,0x02014b50,true);ch.setUint16(4,20,true);ch.setUint16(6,20,true);ch.setUint16(8,0x0800,true);ch.setUint16(10,0,true);ch.setUint16(12,0,true);ch.setUint16(14,0x21,true);ch.setUint32(16,crc,true);ch.setUint32(20,sz,true);ch.setUint32(24,sz,true);ch.setUint16(28,nm.length,true);ch.setUint32(42,off,true);
+    cd.push(new Uint8Array(ch.buffer),nm); off+=30+nm.length+sz;
+  }
+  const cdSize=cd.reduce((a,x)=>a+x.length,0), e=new DataView(new ArrayBuffer(22));
+  e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cdSize,true);e.setUint32(16,off,true);
+  return new Blob([...out,...cd,new Uint8Array(e.buffer)],{type:XLSX_MIME});
+}
+const xmlEsc=s=>String(s==null?'':s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F￾￿]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function xlsxBlob(sheet,rows,widths){
+  const NS='xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"', HD='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  let sd=''; rows.forEach((r,ri)=>{sd+='<row r="'+(ri+1)+'">'+r.map((v,ci)=>{const ref=String.fromCharCode(65+ci)+(ri+1);
+    return typeof v==='number'&&isFinite(v)?'<c r="'+ref+'"><v>'+v+'</v></c>':'<c r="'+ref+'" t="inlineStr"'+(ri===0?' s="1"':'')+'><is><t xml:space="preserve">'+xmlEsc(v)+'</t></is></c>';}).join('')+'</row>';});
+  const ws=HD+'<worksheet '+NS+'><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols>'+widths.map((w,i)=>'<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>').join('')+'</cols><sheetData>'+sd+'</sheetData></worksheet>';
+  return zipStore([
+    {name:'[Content_Types].xml',text:HD+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'},
+    {name:'_rels/.rels',text:HD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'},
+    {name:'xl/workbook.xml',text:HD+'<workbook '+NS+' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="'+xmlEsc(sheet)+'" sheetId="1" r:id="rId1"/></sheets></workbook>'},
+    {name:'xl/_rels/workbook.xml.rels',text:HD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'},
+    {name:'xl/styles.xml',text:HD+'<styleSheet '+NS+'><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>'},
+    {name:'xl/worksheets/sheet1.xml',text:ws}]);
+}
+function clientRows(){return [['Nombre','Celular','Correo','Citas','Última cita','No asistió']].concat(clientsList().sort((a,b)=>a.name.localeCompare(b.name)).map(c=>[c.name,c.phone,c.email||'',c.n,c.last||'',c.noshow]));}
+function exportClients(){
+  const blob=xlsxBlob('Clientes',clientRows(),[28,14,28,8,14,12]);
+  downloadBlob(blob,'clientes.xlsx');
+}
+
 /* ================= EQUIPO: perfil, horario por dia, descansos, ausencias y vacaciones (Fase 3) ================= */
 const clone=x=>JSON.parse(JSON.stringify(x));
 function schedDraft(p){
@@ -1471,20 +1668,25 @@ function profileSection(p){
     if(v.length>24) return say('Cada especialidad admite hasta 24 caracteres.'); if((p.specialties||[]).length>=6) return say('Máximo 6 especialidades.');
     if((p.specialties||[]).some(x=>x.toLowerCase()===v.toLowerCase())) return say('Esa especialidad ya está.');
     p.specialties=[...(p.specialties||[]),v]; upd(); tm.msg[p.id]=''; render();};
+  const fld=(id,label,val,ok,o)=>h('div',null,h('label',{for:id},label),h('input',Object.assign({id,value:val,onchange:e=>ok(e.target.value.trim(),e.target)},o||{})));
+  const dup=(k,v)=>S.pros.some(x=>x.id!==p.id&&!x.deleted&&v&&String(x[k]||'').toLowerCase()===String(v).toLowerCase());
   return h('div',{class:'sec-body'},
-    h('div',{class:'row'},p.owner?null:h('div',null,h('label',{for:'pf-name-'+p.id},'Nombre'),h('input',{id:'pf-name-'+p.id,maxlength:'40',value:p.name,onchange:e=>{const v=e.target.value.trim();if(v.length>=2){const old=p.name;p.name=v;audit('Administrador','Renombró a '+old+' como '+v+' (las citas pasadas conservan el nombre original)');render();}else e.target.value=p.name;}})),
-      h('div',null,h('label',{for:'pf-title-'+p.id},'Cargo o título'),h('input',{id:'pf-title-'+p.id,maxlength:'40',placeholder:'Ej.: Barbero senior',value:p.title||'',onchange:e=>{p.title=e.target.value.trim();upd();render();}}))),
-    h('label',{for:'pf-spec-'+p.id},'Especialidades (máx. 6)'),
+    h('div',{class:'grid2'},
+      fld('pf-name-'+p.id,'Nombre',p.name,(v,el)=>{if(v.length>=2){const old=p.name;p.name=v;audit('Administrador','Renombró a '+old+' como '+v+' (las citas pasadas conservan el nombre original)');render();}else el.value=p.name;},{maxlength:'40'}),
+      fld('pf-title-'+p.id,'Función',p.title||'',(v,el)=>{if(v.length>=2){p.title=v;upd();render();}else{el.value=p.title||'';say('La función no puede quedar vacía.');}},{maxlength:'40',placeholder:'Ej.: Barbero, colorista'}),
+      fld('pf-phone-'+p.id,'Contacto (celular)',p.phone||'',(v,el)=>{const d=v.replace(/\D/g,'');if(!PHONE_RE.test(d)){el.value=p.phone||'';say('El contacto debe ser un celular de 10 dígitos que empiece por 3.');return;}if(dup('phone',d)){el.value=p.phone||'';say('Ya hay otro empleado con ese contacto.');return;}p.phone=d;upd();render();},{type:'tel',inputmode:'numeric',maxlength:'13',placeholder:'3001234567'}),
+      fld('pf-doc-'+p.id,'Documento (opcional)',p.doc||'',(v,el)=>{if(v&&!DOC_RE.test(v)){el.value=p.doc||'';say('El documento admite de 5 a 20 letras, números, punto o guion.');return;}if(dup('doc',v)){el.value=p.doc||'';say('Ya hay otro empleado con ese documento.');return;}p.doc=v;upd();render();},{maxlength:'20',autocomplete:'off'})),
+    h('div',{class:'mute'},'El documento solo lo ve el administrador. Es un dato personal: en este prototipo solo vive en la memoria del navegador y no está protegido como exigiría producción (Ley 1581 de 2012).'),
+    h('label',{for:'pf-spec-'+p.id},'Especialidades (opcional, máx. 6)'),
     h('div',{class:'tags'},(p.specialties||[]).map(s=>h('span',{class:'tag'},s,h('button',{type:'button','aria-label':'Quitar especialidad '+s,onclick:()=>{p.specialties=p.specialties.filter(x=>x!==s);upd();render();}},ic('x',12))))),
     h('div',{class:'row'},h('input',{id:'pf-spec-'+p.id,maxlength:'24',list:'dl-spec',placeholder:'Ej.: Fade, Color, Masaje deportivo',onkeydown:e=>{if(e.key==='Enter'){e.preventDefault();specIn();}}}),btn('Agregar especialidad','plus',specIn,'ghost sm')),
     h('datalist',{id:'dl-spec'},[...new Set(S.services.map(s=>s.cat))].map(c=>h('option',{value:c}))),
-    h('label',{for:'pf-bio-'+p.id},'Presentación breve (máx. 200 caracteres)'),h('textarea',{id:'pf-bio-'+p.id,rows:'2',maxlength:'200',onchange:e=>{p.bio=e.target.value.trim().slice(0,200);upd();render();}},p.bio||''),
+    h('label',{for:'pf-bio-'+p.id},'Descripción (opcional, máx. 200 caracteres)'),h('textarea',{id:'pf-bio-'+p.id,rows:'2',maxlength:'200',onchange:e=>{p.bio=e.target.value.trim().slice(0,200);upd();render();}},p.bio||''),
     h('label',null,'Color en el calendario'),
     h('div',{class:'swatches',role:'group','aria-label':'Color en el calendario'},PCOL.map((c,i)=>h('button',{type:'button',class:'swatch','aria-label':'Color '+(i+1),'aria-pressed':proColor(p.id)===c,style:'background:'+c,onclick:()=>{p.color=i;upd();render();}}))),
-    h('label',{for:'pf-photo-'+p.id},'Fotografía (opcional)'),
-    h('div',{class:'row'},h('input',{id:'pf-photo-'+p.id,type:'file',accept:'image/png,image/jpeg,image/webp',onchange:e=>{const f=e.target.files[0];processPhoto(f,(err,url)=>{if(err){say(err);return;}p.photo=url;audit('Administrador','Foto de '+p.name+' actualizada');tm.msg[p.id]='Foto actualizada.';render();});}}),
-      p.photo?btn('Quitar foto','trash',()=>{p.photo='';audit('Administrador','Foto de '+p.name+' eliminada');render();},'dghost sm'):null),
-    h('div',{class:'mute'},'PNG, JPG o WebP. Se recorta y reduce a 256 px (menos de 150 KB) en este navegador. En producción las fotos necesitan almacenamiento seguro y autorización de la persona.'));
+    h('label',{for:'pf-photo-'+p.id},'Fotografía (cambiar)'),
+    h('div',{class:'row'},h('input',{id:'pf-photo-'+p.id,type:'file',accept:'image/png,image/jpeg,image/webp',onchange:e=>{const f=e.target.files[0];processPhoto(f,(err,url)=>{if(err){say(err);return;}p.photo=url;audit('Administrador','Foto de '+p.name+' actualizada');tm.msg[p.id]='Foto actualizada.';render();});}})),
+    h('div',{class:'mute'},'PNG, JPG o WebP. Se recorta y reduce a 256 px en este navegador. En producción las fotos necesitan almacenamiento seguro y autorización de la persona.'));
 }
 function scheduleSection(p){
   const d=schedDraft(p), id=p.id, up=()=>render();
@@ -1524,34 +1726,159 @@ function absenceSection(p){
     list.length?list.map(k=>{const sp=blkSpan(k);return h('div',{class:'appt x abs-item','data-type':sp.type},h('div',null,h('b',null,KIND_LBL[sp.type]),' · ',sp.to!==sp.from?fmtShort(sp.from)+' al '+fmtShort(sp.to):fmtShort(sp.from),sp.all?' · todo el día':' · '+fmtTime(k.start)+' a '+fmtTime(k.end),k.reason?h('div',{class:'mute'},k.reason):null),
       btn('Quitar','trash',()=>{S.blocks=S.blocks.filter(z=>z!==k);audit('Administrador','Quitó '+KIND_LBL[sp.type].toLowerCase()+' de '+p.name+' ('+fmtShort(sp.from)+')');render();},'dghost sm'));}):h('p',{class:'mute'},'No hay ausencias ni bloqueos próximos.'));
 }
-function proCard(p){
-  const tm=S.tm, key=(k)=>p.id+':'+k;
-  const sec=(k,title,icon,build)=>{const open=!!tm.open[key(k)];return h('details',{class:'sec',open,'data-sec':k,ontoggle:e=>{const was=!!tm.open[key(k)];tm.open[key(k)]=e.target.open;if(e.target.open&&!was)render();}},h('summary',null,ic(icon,15),title),open?build():null);};
-  const nIss=issuesFor(p.id).length;
-  const sv=S.services.length?h('div',{class:'row'},S.services.map(s=>h('label',{class:'chk'},h('input',{type:'checkbox',checked:p.serviceIds.includes(s.id),onchange:e=>{p.serviceIds=e.target.checked?[...p.serviceIds,s.id]:p.serviceIds.filter(x=>x!==s.id);audit('Administrador','Servicios de '+p.name+' actualizados');render();}}),s.name))):h('p',{class:'mute'},'Aún no hay servicios.');
-  return h('div',{class:'card pro-card','data-pro':p.id},
-    h('div',{class:'pro-head'},avatar(p,48),h('div',{class:'pro-id'},h('h3',null,p.owner?'Administrador (tú)':p.name),h('div',{class:'mute'},p.title||(p.owner?'Atiende como '+V.proL():'Sin cargo definido')),
-        (p.specialties||[]).length?h('div',{class:'tags'},p.specialties.map(s=>h('span',{class:'tag'},s))):null,
-        nIss?h('div',{class:'err',role:'status'},ic('alert',14),nIss+' cita'+(nIss===1?'':'s')+' con alerta por reprogramar'):null),
-      p.owner?null:h('label',{class:'chk',style:'margin:0'},h('input',{type:'checkbox',checked:p.active,onchange:e=>{p.active=e.target.checked;const n=S.bookings.filter(b=>b.proId===p.id&&b.date>=todayS()&&(b.status==='confirmada'||b.status==='pendiente')).length;audit('Administrador',p.name+(p.active?' activado':' desactivado')+(!p.active&&n?' (tiene '+n+' citas futuras por reasignar)':''));render();}}),'Activo')),
-    tm.msg[p.id]?h('div',{class:'okt',role:'status'},ic('check',14),tm.msg[p.id]):null,
-    sec('perfil','Perfil','user',()=>profileSection(p)),
-    sec('servicios','Servicios que atiende','scissors',()=>sv),
-    sec('horario','Horario, descansos y días','clock',()=>scheduleSection(p)),
-    sec('ausencias','Ausencias, vacaciones y días libres','calendar',()=>absenceSection(p)));
+/* ================= v6.2 EQUIPO: tarjetas, crear empleado, perfil con pestañas, baja con reagendado ================= */
+const DOC_RE=/^[0-9A-Za-z.\-]{5,20}$/;
+const byDT=(a,b)=>(a.date+String(a.start).padStart(4,'0'))<(b.date+String(b.start).padStart(4,'0'))?-1:1;
+const futureOf=p=>S.bookings.filter(b=>b.proId===p.id&&OPEN(b)&&(b.date>todayS()||(b.date===todayS()&&b.start+b.dur>nowMin()))).sort(byDT);
+const proPill=p=>h('span',{class:'tpill '+(p.active?'on':'off')},p.active?'Activo':'Desactivado');
+function proCardSm(p){
+  const iss=issuesFor(p.id).length, ab=dayModel(p,todayS()).absent;
+  return h('div',{class:'card tcard'+(p.active?'':' inactive'),'data-pro':p.id},
+    h('div',{class:'tc-top'},avatar(p,56),h('div',{class:'tc-id'},h('h3',null,p.name),h('div',{class:'mute'},p.title||'Sin función definida'))),
+    (p.specialties||[]).length?h('div',{class:'tags'},p.specialties.slice(0,3).map(s=>h('span',{class:'tag'},s))):null,
+    h('div',{class:'mute tc-h'},ic('clock',13),schedSummary(schedAt(p,todayS()))),
+    h('div',{class:'tc-st'},proPill(p),ab?h('span',{class:'tpill abs'},'Ausente hoy'):null,iss?h('span',{class:'tpill warn'},ic('alert',12),iss+' con alerta'):null),
+    h('div',{class:'acts'},btn('Ver perfil','user',()=>openProfile(p.id,'datos'),'ghost sm')));
 }
 function adminTeam(){
-  const T=S.adm;
+  const live=S.pros.filter(p=>!p.deleted), arch=S.pros.filter(p=>p.deleted);
   return h('div',null,
-    h('div',{class:'card'},h('h2',null,ic('scissors',18),'El administrador también atiende'),
-      h('label',{class:'chk'},h('input',{type:'checkbox',checked:S.settings.adminAttends,onchange:e=>{S.settings.adminAttends=e.target.checked;{const o=ownerPro(e.target.checked);if(o)o.active=e.target.checked;}audit('Administrador','Doble rol '+(e.target.checked?'activado':'desactivado'));render();}}),'Mostrar mi agenda y recibir reservas como '+V.proL())),
-    S.settings.adminAttends&&S.pros.some(p=>p.owner)?S.pros.filter(p=>p.owner).map(proCard):null,
-    S.pros.filter(p=>!p.owner).length?null:emptyState('user','Aún no tienes '+V.pros().toLowerCase(),'Agrega al primero con el formulario de abajo. Después podrás asignarle servicios, perfil, horario y ausencias.'),
-    S.pros.filter(p=>!p.owner).map(proCard),
-    h('div',{class:'card'},h('h3',null,'Agregar empleado'),h('div',{class:'row'},h('input',{id:'ne',maxlength:'40',placeholder:'Nombre','aria-label':'Nombre del nuevo empleado'}),btn('Agregar','plus',()=>{
-      const n=$('#ne').value.trim(); if(n.length<2){T.newEmp='Escribe un nombre.';render();return;}
-      newPro(n);audit('Administrador','Agregó al empleado '+n);T.newEmp='';render();})),errLine(T.newEmp),
-      h('p',{class:'mute'},'Los empleados no se borran, solo se desactivan, para conservar el historial.')));
+    h('div',{class:'card'},h('div',{class:'hd2'},h('h2',null,ic('user',18),'Equipo'),btn('Crear empleado','plus',openCreate))),
+    live.length?h('div',{class:'tgrid'},live.map(proCardSm)):emptyState('user','Aún no tienes empleados','Pulsa "Crear empleado": pedirá nombre, contacto, foto, función y horario. Después podrás asignarle servicios y registrar ausencias.',btn('Crear empleado','plus',openCreate)),
+    arch.length?h('details',{class:'card arch'},h('summary',null,'Empleados eliminados ('+arch.length+')'),h('p',{class:'mute'},'Su historial se conserva: las citas, los reportes y el registro siguen mostrando su nombre.'),
+      arch.map(p=>h('div',{class:'arch-row'},h('span',null,h('b',null,p.name),h('span',{class:'mute'},' · '+(p.title||'')+(p.delAt?' · eliminado el '+fmtShort(p.delAt):''))),
+        btn('Restaurar','repeat',()=>{p.deleted=false;p.delAt='';p.active=false;audit('Administrador','Restauró a '+p.name+' (queda desactivado)');S.tm.msg[p.id]='Restaurado. Está desactivado: actívalo cuando quieras.';render();},'ghost sm')))):null);
+}
+/* ---------- crear ---------- */
+function newCr(){const d={};DORD.forEach(i=>{d[i]=i>=1&&i<=6?[540,1080]:null;});return{name:'',doc:'',phone:'',title:'',photo:'',bio:'',specs:'',days:d,err:''};}
+function openCreate(){S.tm.cr=S.tm.cr||newCr();S.modal={kind:'proCreate',opened:false};render();}
+function submitCreate(){
+  const c=S.tm.cr, fail=t=>{c.err=t;render();};
+  const name=c.name.trim().replace(/\s+/g,' '), title=c.title.trim().replace(/\s+/g,' '), phone=c.phone.replace(/\D/g,''), doc=c.doc.trim();
+  if(name.length<2) return fail('Escribe el nombre completo.');
+  if(!PHONE_RE.test(phone)) return fail('El contacto debe ser un celular de 10 dígitos que empiece por 3.');
+  if(title.length<2) return fail('Escribe la función (por ejemplo: barbero, colorista).');
+  if(!c.photo) return fail('Sube una foto del empleado.');
+  if(doc&&!DOC_RE.test(doc)) return fail('El documento admite de 5 a 20 letras, números, punto o guion.');
+  if(S.pros.some(p=>!p.deleted&&p.phone===phone)) return fail('Ya hay un empleado con ese contacto.');
+  if(doc&&S.pros.some(p=>!p.deleted&&String(p.doc||'').toLowerCase()===doc.toLowerCase())) return fail('Ya hay un empleado con ese documento.');
+  const days={}; let any=false;
+  for(let i=0;i<7;i++){const w=c.days[i]; if(w){if(!(w[1]>w[0])) return fail('La hora final debe ser posterior a la inicial ('+DN[i]+').'); days[i]=[w[0],w[1]]; any=true;} else days[i]=null;}
+  if(!any) return fail('Elige al menos un día de trabajo.');
+  const specs=c.specs.split(',').map(x=>x.trim().replace(/\s+/g,' ')).filter(Boolean);
+  if(specs.length>6) return fail('Máximo 6 especialidades.'); if(specs.some(x=>x.length>24)) return fail('Cada especialidad admite hasta 24 caracteres.');
+  const wk=DORD.filter(i=>days[i]), lo=Math.min(...wk.map(i=>days[i][0])), hi=Math.max(...wk.map(i=>days[i][1]));
+  const p=newPro(name,{title,phone,doc,photo:c.photo,bio:c.bio.trim().slice(0,200),specialties:[...new Set(specs)],sv:[{since:'',days,breaks:[]}],days:wk,from:Math.floor(lo/60),to:Math.ceil(hi/60)});
+  audit('Administrador','Creó al empleado '+p.name+' ('+p.title+')');
+  S.tm.cr=null; S.modal=null; toast('Empleado creado: '+p.name+(CLOUD_ON?'. Para darle acceso: su perfil → Estado → Generar código de invitación.':'. PIN de demostración: 1111.'));
+}
+function createModal(){
+  const c=S.tm.cr, f=(id,key,label,req,o)=>h('div',null,h('label',{for:id},label,req?h('span',{class:'req','aria-hidden':'true'},' *'):null),h('input',Object.assign({id,value:c[key],oninput:e=>{c[key]=e.target.value;}},o||{})));
+  const rows=DORD.map(i=>{const w=c.days[i];return h('div',{class:'dayrow'},
+    h('label',{class:'chk'},h('input',{type:'checkbox',id:'cr-d'+i+'-on',checked:!!w,onchange:e=>{c.days[i]=e.target.checked?[540,1080]:null;render();}}),DN[i]),
+    w?[h('select',{id:'cr-d'+i+'-f','aria-label':'Entrada '+DN[i],onchange:e=>{w[0]=Number(e.target.value);}},timeOpts(w[0])),h('span',null,'a'),h('select',{id:'cr-d'+i+'-t','aria-label':'Salida '+DN[i],onchange:e=>{w[1]=Number(e.target.value);}},timeOpts(w[1]))]:h('span',{class:'mute'},'No trabaja'));});
+  return h('div',{class:'overlay',role:'dialog','aria-modal':'true','aria-label':'Crear empleado'},h('div',{class:'card pm'},
+    h('div',{class:'pm-hd'},h('h2',{style:'margin:0'},ic('plus',18),'Crear empleado'),btn('Cerrar','x',()=>{S.modal=null;render();},'ghost sm')),
+    h('p',{class:'mute'},'Los campos con * son obligatorios. Si cierras esta ventana, lo escrito se conserva hasta que crees al empleado o lo canceles.'),
+    h('div',{class:'cr-photo'},avatar({photo:c.photo,name:c.name||'?',id:0},72),h('div',null,h('label',{for:'cr-photo'},'Foto',h('span',{class:'req','aria-hidden':'true'},' *')),
+      h('input',{id:'cr-photo',type:'file',accept:'image/png,image/jpeg,image/webp',onchange:e=>{processPhoto(e.target.files[0],(err,url)=>{if(err)c.err=err;else{c.photo=url;c.err='';}render();});}}),h('div',{class:'mute'},'PNG, JPG o WebP. Se reduce en este navegador.'))),
+    h('div',{class:'grid2'},f('cr-name','name','Nombre completo',true,{maxlength:'40',autocomplete:'off'}),f('cr-phone','phone','Contacto (celular)',true,{type:'tel',inputmode:'numeric',maxlength:'13',placeholder:'3001234567'}),
+      f('cr-title','title','Función',true,{maxlength:'40',placeholder:'Ej.: Barbero, colorista'}),f('cr-doc','doc','Documento (opcional)',false,{maxlength:'20',autocomplete:'off','aria-describedby':'cr-doc-h'})),
+    h('div',{id:'cr-doc-h',class:'mute'},'El documento solo lo ve el administrador.'),
+    h('h3',{style:'margin-top:12px'},'Horario semanal ',h('span',{class:'req','aria-hidden':'true'},'*')),
+    h('p',{class:'mute'},'Marca los días que trabaja y su hora de entrada y salida. Los descansos y las ausencias se agregan después, desde su perfil.'),
+    rows,h('div',{class:'acts'},btn('Copiar el lunes a los demás días laborales','repeat',()=>{const m=c.days[1];if(!m)return;DORD.forEach(i=>{if(c.days[i])c.days[i]=[m[0],m[1]];});render();},'ghost sm')),
+    h('div',{class:'grid2'},f('cr-spec','specs','Especialidades (opcional, separadas por coma)',false,{maxlength:'160',placeholder:'Fade, Barba, Color'}),f('cr-bio','bio','Descripción (opcional)',false,{maxlength:'200',placeholder:'Presentación breve'})),
+    h('div',{class:'mute'},'El empleado queda activo y con todos los servicios; los puedes ajustar en su perfil. '+(CLOUD_ON?'Para que entre a la app, genera su código de invitación en su perfil (pestaña Estado).':'PIN de demostración: 1111 (en producción cada empleado tendrá su cuenta).')),
+    errLine(c.err),
+    h('div',{class:'acts'},btn('Crear empleado','check',submitCreate),btn('Cancelar y borrar lo escrito',null,()=>{S.tm.cr=null;S.modal=null;render();},'ghost'))));
+}
+/* ---------- perfil ---------- */
+function openProfile(id,tab){S.tm.msg[id]='';S.modal={kind:'proProfile',id,tab:tab||'datos'};render(true);}
+function estadoTab(p){
+  const f=futureOf(p);
+  return h('div',{class:'sec-body'},
+    h('p',null,'Estado actual: ',proPill(p),f.length?h('span',{class:'mute'},'  · '+f.length+' cita'+(f.length===1?'':'s')+' futura'+(f.length===1?'':'s')):null),
+    p.active
+      ?[h('p',{class:'mute'},'Desactivar: deja de aparecer para reservas nuevas y no puede ingresar. Su historial y su perfil se conservan, y lo puedes activar de nuevo.'),btn('Desactivar','ban',()=>startRemove(p,'desactivar'),'dghost')]
+      :[h('p',{class:'mute'},'Está desactivado. Al activarlo vuelve a aparecer para reservas nuevas.'),btn('Activar','check',()=>{p.active=true;audit('Administrador',p.name+' activado');S.tm.msg[p.id]='Empleado activado.';render();})],
+    CLOUD_ON&&p.active?accessSection(p):null,
+    h('h3',{style:'margin-top:16px'},'Eliminar empleado'),
+    h('p',{class:'mute'},'Eliminar lo archiva: sale de las listas y de las reservas, pero sus citas, reportes y registro conservan su nombre. Si tiene citas futuras, primero se reagendan con otro empleado. Lo puedes restaurar desde "Empleados eliminados".'),
+    btn('Eliminar empleado','trash',()=>startRemove(p,'eliminar'),'dghost'));
+}
+function profileModal(m){
+  const p=proById(m.id); if(!p||p.deleted){S.modal=null;return null;}
+  const tabs=[['datos','Datos'],['servicios','Servicios'],['horario','Horario y ausencias'],['estado','Estado']];
+  const sv=S.services.length?h('div',{class:'sec-body'},h('p',{class:'mute'},'Servicios que atiende. Los clientes solo podrán reservarlo para estos servicios.'),h('div',{class:'row'},S.services.map(s=>h('label',{class:'chk'},h('input',{type:'checkbox',checked:p.serviceIds.includes(s.id),onchange:e=>{p.serviceIds=e.target.checked?[...p.serviceIds,s.id]:p.serviceIds.filter(x=>x!==s.id);audit('Administrador','Servicios de '+p.name+' actualizados');render();}}),s.name)))):h('p',{class:'mute'},'Aún no hay servicios.');
+  const body=m.tab==='servicios'?sv:m.tab==='horario'?h('div',null,scheduleSection(p),h('h3',{style:'margin-top:18px'},'Ausencias, vacaciones y días libres'),absenceSection(p)):m.tab==='estado'?estadoTab(p):profileSection(p);
+  const nIss=issuesFor(p.id).length;
+  return h('div',{class:'overlay',role:'dialog','aria-modal':'true','aria-label':'Perfil de '+p.name},h('div',{class:'card pm'},
+    h('div',{class:'pm-hd'},h('div',{class:'tc-top'},avatar(p,56),h('div',null,h('h2',{style:'margin:0'},p.name),h('div',{class:'mute'},p.title||'Sin función definida'),proPill(p))),btn('Cerrar','x',()=>{S.modal=null;render();},'ghost sm')),
+    nIss?h('div',{class:'err',role:'status'},ic('alert',14),nIss+' cita'+(nIss===1?'':'s')+' con alerta por reprogramar (ver Agenda).'):null,
+    h('div',{class:'pm-tabs',role:'tablist','aria-label':'Secciones del perfil'},tabs.map(([k,t])=>h('button',{type:'button',role:'tab',id:'pt-'+k,'aria-selected':m.tab===k,onclick:()=>{m.tab=k;render(true);}},t))),
+    S.tm.msg[p.id]?h('div',{class:'okt',role:'status'},ic('check',14),S.tm.msg[p.id]):null,
+    body));
+}
+/* ---------- desactivar / eliminar con reagendado ---------- */
+function candidatesFor(b,p){
+  return S.pros.filter(q=>q.id!==p.id&&q.active&&!q.deleted&&!checkSlot({proId:q.id,date:b.date,start:b.start,dur:b.dur,pre:b.pre,post:b.post,res:b.res,svcIds:b.svcIds,ignoreId:b.id}))
+    .sort((x,y)=>dayModel(x,b.date).booked-dayModel(y,b.date).booked);
+}
+function rowsFor(p){return futureOf(p).map(b=>{const cands=candidatesFor(b,p);return{bid:b.id,cands:cands.map(q=>({id:q.id,name:q.name})),sel:cands[0]?'c:'+cands[0].id:''};});}
+function startRemove(p,mode){
+  const rows=rowsFor(p), el=mode==='eliminar';
+  if(!rows.length){confirmDlg((el?'Eliminar a ':'Desactivar a ')+p.name,el?'Se archiva: sale de las listas y de las reservas, y su historial se conserva. No tiene citas futuras.':'Dejará de aparecer para reservas nuevas. Su historial se conserva. No tiene citas futuras.',el?'Eliminar':'Desactivar',()=>finishRemove(p,mode));return;}
+  S.modal={kind:'proRemove',id:p.id,mode,rows,err:''};render(true);
+}
+function finishRemove(p,mode){
+  if(mode==='eliminar'){p.deleted=true;p.active=false;p.delAt=todayS();} else p.active=false;
+  if(S.auth.empleado===p.id) S.auth.empleado=null;
+  audit('Administrador',(mode==='eliminar'?'Eliminó (archivó) a ':'Desactivó a ')+p.name+'. Su historial se conserva.');
+}
+function waMsgRemove(d){
+  const b=d.b, n=S.settings.name;
+  return d.type==='move'?'Hola '+b.name+', te escribimos de '+n+'. Tu cita del '+fmtDate(b.date)+' a las '+fmtTime(b.start)+' ahora será con '+d.to+' (antes con '+d.from+'). El día y la hora no cambian. Si no te sirve, escríbenos y la reprogramamos.'
+    :'Hola '+b.name+', te escribimos de '+n+'. Tuvimos que cancelar tu cita del '+fmtDate(b.date)+' a las '+fmtTime(b.start)+' por un cambio en nuestro equipo. Escríbenos y te damos otra hora.';
+}
+function runRemove(m){
+  const p=proById(m.id), done=[], fails=[], el=m.mode==='eliminar';
+  for(const r of m.rows){
+    const b=S.bookings.find(x=>x.id===r.bid); if(!b||!OPEN(b)||b.proId!==p.id||r.sel==='keep') continue;
+    if(r.sel==='cancel'){setStatus(b,'cancelada','Administrador');b.bizCancel=true;audit('Administrador','Canceló la cita '+b.code+' ('+b.name+') por '+(el?'eliminación':'desactivación')+' de '+p.name);done.push({b,type:'cancel'});continue;}
+    const q=proById(Number(String(r.sel).slice(2))), from=p.name;
+    const err=applyMove(b,{date:b.date,start:b.start,proId:q.id},'Administrador','Reagendó con '+q.name+' por '+(el?'eliminación':'desactivación')+' de '+from+':');
+    if(err){fails.push(b.name+' ('+fmtShort(b.date)+' '+fmtTime(b.start)+'): '+err);continue;}
+    b.reassigned={from,to:q.name,at:todayS()}; done.push({b,type:'move',from,to:q.name});
+  }
+  if(fails.length){m.rows=rowsFor(p);m.err='No se pudo reagendar: '+fails.join(' · ')+'. Revisa las opciones.';render();return;}
+  finishRemove(p,m.mode);
+  if(done.length) notice((el?'Eliminación':'Desactivación')+' de '+p.name+': '+done.length+' cita(s) reagendada(s) o canceladas. Avisa a los clientes.');
+  S.modal={kind:'proDone',name:p.name,mode:m.mode,done:done.map(d=>Object.assign({},d,{msg:waMsgRemove(d)}))}; render(true);
+}
+function removeModal(m){
+  const p=proById(m.id); if(!p){S.modal=null;return null;}
+  const el=m.mode==='eliminar', ready=m.rows.every(r=>r.sel!=='');
+  const rows=m.rows.map(r=>{const b=S.bookings.find(x=>x.id===r.bid); if(!b) return null;
+    return h('div',{class:'rm-row','data-bid':b.id},
+      h('div',null,h('b',null,fmtShort(b.date)+' · '+fmtTime(b.start)),' · '+b.name,h('div',{class:'mute'},b.lines.map(l=>l.name).join(', '))),
+      h('select',{id:'rm-'+b.id,'aria-label':'Qué hacer con la cita de '+b.name,onchange:e=>{r.sel=e.target.value;m.err='';render();}},
+        h('option',{value:'',selected:r.sel===''},r.cands.length?'Elegir…':'Sin reemplazo disponible…'),
+        r.cands.map(q=>h('option',{value:'c:'+q.id,selected:r.sel==='c:'+q.id},'Pasar a '+q.name)),
+        el?h('option',{value:'cancel',selected:r.sel==='cancel'},'Cancelar la cita y avisar al cliente'):h('option',{value:'keep',selected:r.sel==='keep'},'Dejar sin cambios (queda con alerta)')));});
+  return h('div',{class:'overlay',role:'dialog','aria-modal':'true','aria-label':(el?'Eliminar a ':'Desactivar a ')+p.name},h('div',{class:'card pm'},
+    h('h2',null,ic('alert',18),(el?'Eliminar a ':'Desactivar a ')+p.name),
+    h('p',{class:'mute'},p.name+' tiene '+m.rows.length+' cita'+(m.rows.length===1?'':'s')+' futura'+(m.rows.length===1?'':'s')+'. Se reagendan con otro empleado que ofrezca el servicio y esté libre; el día y la hora no cambian. Al terminar te damos un mensaje de WhatsApp para cada cliente.'),
+    rows,errLine(m.err),!ready?h('p',{class:'mute'},'Elige qué hacer con cada cita para continuar.'):null,
+    h('div',{class:'acts'},btn(el?'Reagendar y eliminar':'Reagendar y desactivar',el?'trash':'ban',()=>runRemove(m),'',!ready),btn('Volver',null,()=>{S.modal={kind:'proProfile',id:p.id,tab:'estado'};render();},'ghost'))));
+}
+function doneModal(m){
+  return h('div',{class:'overlay',role:'dialog','aria-modal':'true','aria-label':'Resultado'},h('div',{class:'card pm'},
+    h('h2',null,ic('check',18),m.name+(m.mode==='eliminar'?' fue eliminado (archivado)':' fue desactivado')),
+    h('p',{class:'mute'},'Su historial se conserva. '+(m.done.length?'Los clientes ya ven el aviso en "Mis citas". Envíales además el mensaje por WhatsApp (este prototipo no lo envía solo):':'')),
+    m.done.map(d=>h('div',{class:'rm-row'},h('div',null,h('b',null,d.b.name),' · '+fmtShort(d.b.date)+' '+fmtTime(d.b.start),h('div',{class:'mute'},d.type==='move'?'Reagendada: '+d.from+' → '+d.to:'Cancelada')),
+      d.b.phone&&PHONE_RE.test(d.b.phone)?h('a',{class:'btn ghost sm',href:'https://wa.me/57'+d.b.phone+'?text='+encodeURIComponent(d.msg),target:'_blank',rel:'noopener noreferrer'},ic('chat',14),'Avisar por WhatsApp'):h('span',{class:'mute'},'Sin celular válido: avísale por otro medio.'))),
+    h('div',{class:'acts'},btn('Listo','check',()=>{S.modal=null;render(true);}))));
 }
 
 function adminServices(){
@@ -1581,17 +1908,71 @@ function adminServices(){
         const pre=B?Number($('#ns-pre').value||0):0, post=B?Number($('#ns-post').value||0):0, res=R?Number($('#ns-res').value||0):0;
         if(n.length<2||p===''||Number(p)<0||!(d>=5&&d<=480)){N.e='Revisa nombre, precio y minutos (5 a 480).';render();return;}
         if(!(pre>=0&&pre<=60&&post>=0&&post<=60)){N.e='La preparación y la limpieza van de 0 a 60 minutos.';render();return;}
-        const x={id:Math.max(0,...S.services.map(s=>s.id))+1,cat:c,name:n,dur:d,price:Number(p),on:true,desc:'',pre,post,res};
+        const x={id:nextId(S.services),cat:c,name:n,dur:d,price:Number(p),on:true,desc:'',pre,post,res};
         S.services.push(x); S.pros.forEach(pr=>pr.serviceIds.push(x.id));
         audit('Administrador','Creó el servicio '+n+(pre||post?' (preparación '+pre+' min, limpieza '+post+' min)':''));Object.assign(N,{n:'',c:'',p:'',d:'',e:'',pre:0,post:0});render();}))));
 }
 
+/* ---- v6.4: datos y copias de seguridad (todos los negocios de este navegador) ---- */
+function downloadBlob(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);}
+function exportBackup(){
+  if(!CLOUD_ON) saveNow(); /* en modo nube no se guardan datos del servidor en el navegador */
+  downloadBlob(new Blob([JSON.stringify({app:BACKUP_APP,v:BACKUP_VER,savedAt:new Date().toISOString(),db:DB},null,1)],{type:'application/json'}),'fragola-prenota-copia-'+todayS()+'.json');
+}
+/* tras reemplazar todos los datos: se cierra toda sesion y se vuelve al inicio */
+function afterReplace(msg){
+  S.tabs={cliente:'reservar',empleado:'agenda',admin:'inicio'}; S.role='admin'; S.fails={empleado:0,admin:0,otp:0};
+  store.last=null; switchTenant(DB.cur); saveNow(); toast(msg);
+}
+function importBackup(file){
+  const bk=S.adm.bk||(S.adm.bk={});
+  if(!file) return;
+  if(file.size>15*1024*1024){bk.err='El archivo supera 15 MB.';render();return;}
+  const fr=new FileReader();
+  fr.onerror=()=>{bk.err='No se pudo leer el archivo.';render();};
+  fr.onload=()=>{
+    let d; try{d=JSON.parse(fr.result);}catch(_){bk.err='El archivo no es una copia válida (no es JSON).';render();return;}
+    if(!d||d.app!==BACKUP_APP||!validDB(d.db)){bk.err='El archivo no es una copia de seguridad de FRAGOLA PRENOTA o está incompleto.';render();return;}
+    const n=d.db.order.length, nb=d.db.order.reduce((a,id)=>a+d.db.tenants[id].bookings.length,0);
+    bk.err='';
+    confirmDlg('Restaurar copia de seguridad','La copia es del '+(d.savedAt?new Date(d.savedAt).toLocaleString('es-CO',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'(fecha desconocida)')+' y tiene '+n+' negocio'+(n===1?'':'s')+' y '+nb+' cita'+(nb===1?'':'s')+'. Reemplaza TODOS los datos actuales de este navegador. Se cerrará la sesión y el PIN será el de la copia. Si quieres conservar lo actual, descarga antes una copia.','Restaurar y reemplazar',
+      ()=>{adoptDB(d.db); audit('Administrador','Restauró una copia de seguridad'); afterReplace('Copia restaurada. Vuelve a ingresar con el PIN de la copia.');});
+  };
+  fr.readAsText(file);
+}
+function wipeAll(){
+  Object.keys(DB.tenants).forEach(k=>delete DB.tenants[k]); DB.order=[]; DB.cur=null; DB.n=0;
+  newTenant('Mi negocio'); afterReplace('Se borraron todos los datos. Empiezas con un negocio vacío (PIN 1234).');
+}
+function dataCard(){
+  if(CLOUD_ON){const bk=S.adm.bk||(S.adm.bk={});
+    return h('div',{class:'card'},h('h2',null,ic('download',18),'Datos y copias de seguridad'),
+      h('p',{class:'mute'},'Los datos se guardan en el servidor y se ven desde cualquier equipo con tu cuenta. Igual conviene descargar una copia de vez en cuando.'),
+      h('div',{class:C.st==='err'?'err':'okt',role:'status'},ic(C.st==='err'?'alert':'check',14),h('span',{'data-sync':'1'},syncText())),
+      h('div',{class:'acts'},
+        btn('Descargar copia de este negocio','download',()=>askPin('La copia contiene datos personales de clientes y empleados.',()=>{exportBackup();audit('Administrador','Descargó una copia de seguridad');}),'ghost sm'),
+        btn('Importar datos de la versión local…','upload',()=>$('#bk-file').click(),'ghost sm'),
+        h('input',{id:'bk-file',type:'file',accept:'application/json,.json',hidden:true,'aria-label':'Archivo de copia de seguridad',onchange:e=>{const f=e.target.files[0];e.target.value='';askPin('Importar reemplaza los datos de este negocio en el servidor.',()=>importToCloud(f));}})),
+      h('p',{class:'mute'},'¿Usabas la app sin servidor? En esa versión descarga la copia (Negocio → Descargar copia de seguridad) y aquí elige "Importar datos de la versión local".'),
+      errLine(bk.err));}
+  const bk=S.adm.bk||(S.adm.bk={}), kb=Math.round((lsGet(STORE_KEY)||'').length/1024);
+  return h('div',{class:'card'},h('h2',null,ic('download',18),'Datos y copias de seguridad'),
+    h('p',{class:'mute'},'Los cambios se guardan solos en este navegador. Si borras los datos de navegación, cambias de navegador o de equipo, no estarán: descarga copias de seguridad con frecuencia.'),
+    store.ok?h('div',{class:'okt',role:'status'},ic('check',14),'Guardado automático activo'+(store.at?' · último guardado '+store.at.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}):'')+' · '+kb+' KB usados'):h('div',{class:'err',role:'alert'},ic('alert',14),store.err),
+    h('div',{class:'acts'},
+      btn('Descargar copia de seguridad','download',()=>askPin('La copia contiene datos personales de clientes y empleados de todos los negocios.',()=>{exportBackup();audit('Administrador','Descargó una copia de seguridad');}),'ghost sm'),
+      btn('Restaurar copia…','upload',()=>$('#bk-file').click(),'ghost sm'),
+      h('input',{id:'bk-file',type:'file',accept:'application/json,.json',hidden:true,'aria-label':'Archivo de copia de seguridad',onchange:e=>{const f=e.target.files[0];e.target.value='';askPin('Restaurar una copia reemplaza todos los datos actuales.',()=>importBackup(f));}}),
+      btn('Borrar todos los datos','trash',()=>askPin('Vas a borrar todos los negocios, citas y clientes de este navegador.',()=>confirmDlg('Borrar todos los datos','Se eliminan todos los negocios, servicios, empleados, citas, clientes y el registro de este navegador. No se puede deshacer: si quieres conservar algo, descarga antes una copia de seguridad.','Borrar todo',wipeAll)),'dghost sm')),
+    errLine(bk.err));
+}
 function adminBusiness(){
   const s=S.settings, B=S.adm;
-  const num=(id,label,key,min,max)=>h('div',null,h('label',{for:id},label),h('input',{id:id,type:'number',min:String(min),max:String(max),value:s[key],onchange:e=>{const v=Number(e.target.value);if(v>=min&&v<=max&&!(key==='open'&&v>=s.close)&&!(key==='close'&&v<=s.open)){s[key]=v;audit('Administrador','Ajuste "'+label+'" = '+v);}else e.target.value=s[key];}}));
+  const num=(id,label,key,min,max)=>h('div',null,h('label',{for:id},label),h('input',{id:id,type:'number',min:String(min),max:String(max),value:s[key],onchange:e=>{const v=Number(e.target.value);if(e.target.value!==''&&Number.isInteger(v)&&v>=min&&v<=max&&!(key==='open'&&v>=s.close)&&!(key==='close'&&v<=s.open)){s[key]=v;audit('Administrador','Ajuste "'+label+'" = '+v);}else e.target.value=s[key];}}));
   return h('div',null,
     h('div',{class:'card'},h('h2',null,ic('settings',18),'Perfil y horario del negocio'),
-      h('label',{for:'s-n'},'Nombre'),h('input',{id:'s-n',maxlength:'60',value:s.name,onchange:e=>{if(e.target.value.trim()){s.name=e.target.value.trim();audit('Administrador','Cambió el nombre del negocio');}}}),
+      h('label',{for:'s-n'},'Nombre'),h('input',{id:'s-n',maxlength:'60',value:s.name,onchange:e=>{if(e.target.value.trim().length>=2){s.name=e.target.value.trim();audit('Administrador','Cambió el nombre del negocio');}else e.target.value=s.name;}}),
+      CLOUD_ON?pubLinkEl():null,
       h('label',{for:'s-a'},'Dirección'),h('input',{id:'s-a',maxlength:'120',value:s.address,onchange:e=>{s.address=e.target.value.trim();audit('Administrador','Cambió la dirección');}}),
       h('label',{for:'s-w'},'WhatsApp del negocio (con 57)'),h('input',{id:'s-w',inputmode:'numeric',maxlength:'12',value:s.whatsapp,onchange:e=>{if(e.target.value===''||/^57\d{10}$/.test(e.target.value)){s.whatsapp=e.target.value;audit('Administrador','Cambió el WhatsApp');}else e.target.value=s.whatsapp;}}),
       h('div',{class:'row'},num('s-o','Apertura (hora)','open',0,23),num('s-c','Cierre (hora)','close',1,24),h('div',null,h('label',{for:'s-s'},'Intervalo (min)'),h('select',{id:'s-s',onchange:e=>{s.step=Number(e.target.value);audit('Administrador','Intervalo de agenda: '+s.step+' min');}},[15,30,60].map(v=>h('option',{value:v,selected:s.step===v},v)))))),
@@ -1599,7 +1980,7 @@ function adminBusiness(){
     h('div',{class:'card'},h('h2',null,ic('calendar',18),'Festivos y días cerrados'),
       h('div',{class:'row'},h('input',{id:'cd',type:'date',min:todayS(),'aria-label':'Fecha cerrada'}),btn('Agregar','plus',()=>{const v=$('#cd').value;if(v&&!s.closedDates.includes(v)){s.closedDates.push(v);s.closedDates.sort();audit('Administrador','Día cerrado: '+v);render();}},'ghost')),
       s.closedDates.length?s.closedDates.map(d=>h('div',{style:'display:flex;justify-content:space-between;align-items:center;padding:4px 0'},fmtDate(d),btn('Quitar','trash',()=>{s.closedDates=s.closedDates.filter(x=>x!==d);audit('Administrador','Reabrió el '+d);render();},'dghost sm'))):h('p',{class:'mute'},'No hay días cerrados.')),
-    bizTypeCard(),resourcesCard(),demoTools(),h('div',{class:'card'},h('h2',null,ic('lock',18),'Seguridad'),
+    bizTypeCard(),resourcesCard(),dataCard(),demoTools(),CLOUD_ON?cloudSecurityCard():h('div',{class:'card'},h('h2',null,ic('lock',18),'Seguridad'),
       h('div',{class:'row'},h('div',null,h('label',{for:'p-a'},'PIN actual'),h('input',{id:'p-a',type:'password',inputmode:'numeric',maxlength:'8',autocomplete:'off'})),h('div',null,h('label',{for:'p-n'},'PIN nuevo (4 a 8 dígitos)'),h('input',{id:'p-n',type:'password',inputmode:'numeric',maxlength:'8',autocomplete:'off'}))),
       B.pinMsg?h('div',{class:B.pinMsg.startsWith('PIN actualizado')?'okt':'err',role:'alert'},B.pinMsg):null,
       h('div',{class:'acts'},btn('Cambiar PIN','lock',()=>{const a=$('#p-a').value,n=$('#p-n').value;
@@ -1630,7 +2011,357 @@ function adminAudit(){
     h('div',{class:'scroll'},h('table',null,h('thead',null,h('tr',null,['Fecha','Quién','Acción'].map(x=>h('th',null,x)))),
       h('tbody',null,S.audit.slice(0,80).map(a=>h('tr',null,h('td',null,a.ts.toLocaleString('es-CO',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})),h('td',null,a.who),h('td',null,a.text)))))));
 }
+/* ================= v7 · MODO NUBE (Supabase) =================
+   - Visitante con enlace ?n=negocio: ve el catálogo y reserva con la función segura public.book().
+   - Cliente con código por SMS: ve, cancela y reprograma SUS citas (funciones my_*).
+   - Administrador / empleado con correo y contraseña: se cargan los datos del negocio y cada cambio
+     se envía al servidor comparando con la última copia (solo las columnas que cambiaron).
+   Las reglas de la base de datos (RLS, restricción de cruces, disparadores) tienen la última palabra. */
+const SB_SRC='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js',
+  SB_SRI='sha384-0w2KAL2YHP6wKOkUDzkCDGgVvfmHnj02DHeQ6XcHOgTfFsGyonKOpShMH1x6nk9o';
+const C={sb:null,ready:!CLOUD_ON,fatal:'',err:'',user:null,phone:null,list:[],bid:null,role:null,isAdmin:false,proId:null,
+  slug:(new URLSearchParams(location.search).get('n')||'').toLowerCase().replace(/[^a-z0-9-]/g,'').slice(0,40),
+  mode:'none',snap:{},bizSnap:{},st:'',at:null,t:null,running:false,again:false,ch:null,remoteT:null,busy:false,codes:{},
+  lg:{email:'',err:'',msg:'',busy:false},nb:{name:'',slug:'',err:''},inv:{code:'',err:''},otp:{sent:false,phone:'',err:'',msg:''}};
+const slugify=s=>String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
+function loadScript(src,sri){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;if(sri){s.integrity=sri;s.crossOrigin='anonymous';}s.onload=res;s.onerror=()=>rej(new Error('No se pudo cargar la conexión con el servidor.'));document.head.append(s);});}
+function syncMsg(e){const m=String((e&&(e.message||e.error_description))||e||'');
+  if(/no_overlap|exclusion|conflicting key/i.test(m)) return 'La cita se cruza con otra del mismo profesional.';
+  if(/row-level security|permission denied|42501/i.test(m)) return 'No tienes permiso para ese cambio.';
+  if(/duplicate key/i.test(m)) return 'Ese dato ya existe en el servidor.';
+  if(/Failed to fetch|NetworkError|Load failed|network/i.test(m)) return 'Sin conexión con el servidor.';
+  return m.slice(0,240)||'Error desconocido.';}
+function authMsg(e){const m=String(e&&e.message||e);
+  if(/Invalid login/i.test(m)) return 'Correo o contraseña incorrectos.';
+  if(/already (been )?registered/i.test(m)) return 'Ese correo ya tiene cuenta: usa "Entrar".';
+  if(/not confirmed/i.test(m)) return 'Primero confirma tu correo con el enlace que te enviamos.';
+  if(/rate limit|too many/i.test(m)) return 'Demasiados intentos. Espera unos minutos.';
+  if(/token.*(expired|invalid)|otp/i.test(m)) return 'El código no es válido o ya venció.';
+  return syncMsg(e);}
+async function rpcOk(fn,args){const {data,error}=await C.sb.rpc(fn,args||{});if(error) throw error;return data;}
+
+/* ---- conversión entre la app y las tablas (mismos nombres que supabase/schema.sql) ---- */
+const bkRow=b=>({id:b.id,code:b.code,date:b.date,start_min:b.start,dur:b.dur,pre:b.pre||0,post:b.post||0,pro_id:b.proId,pro_name:b.proName||'',
+  lines:b.lines||[],total:b.total||0,svc_ids:b.svcIds||[],res:b.res||[],res_names:b.resNames||[],name:String(b.name||'').slice(0,60),phone:b.phone||'',
+  email:b.email||'',notes:b.notes||'',status:b.status,paid:!!b.paid,source:b.source||'online',demo:!!b.demo,reassigned:b.reassigned||null,biz_cancel:!!b.bizCancel});
+const fromBk=r=>({id:r.id,code:r.code,date:r.date,start:r.start_min,dur:r.dur,pre:r.pre,post:r.post,proId:r.pro_id,proName:r.pro_name,lines:r.lines||[],
+  total:r.total,svcIds:r.svc_ids||[],res:r.res||[],resNames:r.res_names||[],name:r.name,phone:r.phone,email:r.email,notes:r.notes,status:r.status,
+  paid:r.paid,source:r.source,demo:r.demo,reassigned:r.reassigned||undefined,bizCancel:r.biz_cancel||undefined});
+/* cita devuelta por las funciones del servidor (ya en formato de la app) */
+const fromBj=j=>{const b=Object.assign({lines:[],svcIds:[],res:[],resNames:[],name:'',phone:'',email:'',notes:'',total:0,paid:false,source:'online',proName:''},j);
+  if(!b.reassigned) delete b.reassigned; if(!b.bizCancel) delete b.bizCancel; return b;};
+const fromBlk=r=>({id:r.id,proId:r.pro_id,date:r.date,dateTo:r.date_to||undefined,start:r.start_min,end:r.end_min,reason:r.reason,type:r.type});
+const fromPro=(r,pv)=>({id:r.id,name:r.name,active:r.active,deleted:r.deleted,delAt:r.del_at||'',serviceIds:r.service_ids||[],color:r.color,title:r.title,
+  specialties:r.specialties||[],bio:r.bio,photo:r.photo,sv:r.sv||undefined,days:r.days||[],from:r.from_h,to:r.to_h,owner:r.owner,demo:r.demo,
+  phone:(pv||{}).phone||'',doc:(pv||{}).doc||'',pin:''});
+const bizRow=s=>({name:s.name,address:s.address||'',whatsapp:s.whatsapp||'',open_hour:s.open,close_hour:s.close,step_min:s.step,
+  min_cancel_hours:s.minCancelHours,max_active:s.maxActive,min_advance_min:s.minAdvanceMin,max_advance_days:s.maxAdvanceDays,
+  auto_confirm:!!s.autoConfirm,type:s.type||'general',features:s.features||{},closed_dates:s.closedDates||[]});
+const fromBiz=r=>({name:r.name,address:r.address,whatsapp:r.whatsapp,open:r.open_hour,close:r.close_hour,step:r.step_min,minCancelHours:r.min_cancel_hours,
+  maxActive:r.max_active,minAdvanceMin:r.min_advance_min,maxAdvanceDays:r.max_advance_days,autoConfirm:r.auto_confirm,type:r.type,
+  features:Object.assign({buffers:false,resources:false},r.features||{}),closedDates:r.closed_dates||[],pin:'',slug:r.slug});
+/* tablas que se sincronizan, en orden de escritura (los borrados van al revés). adm: solo las ve el administrador */
+const CT=[
+  {t:'services',k:'id',rows:()=>S.services.map(s=>({id:s.id,cat:(s.cat||'Otros').slice(0,30),name:s.name,dur:s.dur,price:s.price,active:!!s.on,
+    descr:(s.desc||'').slice(0,200),pre:s.pre||0,post:s.post||0,res:s.res||0,demo:!!s.demo}))},
+  {t:'resources',k:'id',rows:()=>S.resources.map(g=>({id:g.id,name:g.name,qty:g.qty,active:!!g.active}))},
+  {t:'pros',k:'id',rows:()=>S.pros.map(p=>({id:p.id,name:p.name,active:!!p.active,deleted:!!p.deleted,del_at:p.delAt||null,service_ids:p.serviceIds||[],
+    color:p.color||0,title:p.title||'',specialties:p.specialties||[],bio:p.bio||'',photo:p.photo||'',sv:p.sv||null,days:p.days||[1,2,3,4,5,6],
+    from_h:p.from==null?9:p.from,to_h:p.to==null?18:p.to,owner:!!p.owner,demo:!!p.demo}))},
+  {t:'pro_private',k:'pro_id',adm:1,rows:()=>S.pros.filter(p=>p.phone||p.doc).map(p=>({pro_id:p.id,phone:p.phone||'',doc:p.doc||''}))},
+  {t:'blocks',k:'id',rows:()=>S.blocks.map(k=>({id:k.id,pro_id:k.proId,date:k.date,date_to:k.dateTo||null,start_min:k.start,end_min:k.end,
+    reason:(k.reason||'').slice(0,60),type:k.type||'bloqueo'}))},
+  {t:'bookings',k:'id',rows:()=>S.bookings.map(bkRow)},
+  {t:'client_notes',k:'phone',adm:1,rows:()=>Object.keys(S.meta).filter(ph=>PHONE_RE.test(ph)).map(ph=>({phone:ph,note:String((S.meta[ph]||{}).note||'').slice(0,200)}))},
+  {t:'notices',k:'id',rows:()=>S.notices.map(n=>{if(!n.id)n.id=rid();return {id:n.id,text:String(n.text).slice(0,300)};})}];
+function takeSnap(){C.snap={};CT.forEach(sp=>{C.snap[sp.t]=new Map(sp.rows().map(r=>[String(r[sp.k]),JSON.stringify(r)]));});C.bizSnap=JSON.parse(JSON.stringify(bizRow(S.settings)));}
+function setTenant(t){Object.keys(DB.tenants).forEach(k=>delete DB.tenants[k]);DB.tenants.c=normTenant(t);DB.order=['c'];DB.cur='c';}
+const blankTenant=()=>({id:'c',settings:{name:'FRAGOLA PRENOTA',address:'',whatsapp:'',open:9,close:19,step:30,minCancelHours:2,maxActive:3,minAdvanceMin:30,
+  maxAdvanceDays:14,closedDates:[],autoConfirm:true,type:'general',features:{buffers:false,resources:false},pin:'',slug:''},
+  services:[],pros:[],bookings:[],blocks:[],resources:[],meta:{},audit:[],notices:[],seq:0});
+
+/* ---- carga de datos ---- */
+async function fetchAll(q){const out=[];for(let i=0;;i+=1000){const {data,error}=await q().range(i,i+999);if(error) throw error;out.push(...data);if(data.length<1000) break;}return out;}
+async function loadBiz(bid){
+  const sb=C.sb, all=(t,k)=>fetchAll(()=>sb.from(t).select('*').eq('business_id',bid).order(k||'id'));
+  const [bz,svcs,res,pros,priv,blks,bks,notes,nts,aud]=await Promise.all([
+    sb.from('businesses').select('*').eq('id',bid).then(r=>{if(r.error) throw r.error;return r.data;}),
+    all('services'),all('resources'),all('pros'),C.isAdmin?all('pro_private','pro_id'):[],all('blocks'),
+    fetchAll(()=>sb.from('bookings').select('*').eq('business_id',bid).gte('date',addDays(todayS(),-400)).order('id')),
+    C.isAdmin?all('client_notes','phone'):[],C.isAdmin?all('notices'):[],
+    C.isAdmin?sb.from('audit_log').select('*').eq('business_id',bid).order('ts',{ascending:false}).range(0,299).then(r=>{if(r.error) throw r.error;return r.data;}):[]]);
+  if(!bz.length) throw new Error('No tienes acceso a este negocio.');
+  setTenant({id:'c',settings:fromBiz(bz[0]),services:svcs.map(r=>({id:r.id,cat:r.cat,name:r.name,dur:r.dur,price:r.price,on:r.active,desc:r.descr,pre:r.pre,post:r.post,res:r.res,demo:r.demo})),
+    resources:res.map(r=>({id:r.id,name:r.name,qty:r.qty,active:r.active})),pros:pros.map(r=>fromPro(r,priv.find(x=>x.pro_id===r.id))),
+    blocks:blks.map(fromBlk),bookings:bks.map(fromBk),meta:Object.fromEntries(notes.map(n=>[n.phone,{note:n.note}])),
+    notices:nts.sort((a,b)=>a.ts<b.ts?1:-1).map(n=>({id:n.id,ts:n.ts,text:n.text})),audit:aud.map(a=>({id:a.id,ts:a.ts,who:a.who,text:a.text})),seq:0});
+  takeSnap(); C.mode='biz';
+}
+async function loadPub(){
+  const d=await rpcOk('public_catalog',{p_slug:C.slug});
+  if(!d){C.err='Este enlace no corresponde a ningún negocio. Revisa la dirección que te compartieron.';C.mode='none';setTenant(blankTenant());return;}
+  const b=d.business;
+  setTenant({id:'c',settings:Object.assign({},b,{pin:'',features:Object.assign({buffers:false,resources:false},b.features||{})}),
+    services:d.services,pros:d.pros.map(p=>Object.assign({deleted:false,pin:''},p,{sv:p.sv||undefined})),
+    blocks:d.blocks.map(k=>Object.assign({},k,{dateTo:k.dateTo||undefined})),resources:d.resources,bookings:d.busy.map(fromBj),meta:{},audit:[],notices:[],seq:0});
+  C.mode='pub'; C.err='';
+  if(C.phone) refreshMine();
+}
+async function refreshMine(){
+  try{const list=await rpcOk('my_bookings',{p_slug:S.settings.slug});
+    list.map(fromBj).forEach(b=>{const x=S.bookings.find(y=>y.id===b.id);if(x) Object.assign(x,b);else S.bookings.push(b);});
+    S.cl.logged=C.phone;}
+  catch(e){S.cl.err=syncMsg(e);}
+  render();
+}
+async function openBiz(m){
+  C.bid=m.id;C.role=m.role;C.isAdmin=m.role!=='staff';C.proId=m.proId||null;
+  await loadBiz(m.id);
+  try{localStorage.setItem('fragola-prenota:bid',m.id);}catch(_){}
+  S.auth={admin:C.isAdmin,empleado:C.isAdmin?null:C.proId}; resetFlow(); S.tm=newTm(); S.modal=null;
+  subscribe();
+}
+/* después de iniciar o cerrar sesión: decide qué datos mostrar */
+async function afterAuth(user,boot){
+  C.user=user||null;C.list=[];C.phone=null;C.err='';
+  if(user&&user.email) C.list=await rpcOk('my_businesses')||[];
+  else if(user&&user.phone){const p=String(user.phone).replace(/\D/g,'').slice(-10);C.phone=PHONE_RE.test(p)?p:null;}
+  const bySlug=C.slug&&C.list.find(x=>x.slug===C.slug), saved=C.list.find(x=>x.id===lsGet('fragola-prenota:bid'));
+  const pick=C.slug?bySlug:(saved||C.list[0]);
+  if(pick){await openBiz(pick);if(boot) S.role=C.slug?'cliente':(pick.role==='staff'?'empleado':'admin');}
+  else{unsubscribe();C.bid=null;C.role=null;C.isAdmin=false;S.auth={admin:false,empleado:null};
+    if(C.slug){await loadPub();if(boot) S.role='cliente';} else {C.mode='none';setTenant(blankTenant());}}
+  S.cl.logged=C.phone;
+}
+async function cloudBoot(){
+  try{
+    if(!window.supabase) await loadScript(SB_SRC,SB_SRI);
+    C.sb=window.supabase.createClient(CFG.url,CFG.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+    C.sb.auth.onAuthStateChange(ev=>{if(ev==='PASSWORD_RECOVERY'){S.modal={kind:'newpass',err:''};render();}});
+    const {data}=await C.sb.auth.getSession();
+    await afterAuth(data&&data.session&&data.session.user,true);
+  }catch(e){C.fatal='No se pudo conectar con el servidor ('+syncMsg(e)+'). Revisa tu conexión a internet e inténtalo de nuevo.';}
+  C.ready=true; render(true);
+  /* respaldo del tiempo real: cada 90 s, si la pestaña está visible y no hay cambios por enviar */
+  setInterval(()=>{if(document.visibilityState==='visible'&&C.mode!=='none'&&!C.running&&!C.t&&!C.loading&&!S.modal) cloudReload(true);},90000);
+}
+async function cloudReload(quiet){
+  if(C.loading) return; C.loading=true;
+  try{ if(C.mode==='biz') await loadBiz(C.bid); else if(C.mode==='pub') await loadPub(); }
+  catch(e){ if(!quiet) toast(syncMsg(e),'err'); }
+  finally{ C.loading=false; }
+  render();
+}
+
+/* ---- envío de cambios ---- */
+function cloudSchedule(){if(C.mode!=='biz') return;clearTimeout(C.t);C.t=setTimeout(()=>{C.t=null;cloudSync();},400);}
+async function cloudFlush(){clearTimeout(C.t);C.t=null;for(let i=0;i<100&&C.running;i++) await new Promise(r=>setTimeout(r,100));await cloudSync();}
+async function cloudSync(){
+  if(C.mode!=='biz') return;
+  if(C.running){C.again=true;return;}
+  C.running=true; let changed=false;
+  try{
+    const sb=C.sb, bid=C.bid, plan=[];
+    for(const sp of CT){
+      if(sp.adm&&!C.isAdmin) continue;
+      const snap=C.snap[sp.t]||new Map(), cur=new Map(), ins=[], upd=[];
+      sp.rows().forEach(r=>{const key=String(r[sp.k]),j=JSON.stringify(r);cur.set(key,j);const old=snap.get(key);if(old===j) return;
+        if(old==null){ins.push(r);return;} const o=JSON.parse(old),patch={};for(const c in r) if(JSON.stringify(r[c])!==JSON.stringify(o[c])) patch[c]=r[c]; upd.push([key,patch]);});
+      plan.push({sp,ins,upd,del:[...snap.keys()].filter(k=>!cur.has(k)),cur});
+    }
+    const biz=C.isAdmin?bizRow(S.settings):null, bp={};
+    if(biz) for(const c in biz) if(JSON.stringify(biz[c])!==JSON.stringify(C.bizSnap[c])) bp[c]=biz[c];
+    const na=S.audit.filter(a=>!a.id);
+    changed=plan.some(x=>x.ins.length||x.upd.length||x.del.length)||Object.keys(bp).length>0||na.length>0;
+    if(!changed) return;
+    C.st='saving'; syncBadge();
+    if(Object.keys(bp).length){const {error}=await sb.from('businesses').update(bp).eq('id',bid);if(error) throw error;}
+    for(const x of plan){
+      for(let i=0;i<x.ins.length;i+=200){const {error}=await sb.from(x.sp.t).insert(x.ins.slice(i,i+200).map(r=>Object.assign({business_id:bid},r)));if(error) throw error;}
+      for(const [key,patch] of x.upd){const {error}=await sb.from(x.sp.t).update(patch).eq('business_id',bid).eq(x.sp.k,key);if(error) throw error;}
+    }
+    for(const x of plan.slice().reverse()) for(let i=0;i<x.del.length;i+=100){
+      const {error}=await sb.from(x.sp.t).delete().eq('business_id',bid).in(x.sp.k,x.del.slice(i,i+100));if(error) throw error;}
+    if(na.length){const {error}=await sb.from('audit_log').insert(na.slice().reverse().map(a=>({business_id:bid,ts:new Date(a.ts).toISOString(),
+      who:String(a.who).slice(0,80),text:String(a.text).slice(0,600)})));if(error) throw error;na.forEach(a=>{a.id=-1;});}
+    plan.forEach(x=>{C.snap[x.sp.t]=x.cur;}); if(biz) C.bizSnap=JSON.parse(JSON.stringify(biz));
+    C.st='ok'; C.at=new Date();
+  }catch(e){
+    C.st='err'; const msg=syncMsg(e);
+    if(/Sin conexión/.test(msg)){toast(msg+' Tus cambios se reintentarán en unos segundos.','err');setTimeout(cloudSchedule,5000);}
+    else{toast('No se guardó: '+msg+' Se cargaron de nuevo los datos del servidor.','err');C.loading=false;await cloudReload(true);}
+  }finally{C.running=false;syncBadge();if(C.again){C.again=false;cloudSchedule();}}
+}
+const syncText=()=>C.st==='saving'?'Guardando…':C.st==='err'?'No se pudo guardar el último cambio':C.at?'Guardado en el servidor '+C.at.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}):'Conectado al servidor';
+function syncBadge(){document.querySelectorAll('[data-sync]').forEach(e=>{e.textContent=syncText();});}
+
+/* ---- tiempo real: otro usuario cambió algo ---- */
+function unsubscribe(){if(C.ch&&C.sb&&C.sb.removeChannel) C.sb.removeChannel(C.ch);C.ch=null;}
+function subscribe(){
+  unsubscribe(); if(!C.sb.channel) return;
+  const own=(t,row,key)=>{const s=C.snap[t];if(!s||!row) return false;const j=s.get(String(row[key]));if(t==='bookings') return j===JSON.stringify(bkRow(fromBk(row)));return !!j;};
+  C.ch=C.sb.channel('biz-'+C.bid);
+  ['bookings','blocks','notices'].forEach(t=>C.ch.on('postgres_changes',{event:'*',schema:'public',table:t,filter:'business_id=eq.'+C.bid},p=>{
+    if(p.eventType==='DELETE'?!(C.snap[t]||new Map()).has(String((p.old||{}).id)):own(t,p.new,'id')) return; /* eco de un cambio propio */
+    clearTimeout(C.remoteT); C.remoteT=setTimeout(function again(){if(C.running||C.t||S.modal){C.remoteT=setTimeout(again,1500);return;}cloudReload(true);},800);}));
+  C.ch.subscribe();
+}
+
+/* ---- acciones del cliente (sin cuenta / con código por SMS) ---- */
+async function cloudBook(){
+  const c=S.client; if(C.busy) return; C.busy=true; render();
+  try{
+    if(C.mode==='biz') await cloudFlush();
+    const d=await rpcOk('book',{p_slug:S.settings.slug,p_svc:[...S.cart],p_pro:S.proId||0,p_date:S.date,p_start:S.time,p_name:c.name.trim(),
+      p_phone:cleanPhone(c.phone),p_email:c.email.trim(),p_notes:c.notes.trim(),p_consent:!!c.consent});
+    const b=fromBj(d); S.bookings.push(b); C.busy=false;
+    S.last=b; S.lastMsg=b.status==='pendiente'?'Reserva recibida. Queda pendiente de confirmación del negocio.':'Reserva confirmada.'; goStep(5);
+    cloudReload(true);
+  }catch(e){
+    C.busy=false; const m=syncMsg(e);
+    if(/máximo de/.test(m)){S.errors={limit:m};render();}
+    else if(/nombre|Celular|Correo|notas|tratamiento/i.test(m)){S.errors={consent:m};render();}
+    else{S.errors={slot:m};S.time=null;goStep(3);cloudReload(true);}
+  }
+}
+async function cloudResched(ed){
+  try{const d=await rpcOk('reschedule_my_booking',{p_slug:S.settings.slug,p_id:ed.id,p_date:S.date,p_start:S.time});
+    Object.assign(ed,fromBj(d)); S.last=ed; S.lastMsg='Tu cita fue reprogramada.'; S.editing=null; goStep(5); cloudReload(true);}
+  catch(e){S.errors={slot:syncMsg(e)};S.time=null;render();}
+}
+async function clientSignOut(){try{await C.sb.auth.signOut();}catch(_){} C.user=null;C.phone=null;Object.assign(S.cl,{logged:null,msg:'',err:'',delConfirm:false,confirm:null});C.otp={sent:false,phone:'',err:'',msg:''};await cloudReload(true);}
+function cloudClientLogin(){
+  const o=C.otp;
+  const send=async()=>{const ph=cleanPhone($('#c-ph').value);o.phone=ph;o.err='';o.msg='';
+    if(!PHONE_RE.test(ph)){o.err='Escribe un celular válido de 10 dígitos.';render();return;}
+    const {error}=await C.sb.auth.signInWithOtp({phone:'+57'+ph});
+    if(error){o.err=authMsg(error);render();return;} o.sent=true;o.msg='Te enviamos un código por SMS al '+ph+'.';render();};
+  const verify=async()=>{const code=($('#c-ot').value||'').trim();o.err='';
+    if(!/^\d{6}$/.test(code)){o.err='El código tiene 6 dígitos.';render();return;}
+    const {data,error}=await C.sb.auth.verifyOtp({phone:'+57'+o.phone,token:code,type:'sms'});
+    if(error||!data.session){o.err=authMsg(error||'Código no válido.');render();return;}
+    C.user=data.session.user;C.phone=o.phone;o.sent=false;o.msg='';await refreshMine();};
+  return h('div',{class:'card',style:'max-width:440px;margin:0 auto'},h('h2',null,ic('phone',18),'Consulta tus citas'),
+    h('p',{class:'mute'},'Te enviaremos un código por SMS para confirmar que el celular es tuyo.'),
+    h('label',{for:'c-ph'},'Celular'),h('input',{id:'c-ph',type:'tel',inputmode:'numeric',maxlength:'13',autocomplete:'tel',value:o.phone,disabled:o.sent}),
+    o.sent?[h('label',{for:'c-ot'},'Código de verificación'),h('input',{id:'c-ot',type:'text',inputmode:'numeric',maxlength:'6',autocomplete:'one-time-code'})]:null,
+    o.msg?h('div',{class:'okt',role:'status'},ic('check',14),o.msg):null,errLine(o.err),
+    h('div',{class:'acts',style:'margin-top:12px'},o.sent?[btn('Entrar','lock',verify),btn('Cambiar celular',null,()=>{o.sent=false;o.msg='';render();},'ghost')]:btn('Enviarme un código','chat',send)));
+}
+
+/* ---- acceso del negocio (correo y contraseña) ---- */
+async function doAuth(kind){
+  const L=C.lg, e=($('#lg-email').value||'').trim().toLowerCase(), p=$('#lg-pass')?$('#lg-pass').value:'';
+  L.email=e;L.err='';L.msg='';
+  if(!/^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,}$/.test(e)){L.err='Escribe un correo válido.';render();return;}
+  if(kind!=='reset'&&p.length<8){L.err='La contraseña tiene al menos 8 caracteres.';render();return;}
+  L.busy=true;render();
+  try{
+    const back=location.origin+location.pathname;
+    if(kind==='reset'){const {error}=await C.sb.auth.resetPasswordForEmail(e,{redirectTo:back});if(error) throw error;L.msg='Si el correo tiene cuenta, te llegará un enlace para crear una contraseña nueva.';}
+    else{
+      const r=kind==='up'?await C.sb.auth.signUp({email:e,password:p,options:{emailRedirectTo:back}}):await C.sb.auth.signInWithPassword({email:e,password:p});
+      if(r.error) throw r.error;
+      if(!r.data.session) L.msg='Te enviamos un correo de confirmación. Ábrelo y luego vuelve aquí y pulsa "Entrar".';
+      else{await afterAuth(r.data.session.user,false);if(C.mode==='biz') audit(C.isAdmin?'Administrador':'Empleado '+proName(C.proId),'Inicio de sesión');}
+    }
+  }catch(err){L.err=authMsg(err);}
+  L.busy=false;render(true);
+}
+async function cloudLogout(){
+  try{if(C.mode==='biz') await cloudFlush();}catch(_){}
+  try{await C.sb.auth.signOut();}catch(_){}
+  unsubscribe(); await afterAuth(null,false); C.lg={email:C.lg.email,err:'',msg:'',busy:false}; render(true);
+}
+async function createBiz(){
+  const n=C.nb; n.name=($('#nb-name').value||'').trim(); n.slug=slugify($('#nb-slug').value||n.name); n.err='';
+  try{const b=await rpcOk('create_business',{p_name:n.name,p_slug:n.slug});C.list=await rpcOk('my_businesses');await openBiz(C.list.find(x=>x.id===b.id)||b);S.role='admin';S.tabs.admin='inicio';}
+  catch(e){n.err=syncMsg(e);}
+  render(true);
+}
+async function acceptInvite(){
+  const v=C.inv; v.err='';
+  try{const b=await rpcOk('accept_invite',{p_code:($('#inv-code').value||'').trim()});C.list=await rpcOk('my_businesses');
+    await openBiz(C.list.find(x=>x.id===b.id)||b);S.role=b.role==='staff'?'empleado':'admin';}
+  catch(e){v.err=syncMsg(e);}
+  render(true);
+}
+async function switchBiz(id){const m=C.list.find(x=>x.id===id);if(!m) return;try{await cloudFlush();await openBiz(m);S.role=m.role==='staff'?'empleado':'admin';}catch(e){toast(syncMsg(e),'err');}render(true);}
+const loadingCard=()=>h('div',{class:'card'},h('p',{class:'mute',role:'status'},'Conectando con el servidor…'));
+function cloudLoginView(role){
+  const L=C.lg, emp=role==='empleado';
+  if(C.user&&C.phone) return h('div',{class:'card',style:'max-width:440px;margin:0 auto'},h('h2',null,ic('lock',18),'Sesión de cliente abierta'),
+    h('p',{class:'mute'},'Entraste como cliente con el celular '+C.phone+'. Cierra esa sesión para entrar al panel del negocio.'),btn('Cerrar sesión de cliente','logout',clientSignOut,'ghost'));
+  if(C.user){
+    const other=C.list.filter(x=>emp?x.role==='staff':x.role!=='staff');
+    return h('div',{class:'card',style:'max-width:520px;margin:0 auto'},h('h2',null,ic(emp?'scissors':'shield',18),emp?'Acceso de empleados':'Tu negocio'),
+      h('p',{class:'mute'},'Sesión iniciada como ',h('b',null,C.user.email),'.'),
+      C.slug&&C.mode==='pub'?h('div',{class:'notice'},'Estás en la página de reservas de '+S.settings.name+'. Para entrar a tu panel abre la app sin “?n=…”: ',h('a',{href:location.pathname},'ir a mi panel'),'.'):null,
+      other.length?[h('h3',null,'Tus negocios'),other.map(m=>h('div',{class:'acts'},btn(m.name+(m.role==='staff'?' (empleado)':''),'right',()=>switchBiz(m.id),'ghost sm')))]:null,
+      !emp?[h('h3',{style:'margin-top:12px'},'Crear un negocio'),
+        h('label',{for:'nb-name'},'Nombre del negocio'),h('input',{id:'nb-name',maxlength:'60',value:C.nb.name,placeholder:'Ej.: Barbería Centro',oninput:e=>{C.nb.name=e.target.value;const s=$('#nb-slug');if(s&&!C.nb.slugEdited)s.value=slugify(e.target.value);}}),
+        h('label',{for:'nb-slug'},'Dirección corta para tu enlace de reservas'),h('input',{id:'nb-slug',maxlength:'40',value:C.nb.slug||slugify(C.nb.name),placeholder:'barberia-centro',oninput:e=>{C.nb.slugEdited=true;C.nb.slug=e.target.value;}}),
+        h('div',{class:'mute'},'Tus clientes reservarán en: '+location.origin+location.pathname+'?n=…'),errLine(C.nb.err),
+        h('div',{class:'acts'},btn('Crear negocio','plus',createBiz))]:h('p',{class:'mute'},'Tu cuenta aún no está unida a un negocio como empleado.'),
+      h('h3',{style:'margin-top:12px'},'¿Te invitaron?'),h('p',{class:'mute'},'Escribe el código que te dio el administrador.'),
+      h('div',{class:'row'},h('input',{id:'inv-code',maxlength:'8',placeholder:'Código','aria-label':'Código de invitación',autocomplete:'off',style:'text-transform:uppercase'}),btn('Unirme','check',acceptInvite,'ghost')),errLine(C.inv.err),
+      h('div',{class:'acts',style:'margin-top:12px'},btn('Cerrar sesión','logout',cloudLogout,'ghost sm')));
+  }
+  return h('div',{class:'card',style:'max-width:420px;margin:0 auto'},h('h2',null,ic('lock',18),emp?'Acceso de empleados':'Acceso del negocio'),
+    h('p',{class:'mute'},emp?'Entra con el correo y la contraseña de tu cuenta. Si es tu primera vez, crea la cuenta y luego escribe el código que te dio el administrador.':'Entra con tu correo y contraseña. Si es tu primera vez, crea tu cuenta y luego tu negocio.'),
+    h('label',{for:'lg-email'},'Correo'),h('input',{id:'lg-email',type:'email',autocomplete:'email',maxlength:'254',value:L.email}),
+    h('label',{for:'lg-pass'},'Contraseña (mínimo 8 caracteres)'),h('input',{id:'lg-pass',type:'password',autocomplete:'current-password',maxlength:'72'}),
+    L.msg?h('div',{class:'okt',role:'status'},ic('check',14),L.msg):null,errLine(L.err),
+    h('div',{class:'acts',style:'margin-top:12px'},btn(L.busy?'Un momento…':'Entrar','lock',()=>doAuth('in'),'',L.busy),btn('Crear cuenta','plus',()=>doAuth('up'),'ghost',L.busy),
+      btn('Olvidé mi contraseña',null,()=>doAuth('reset'),'ghost sm',L.busy)));
+}
+function newPassModal(m){
+  return h('div',{class:'overlay',role:'dialog','aria-modal':'true','aria-label':'Nueva contraseña'},h('div',{class:'card'},
+    h('h2',null,ic('lock',18),'Crea tu nueva contraseña'),h('label',{for:'np-1'},'Contraseña nueva (mínimo 8)'),h('input',{id:'np-1',type:'password',autocomplete:'new-password',maxlength:'72'}),
+    errLine(m.err),h('div',{class:'acts',style:'margin-top:12px'},btn('Guardar','check',async()=>{const p=$('#np-1').value;if(p.length<8){m.err='Mínimo 8 caracteres.';render();return;}
+      const {error}=await C.sb.auth.updateUser({password:p});if(error){m.err=authMsg(error);render();return;}S.modal=null;toast('Contraseña actualizada.');}))));
+}
+/* ---- piezas del panel en modo nube ---- */
+const pubLink=()=>location.origin+location.pathname+'?n='+(S.settings.slug||'');
+function pubLinkEl(){return h('div',{class:'notice pub-link'},h('b',null,'Tu enlace de reservas: '),h('a',{href:pubLink(),target:'_blank',rel:'noopener noreferrer'},pubLink()),' ',
+  btn('Copiar enlace',null,()=>{(navigator.clipboard?navigator.clipboard.writeText(pubLink()):Promise.reject()).then(()=>toast('Enlace copiado.'),()=>toast('No se pudo copiar: selecciona el enlace y cópialo.','err'));},'ghost sm'));}
+function accessSection(p){
+  const code=C.codes[p.id];
+  return [h('h3',{style:'margin-top:16px'},'Acceso a la app'),
+    h('p',{class:'mute'},'Genera un código para que '+p.name+' entre con su propia cuenta. Solo verá su agenda y sus bloqueos.'),
+    code?h('div',{class:'notice'},'Código: ',h('b',{class:'code',style:'font-size:20px'},code),h('div',null,'Pasos para '+p.name+': abrir '+location.origin+location.pathname+' → Empleado → Crear cuenta (con su correo) → escribir este código. Vence en 7 días.')):null,
+    btn(code?'Generar otro código':'Generar código de invitación','plus',async()=>{try{await cloudFlush();C.codes[p.id]=await rpcOk('create_invite',{p_bid:C.bid,p_role:'staff',p_pro:p.id});audit('Administrador','Generó un código de acceso para '+p.name);}catch(e){toast(syncMsg(e),'err');}render();},'ghost')];
+}
+function cloudSecurityCard(){
+  const B=S.adm;
+  return h('div',{class:'card'},h('h2',null,ic('lock',18),'Cuenta y seguridad'),
+    h('p',{class:'mute'},'Sesión: ',h('b',null,(C.user||{}).email||''),' · rol: '+({owner:'dueño',admin:'administrador',staff:'empleado'}[C.role]||'')),
+    h('div',{class:'row'},h('div',null,h('label',{for:'p-n'},'Contraseña nueva (mínimo 8)'),h('input',{id:'p-n',type:'password',autocomplete:'new-password',maxlength:'72'}))),
+    B.pinMsg?h('div',{class:/actualizada|cerraron|Código/.test(B.pinMsg)?'okt':'err',role:'alert'},B.pinMsg):null,
+    h('div',{class:'acts'},btn('Cambiar contraseña','lock',async()=>{const n=$('#p-n').value;if(n.length<8){B.pinMsg='La contraseña nueva debe tener al menos 8 caracteres.';render();return;}
+        const {error}=await C.sb.auth.updateUser({password:n});B.pinMsg=error?authMsg(error):'Contraseña actualizada.';if(!error)audit('Administrador','Cambió su contraseña');render();}),
+      btn('Cerrar sesión en otros equipos','logout',async()=>{const {error}=await C.sb.auth.signOut({scope:'others'});B.pinMsg=error?authMsg(error):'Se cerraron las sesiones en otros equipos.';render();},'ghost'),
+      btn('Invitar a otro administrador','plus',async()=>{try{const c=await rpcOk('create_invite',{p_bid:C.bid,p_role:'admin',p_pro:null});B.pinMsg='Código para un nuevo administrador: '+c+' (vence en 7 días). Esa persona crea su cuenta y lo escribe en "¿Te invitaron?".';}catch(e){B.pinMsg=syncMsg(e);}render();},'ghost')));
+}
+function importToCloud(file){
+  const bk=S.adm.bk||(S.adm.bk={}); if(!file) return;
+  if(file.size>15*1024*1024){bk.err='El archivo supera 15 MB.';render();return;}
+  const fr=new FileReader(); fr.onerror=()=>{bk.err='No se pudo leer el archivo.';render();};
+  fr.onload=()=>{let d;try{d=JSON.parse(fr.result);}catch(_){bk.err='El archivo no es una copia válida.';render();return;}
+    if(!d||d.app!==BACKUP_APP||!validDB(d.db)){bk.err='El archivo no es una copia de seguridad de FRAGOLA PRENOTA o está incompleto.';render();return;}
+    const src=normTenant(d.db.tenants[d.db.cur]||d.db.tenants[d.db.order[0]]); bk.err='';
+    confirmDlg('Importar datos al servidor','Se reemplazarán los servicios, el equipo, las citas, los bloqueos, los recursos y los ajustes de "'+S.settings.name+'" con los de la copia "'+src.settings.name+'" ('+src.bookings.length+' citas). Los códigos de acceso de empleados que ya existan pueden dejar de corresponder. No se puede deshacer: descarga antes una copia de lo actual.','Importar y reemplazar',()=>{
+      const t=T(); ['services','pros','bookings','blocks','resources','meta'].forEach(k=>{t[k]=src[k];});
+      ['name','address','whatsapp','open','close','step','minCancelHours','maxActive','minAdvanceMin','maxAdvanceDays','autoConfirm','type','features','closedDates'].forEach(k=>{if(src.settings[k]!=null)t.settings[k]=src.settings[k];});
+      if(String(t.settings.name).length<2) t.settings.name='Mi negocio';
+      audit('Administrador','Importó datos desde una copia de la versión local ('+src.bookings.length+' citas)');toast('Importando… los datos se están enviando al servidor.');});
+  };
+  fr.readAsText(file);
+}
+
 render(true);
+if(store.err) toast(store.err,'err');
+if(CLOUD_ON) cloudBoot();
 
 /* ===== v6.1: adaptacion a pantallas (solo presentacion; no cambia datos ni reglas) ===== */
 (function(){
